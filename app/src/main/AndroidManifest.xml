@@ -31,8 +31,7 @@
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ruben.woldhuis.androideindopdrachtapp.MainActivity"
-                />
+                android:value="com.ruben.woldhuis.androideindopdrachtapp.MainActivity" />
         </activity>
         <activity android:name=".Activities.ChatActivity" />
         <activity android:name=".Activities.GlobalChatActivity" />
