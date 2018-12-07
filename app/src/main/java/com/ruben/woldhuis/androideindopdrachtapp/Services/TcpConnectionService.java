@@ -1,7 +1,5 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Services;
 
-import android.content.Context;
-
 import com.ruben.woldhuis.androideindopdrachtapp.Constants;
 import com.ruben.woldhuis.androideindopdrachtapp.Interfaces.TcpErrorListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Interfaces.TcpMessageReceiverListener;
@@ -22,47 +20,46 @@ import java.time.LocalDateTime;
  */
 public class TcpConnectionService {
     /**
-     *
+     * Static instance for singleton pattern
      */
     private static TcpConnectionService instance;
     /**
-     *
+     * TcpMessageReceiverListener variable has a callback to send the decoded message back to the app.
      */
     private TcpMessageReceiverListener messageReceiverListener;
     /**
-     *
+     * TcpErrorListener variable has a callback that get's called when something breaks in this class.
      */
     private TcpErrorListener errorListener;
+
     /**
-     *
-     */
-    private Context context;
-    /**
-     *
+     * TcpSocket
      */
     private Socket socket;
     /**
-     *
+     * Sends data to the server
      */
     private DataOutputStream toServer;
     /**
-     *
+     * Receives data from the server.
      */
     private DataInputStream fromServer;
     /**
-     *
+     * Thread used for listening on the background for incoming messages
      */
     private Thread communicationListeningThread;
     /**
-     *
+     * boolean variable indicating whether this class is running.
      */
     private boolean running;
+
     /**
-     * @param context
-     * @param errorListener
+     * TcpConnectionService constructor
+     * Creates the connection when it's called
+     *
+     * @param errorListener sets the TcpErrorListener
      */
-    private TcpConnectionService(Context context, TcpErrorListener errorListener) {
-        this.context = context;
+    private TcpConnectionService(TcpErrorListener errorListener) {
         this.errorListener = errorListener;
         try {
             createConnection();
@@ -72,18 +69,21 @@ public class TcpConnectionService {
     }
 
     /**
-     * @param context
-     * @param errorListener
-     * @return
+     * Singleton getInstance method invoking the constructor once.
+     *
+     * @param errorListener sets the TcpErrorListener
+     * @return a single instance of the TcpConnectionService class.
      */
-    public static TcpConnectionService getInstance(Context context, TcpErrorListener errorListener) {
+    public static TcpConnectionService getInstance(TcpErrorListener errorListener) {
         if (instance == null)
-            instance = new TcpConnectionService(context, errorListener);
+            instance = new TcpConnectionService(errorListener);
         return instance;
     }
 
     /**
-     * @throws IOException
+     * Initializes the connection with the server and starts listening to messages from the server.
+     *
+     * @throws IOException thrown when the socket disconnects during the DataOutputStream flushing.
      */
     private void createConnection() throws IOException {
         socket = new Socket(Constants.SERVER_HOSTNAME, Constants.SERVER_PORT);
@@ -96,10 +96,11 @@ public class TcpConnectionService {
     }
 
     /**
-     * @param message
-     * @param errorListener
+     * Method for sending messages to the server.
+     *
+     * @param message The message that will be send.
      */
-    public void writeMessageToServer(IMessage message, TcpErrorListener errorListener) {
+    public void writeMessageToServer(IMessage message) {
         byte[] buffer = MessageSerializer.serialize(message);
         try {
             toServer.write(buffer, 0, buffer.length);
@@ -110,7 +111,7 @@ public class TcpConnectionService {
     }
 
     /**
-     *
+     * Starts the communicationListeningThread for listening to the server for messages.
      */
     private void startMessageReceiver() {
         communicationListeningThread = new Thread(receiveMessageFromServer());
@@ -118,7 +119,7 @@ public class TcpConnectionService {
     }
 
     /**
-     *
+     * @return runnable listening object
      */
     private Runnable receiveMessageFromServer() {
         return () -> {
@@ -127,7 +128,9 @@ public class TcpConnectionService {
                     errorListener.onTcpError(new Error("No messageReceiverListener available"));
                 } else {
                     IMessage message = getMessage();
-                    messageReceiverListener.onMessageReceived(message);
+                    if (message == null)
+                        errorListener.onTcpError(new Error("Couldn't decode a message from the server."));
+                    else messageReceiverListener.onMessageReceived(message);
                 }
             }
         };
@@ -136,8 +139,8 @@ public class TcpConnectionService {
     /**
      * Cuz java's a bitch
      *
-     * @param data
-     * @return
+     * @param data A byte array of 4 bytes containing the length of the prefix.
+     * @return an integer value converted from the byte array
      */
     private int byteToInt(byte[] data) {
         ByteBuffer intShifter = ByteBuffer.allocate(Integer.SIZE / Byte.SIZE).order(ByteOrder.LITTLE_ENDIAN);
@@ -148,7 +151,9 @@ public class TcpConnectionService {
     }
 
     /**
-     * @return
+     * Receives a message
+     *
+     * @return a decoded IMessage
      */
     private IMessage getMessage() {
         byte[] prefix = new byte[4];
@@ -175,24 +180,37 @@ public class TcpConnectionService {
     }
 
     /**
-     *
+     * safely disconnects the TcpConnectionService from the server
      */
     public void disconnect() {
-        writeMessageToServer(new DisconnectingMessage(Constants.USERNAME, LocalDateTime.now(), "Disconnecting..."), this.errorListener);
+        writeMessageToServer(new DisconnectingMessage(Constants.USERNAME, LocalDateTime.now(), "Disconnecting..."));
         setRunning(false);
     }
 
     /**
-     * @param messageReceiverListener
+     * Setter
+     *
+     * @param messageReceiverListener sets the TcpMessageReceiverListener
      */
     public void setMessageReceiverListener(TcpMessageReceiverListener messageReceiverListener) {
         this.messageReceiverListener = messageReceiverListener;
     }
 
     /**
-     * @param running
+     * setter
+     *
+     * @param running sets the running variable
      */
     private void setRunning(boolean running) {
         this.running = running;
+    }
+
+    /**
+     * getter
+     *
+     * @return CommunicationListeningThread
+     */
+    public Thread getCommunicationListeningThread() {
+        return communicationListeningThread;
     }
 }

@@ -20,10 +20,22 @@ public class MessageSerializer {
     }
 
     /**
-     * @param data
+     * @param byteData
      * @return
      */
-    public static IMessage deserialize(byte[] data) {
+    public static IMessage deserialize(byte[] byteData) {
+        String serialized = new String(byteData);
+        String[] items = serialized.split(",");
+        String type = items[0];
+        StringBuilder data = new StringBuilder();
+        for (int i = 1; i < items.length; i++)
+            data.append(items[i]);
+        switch (MessageType.valueOf(type)) {
+            case Identification_Message:
+                return IdentificationMessage.deserialize(data.toString());
+            case Disconnecting_Message:
+                return DisconnectingMessage.deserialize(data.toString());
+        }
         return null;
     }
 }

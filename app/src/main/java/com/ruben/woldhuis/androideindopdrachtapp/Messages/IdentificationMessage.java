@@ -19,6 +19,12 @@ public class IdentificationMessage implements IMessage {
         this.message = message;
     }
 
+    public static IdentificationMessage deserialize(String serialized) {
+        String[] items = serialized.split(",");
+
+        return new IdentificationMessage(items[0], LocalDateTime.parse(items[1]), items[3]);
+    }
+
     @Override
     public MessageType getMessageType() {
         return messageType;
@@ -26,21 +32,21 @@ public class IdentificationMessage implements IMessage {
 
     @Override
     public String getSender() {
-        return null;
+        return sender;
     }
 
     @Override
     public LocalDateTime getTimeSend() {
-        return null;
+        return timeSend;
     }
 
     @Override
     public String getMessage() {
-        return null;
+        return message;
     }
 
     @Override
     public String serialize() {
-        return null;
+        return messageType + "," + sender + "," + timeSend.toString() + "," + message;
     }
 }

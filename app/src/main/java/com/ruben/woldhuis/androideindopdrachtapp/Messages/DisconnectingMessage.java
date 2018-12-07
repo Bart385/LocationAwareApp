@@ -19,6 +19,12 @@ public class DisconnectingMessage implements IMessage {
         this.message = message;
     }
 
+    public static DisconnectingMessage deserialize(String serialized) {
+        String[] items = serialized.split(",");
+
+        return new DisconnectingMessage(items[0], LocalDateTime.parse(items[1]), items[3]);
+    }
+
     @Override
     public MessageType getMessageType() {
         return messageType;
@@ -41,6 +47,6 @@ public class DisconnectingMessage implements IMessage {
 
     @Override
     public String serialize() {
-        return null;
+        return messageType + "," + sender + "," + timeSend.toString() + "," + message;
     }
 }
