@@ -22,6 +22,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+//TODO: Activities omzetten naar NavigationDrawer Activities
+//TODO: Map implementeren in Main screen
+//TODO: DataBase aan maken
 
 public class NavigationDrawerFragment extends Fragment {
 
@@ -79,6 +82,7 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section1),
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
+                        getString(R.string.title_section4)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -151,6 +155,8 @@ public class NavigationDrawerFragment extends Fragment {
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
+            System.out.println("Deze" + position);
+            //TODO: Methode aanmaken die case aanroept met methode om de goede activity aan te zetten.
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
