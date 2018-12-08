@@ -4,6 +4,8 @@ package com.ruben.woldhuis.androideindopdrachtapp;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +24,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.ruben.woldhuis.androideindopdrachtapp.Activities.FriendChatActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.Activities.GlobalChatActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.Activities.SettingsActivity;
 
 //TODO: Activities omzetten naar NavigationDrawer Activities
 //TODO: Map implementeren in Main screen
@@ -38,6 +45,7 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+
 
     public NavigationDrawerFragment() {
     }
@@ -157,6 +165,7 @@ public class NavigationDrawerFragment extends Fragment {
             mDrawerListView.setItemChecked(position, true);
             System.out.println("Deze" + position);
             //TODO: Methode aanmaken die case aanroept met methode om de goede activity aan te zetten.
+            openActivityFromDrawer(position);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
@@ -228,7 +237,27 @@ public class NavigationDrawerFragment extends Fragment {
         return getActivity().getActionBar();
     }
 
+
+
     public static interface NavigationDrawerCallbacks {
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    public void openActivityFromDrawer(int position){
+        Intent intent = null;
+        switch (position) {
+            case 0:
+                intent = new Intent(getActivity(), FriendChatActivity.class);
+                break;
+            case 1:
+                intent = new Intent(getActivity(), GlobalChatActivity.class);
+                break;
+            case 2:
+                break;
+            case 3:
+                intent = new Intent(getActivity(), SettingsActivity.class);
+                break;
+        }
+        startActivity(intent);
     }
 }
