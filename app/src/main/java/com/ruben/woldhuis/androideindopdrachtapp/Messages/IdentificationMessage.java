@@ -20,7 +20,7 @@ public class IdentificationMessage implements IMessage {
     }
 
     public static IdentificationMessage deserialize(String serialized) {
-        String[] items = serialized.split(",");
+        String[] items = serialized.split(";");
 
         return new IdentificationMessage(items[0], LocalDateTime.parse(items[1]), items[3]);
     }
@@ -30,23 +30,20 @@ public class IdentificationMessage implements IMessage {
         return messageType;
     }
 
-    @Override
     public String getSender() {
         return sender;
     }
 
-    @Override
     public LocalDateTime getTimeSend() {
         return timeSend;
     }
 
-    @Override
     public String getMessage() {
         return message;
     }
 
     @Override
     public String serialize() {
-        return messageType + "," + sender + "," + timeSend.toString() + "," + message;
+        return messageType + ";" + sender + ";" + timeSend.toString() + ";" + message;
     }
 }

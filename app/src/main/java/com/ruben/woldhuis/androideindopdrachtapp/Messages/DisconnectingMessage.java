@@ -30,17 +30,14 @@ public class DisconnectingMessage implements IMessage {
         return messageType;
     }
 
-    @Override
     public String getSender() {
         return null;
     }
 
-    @Override
     public LocalDateTime getTimeSend() {
         return null;
     }
 
-    @Override
     public String getMessage() {
         return null;
     }

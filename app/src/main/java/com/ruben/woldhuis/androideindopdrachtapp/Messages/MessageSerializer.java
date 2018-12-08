@@ -1,6 +1,7 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Messages;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 public class MessageSerializer {
     /**
@@ -17,6 +18,20 @@ public class MessageSerializer {
         System.arraycopy(data, 0, buffer, prefix.length, data.length);
 
         return buffer;
+    }
+
+    public static String serializeArrayList(ArrayList<Object> value) {
+        StringBuilder serialized = new StringBuilder();
+        for (int idx = 0; idx < value.size(); idx++)
+            serialized.append("index:" + idx + "," + value.get(idx) + ";");
+        return serialized.toString();
+    }
+
+    public static String serializeArray(Object[] value) {
+        StringBuilder serialized = new StringBuilder();
+        for (int idx = 0; idx < value.length; idx++)
+            serialized.append("index:" + idx + "," + value[idx] + ";");
+        return serialized.toString();
     }
 
     /**
