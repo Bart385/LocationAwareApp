@@ -142,7 +142,7 @@ public class TcpConnectionService {
      * @param data A byte array of 4 bytes containing the length of the prefix.
      * @return an integer value converted from the byte array
      */
-    private int byteToInt(byte[] data) {
+    private int byteArrayToInt(byte[] data) {
         ByteBuffer intShifter = ByteBuffer.allocate(Integer.SIZE / Byte.SIZE).order(ByteOrder.LITTLE_ENDIAN);
         intShifter.clear();
         intShifter.put(data, 0, Integer.SIZE / Byte.SIZE);
@@ -167,7 +167,7 @@ public class TcpConnectionService {
             }
         }
         bytesRead = 0;
-        data = new byte[byteToInt(prefix)];
+        data = new byte[byteArrayToInt(prefix)];
 
         while (bytesRead < data.length) {
             try {
