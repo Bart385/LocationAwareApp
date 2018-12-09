@@ -4,7 +4,6 @@ package com.ruben.woldhuis.androideindopdrachtapp;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -13,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -237,13 +235,7 @@ public class NavigationDrawerFragment extends Fragment {
         return getActivity().getActionBar();
     }
 
-
-
-    public static interface NavigationDrawerCallbacks {
-        void onNavigationDrawerItemSelected(int position);
-    }
-
-    public void openActivityFromDrawer(int position){
+    public void openActivityFromDrawer(int position) {
         Intent intent = null;
         switch (position) {
             case 0:
@@ -259,5 +251,9 @@ public class NavigationDrawerFragment extends Fragment {
                 break;
         }
         startActivity(intent);
+    }
+
+    public static interface NavigationDrawerCallbacks {
+        void onNavigationDrawerItemSelected(int position);
     }
 }

@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import com.ruben.woldhuis.androideindopdrachtapp.NavigationDrawerFragment;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
-import java.io.Serializable;
-
 public class FriendChatActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -40,6 +38,7 @@ public class FriendChatActivity extends Activity implements NavigationDrawerFrag
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
     }
+
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -94,7 +93,7 @@ public class FriendChatActivity extends Activity implements NavigationDrawerFrag
 
     }
 
-    }
+}
 
 
 
