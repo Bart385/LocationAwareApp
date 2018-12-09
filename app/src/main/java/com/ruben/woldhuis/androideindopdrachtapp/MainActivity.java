@@ -16,6 +16,8 @@ import com.ruben.woldhuis.androideindopdrachtapp.Activities.FriendChatActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.Activities.GlobalChatActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.Activities.SettingsActivity;
 
+import java.io.Serializable;
+
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -98,23 +100,4 @@ public class MainActivity extends Activity
 
 
     }
-
-    public void openActivityFromDrawer(int position){
-        Intent intent = null;
-        switch (position) {
-            case 1:
-                intent = new Intent(this, FriendChatActivity.class);
-                break;
-            case 2:
-                intent = new Intent(this, GlobalChatActivity.class);
-                break;
-            case 3:
-                break;
-            case 4:
-                intent = new Intent(this, SettingsActivity.class);
-                break;
-        }
-        startActivity(intent);
-    }
-
 }

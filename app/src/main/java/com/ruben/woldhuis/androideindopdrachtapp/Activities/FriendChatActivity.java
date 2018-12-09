@@ -4,15 +4,15 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.NavigationDrawerFragment;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+
+import java.io.Serializable;
 
 public class FriendChatActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -29,7 +29,7 @@ public class FriendChatActivity extends Activity implements NavigationDrawerFrag
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, MainActivity.PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
     }
     public void onSectionAttached(int number) {
@@ -61,8 +61,8 @@ public class FriendChatActivity extends Activity implements NavigationDrawerFrag
         public PlaceholderFragment() {
         }
 
-        public static MainActivity.PlaceholderFragment newInstance(int sectionNumber) {
-            MainActivity.PlaceholderFragment fragment = new MainActivity.PlaceholderFragment();
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -79,13 +79,15 @@ public class FriendChatActivity extends Activity implements NavigationDrawerFrag
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
+            ((FriendChatActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
 
 
     }
 
+    }
 
 
-}
+
+
