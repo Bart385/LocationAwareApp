@@ -5,7 +5,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Interfaces.TcpErrorListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Interfaces.TcpMessageReceiverListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.DisconnectingMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.MessageSerializer;
+import com.ruben.woldhuis.androideindopdrachtapp.Utils.MessageSerializer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
