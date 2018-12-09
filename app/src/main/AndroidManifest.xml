@@ -36,7 +36,10 @@
         <activity android:name=".Activities.GlobalChatActivity" />
         <activity
             android:name=".friend_chat"
-            android:label="@string/title_activity_friend_chat"></activity>
+            android:label="@string/title_activity_friend_chat" />
+        <activity
+            android:name=".GlobalChatActivity"
+            android:label="@string/title_activity_global_chat"></activity>
     </application>
 
 </manifest>
