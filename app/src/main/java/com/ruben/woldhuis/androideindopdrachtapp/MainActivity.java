@@ -6,9 +6,18 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.LocationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.TcpConnectionService;
+
+import java.util.Date;
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -20,6 +29,17 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        new Thread(() -> {
+            TcpConnectionService connectionService = TcpConnectionService.getInstance((Error error) -> {
+                Log.d("ERROR_TAG", error.getMessage());
+            });
+            connectionService.setMessageReceiverListener((IMessage message) -> {
+                Log.d("MESSAGE_TAG", message.getMessageType().name());
+            });
+            connectionService.writeMessageToServer(new LocationMessage("Phone", new Date(), "Hello from phone.", new Location(10.0050324, 1.523504353)));
+            connectionService.writeMessageToServer(new IdentificationMessage("Phone", new Date(), "Wachtwoord"));
+
+        }).start();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);

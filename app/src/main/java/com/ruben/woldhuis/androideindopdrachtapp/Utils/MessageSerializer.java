@@ -1,5 +1,7 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Utils;
 
+import android.util.Log;
+
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.DisconnectingMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.FriendRequestMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
@@ -8,75 +10,70 @@ import com.ruben.woldhuis.androideindopdrachtapp.Messages.LocationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.MessageType;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.zip.DataFormatException;
 
 //TODO: Implement compression success/failed flag to byte[]
 public class MessageSerializer {
+
+    private static byte[] toByteArray(int value) {
+        return new byte[]{
+                (byte) (value >> 24),
+                (byte) (value >> 16),
+                (byte) (value >> 8),
+                (byte) value};
+    }
+
     /**
      * @param message
      * @return
      */
     public static byte[] serialize(IMessage message) {
         String msg = message.serialize();
-        byte[] prefix = ByteBuffer.allocate(4).putInt(msg.length()).array();
-        byte[] data = msg.getBytes();
+        Log.d("MESSAGE_TAG", msg);
+        byte[] compressedData = null;
 
-        byte[] buffer = new byte[prefix.length + data.length];
-        System.arraycopy(prefix, 0, buffer, 0, prefix.length);
-        System.arraycopy(data, 0, buffer, prefix.length, data.length);
-        byte[] compressed = null;
         try {
-            compressed = CompressionUtil.compress(buffer);
+            compressedData = CompressionUtil.compress(msg.getBytes("UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return compressed;
-    }
 
-    public static String serializeArrayList(ArrayList<Object> value) {
-        StringBuilder serialized = new StringBuilder();
-        for (int idx = 0; idx < value.size(); idx++)
-            serialized.append("index:" + idx + "," + value.get(idx) + ";");
-        return serialized.toString();
-    }
+        byte[] prefix = toByteArray(compressedData.length);
+        for (byte b : prefix) {
+            Log.d("SIZE_TAG", "" + b);
 
-    public static String serializeArray(Object[] value) {
-        StringBuilder serialized = new StringBuilder();
-        for (int idx = 0; idx < value.length; idx++)
-            serialized.append("index:" + idx + "," + value[idx] + ";");
-        return serialized.toString();
+        }
+        byte[] buffer = new byte[prefix.length + compressedData.length];
+        System.arraycopy(prefix, 0, buffer, 0, prefix.length);
+        System.arraycopy(compressedData, 0, buffer, prefix.length, compressedData.length);
+        return buffer;
     }
 
     /**
-     * @param byteData
+     * @param serialized
      * @return
      */
-    public static IMessage deserialize(byte[] byteData) {
-        byte[] decompressed = null;
-        try {
-            decompressed = CompressionUtil.decompress(byteData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DataFormatException e) {
-            e.printStackTrace();
+    public static IMessage deserialize(String serialized) {
+        System.out.println(serialized);
+        String[] elements = serialized.split(",");
+        String messageType = "";
+        for (String item : elements) {
+            if (item.contains("messageType")) {
+                messageType = item;
+                break;
+            }
         }
-        String serialized = new String(decompressed);
-        String[] items = serialized.split(",");
-        String type = items[0];
-        StringBuilder data = new StringBuilder();
-        for (int i = 1; i < items.length; i++)
-            data.append(items[i]);
-        switch (MessageType.valueOf(type)) {
+        messageType = messageType.split(":")[1];
+        messageType = messageType.substring(1, messageType.length() - 1);
+        MessageType type = MessageType.valueOf(messageType);
+        switch (type) {
             case FriendRequest_Message:
-                return FriendRequestMessage.deserialize(data.toString());
+                return FriendRequestMessage.deserialize(serialized);
             case Disconnecting_Message:
-                return DisconnectingMessage.deserialize(data.toString());
+                return DisconnectingMessage.deserialize(serialized);
             case Identification_Message:
-                return IdentificationMessage.deserialize(data.toString());
+                return IdentificationMessage.deserialize(serialized);
             case Location_Message:
-                return LocationMessage.deserialize(data.toString());
+                return LocationMessage.deserialize(serialized);
         }
         return null;
     }

@@ -1,8 +1,10 @@
 package com.ruben.woldhuis.androideindopdrachtapp;
 
-public class Constants {
-    public static final String SERVER_HOSTNAME = "localhost";
-    public static final int SERVER_PORT = 9000;
+import com.google.gson.Gson;
 
+public class Constants {
+    public static final String SERVER_HOSTNAME = "10.0.2.2";
+    public static final int SERVER_PORT = 9000;
+    public static final Gson GSON = new Gson();
     public static String USERNAME;
 }

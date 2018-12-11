@@ -1,10 +1,13 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Services;
 
+import android.util.Log;
+
 import com.ruben.woldhuis.androideindopdrachtapp.Constants;
 import com.ruben.woldhuis.androideindopdrachtapp.Interfaces.TcpErrorListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Interfaces.TcpMessageReceiverListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.DisconnectingMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Utils.CompressionUtil;
 import com.ruben.woldhuis.androideindopdrachtapp.Utils.MessageSerializer;
 
 import java.io.DataInputStream;
@@ -14,6 +17,7 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.time.LocalDateTime;
+import java.util.zip.DataFormatException;
 
 /**
  *
@@ -22,7 +26,7 @@ public class TcpConnectionService {
     /**
      * Static instance for singleton pattern
      */
-    private static TcpConnectionService instance;
+    private volatile static TcpConnectionService instance;
     /**
      * TcpMessageReceiverListener variable has a callback to send the decoded message back to the app.
      */
@@ -60,12 +64,15 @@ public class TcpConnectionService {
      * @param errorListener sets the TcpErrorListener
      */
     private TcpConnectionService(TcpErrorListener errorListener) {
+
         this.errorListener = errorListener;
         try {
             createConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
     /**
@@ -101,6 +108,7 @@ public class TcpConnectionService {
      * @param message The message that will be send.
      */
     public void writeMessageToServer(IMessage message) {
+
         byte[] buffer = MessageSerializer.serialize(message);
         try {
             toServer.write(buffer, 0, buffer.length);
@@ -108,6 +116,8 @@ public class TcpConnectionService {
         } catch (IOException e) {
             errorListener.onTcpError(new Error(e));
         }
+
+
     }
 
     /**
@@ -124,6 +134,7 @@ public class TcpConnectionService {
     private Runnable receiveMessageFromServer() {
         return () -> {
             while (running) {
+                Log.d("RECEIVING_TAG", "in receiveMessage");
                 if (messageReceiverListener == null) {
                     errorListener.onTcpError(new Error("No messageReceiverListener available"));
                 } else {
@@ -151,14 +162,12 @@ public class TcpConnectionService {
     }
 
     /**
-     * Receives a message
-     *
-     * @return a decoded IMessage
+     * @return
      */
     private IMessage getMessage() {
         byte[] prefix = new byte[4];
         int bytesRead = 0;
-        byte[] data;
+
         while (bytesRead < prefix.length) {
             try {
                 bytesRead += fromServer.read(prefix, bytesRead, prefix.length - bytesRead);
@@ -166,16 +175,27 @@ public class TcpConnectionService {
                 e.printStackTrace();
             }
         }
+        System.out.println("Got prefix");
         bytesRead = 0;
-        data = new byte[byteArrayToInt(prefix)];
-
-        while (bytesRead < data.length) {
+        byte[] compressedData = new byte[byteArrayToInt(prefix)];
+        while (bytesRead < compressedData.length) {
             try {
-                bytesRead += fromServer.read(data, bytesRead, data.length - bytesRead);
+                bytesRead += fromServer.read(compressedData, bytesRead, compressedData.length - bytesRead);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println("Got data");
+        String data = null;
+
+        try {
+            data = CompressionUtil.decompress(compressedData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DataFormatException e) {
+            e.printStackTrace();
+        }
+
         return MessageSerializer.deserialize(data);
     }
 
