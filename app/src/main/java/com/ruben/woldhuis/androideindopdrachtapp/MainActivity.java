@@ -12,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.LocationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.TcpConnectionService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 
 import java.util.Date;
 
@@ -29,18 +28,13 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new Thread(() -> {
-            TcpConnectionService connectionService = TcpConnectionService.getInstance((Error error) -> {
-                Log.d("ERROR_TAG", error.getMessage());
-            });
-            connectionService.setMessageReceiverListener((IMessage message) -> {
-                Log.d("MESSAGE_TAG", message.getMessageType().name());
-            });
-            connectionService.writeMessageToServer(new LocationMessage("Phone", new Date(), "Hello from phone.", new Location(10.0050324, 1.523504353)));
-            connectionService.writeMessageToServer(new IdentificationMessage("Phone", new Date(), "Wachtwoord"));
-
-        }).start();
-
+        TcpManagerService tcpManagerService = TcpManagerService.getInstance(
+                (Error error) -> {
+                    Log.d("ERROR_TAG", "onCreate: ");
+                }, (IMessage message) -> {
+                    Log.d("MESSAGE_TAG", "onCreate: ");
+                });
+        tcpManagerService.submitMessage(new LocationMessage("Phone", new Date(), "Hello", new Location(10.543, 12543.90)));
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();

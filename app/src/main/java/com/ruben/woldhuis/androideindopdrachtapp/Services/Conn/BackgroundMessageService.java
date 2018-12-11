@@ -1,4 +1,4 @@
-package com.ruben.woldhuis.androideindopdrachtapp.Services;
+package com.ruben.woldhuis.androideindopdrachtapp.Services.Conn;
 
 /**
  * Handles the notifications
