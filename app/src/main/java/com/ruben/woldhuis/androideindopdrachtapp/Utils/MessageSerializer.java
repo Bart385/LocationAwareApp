@@ -12,6 +12,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.zip.DataFormatException;
 
+//TODO: Implement compression success/failed flag to byte[]
 public class MessageSerializer {
     /**
      * @param message

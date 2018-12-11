@@ -1,6 +1,7 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Messages;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
 
 import java.time.LocalDateTime;
 
@@ -9,9 +10,9 @@ public class LocationMessage implements IMessage {
     private String sender;
     private LocalDateTime timeSend;
     private String message;
-    private LatLng location;
+    private Location location;
 
-    public LocationMessage(String sender, LocalDateTime timeSend, String message, LatLng location) {
+    public LocationMessage(String sender, LocalDateTime timeSend, String message, Location location) {
         this.sender = sender;
         this.timeSend = timeSend;
         this.message = message;
@@ -39,12 +40,24 @@ public class LocationMessage implements IMessage {
         return this.message;
     }
 
-    public LatLng getLocation() {
+    public Location getLocation() {
         return location;
     }
 
     @Override
     public String serialize() {
-        return null;
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    @Override
+    public String toString() {
+        return "LocationMessage{" +
+                "messageType=" + messageType +
+                ", sender='" + sender + '\'' +
+                ", timeSend=" + timeSend +
+                ", message='" + message + '\'' +
+                ", location=" + location +
+                '}';
     }
 }

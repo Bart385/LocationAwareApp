@@ -1,5 +1,6 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Messages;
 
+import com.google.gson.Gson;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Friend;
 
 import java.time.LocalDateTime;
@@ -46,6 +47,18 @@ public class FriendRequestMessage implements IMessage {
 
     @Override
     public String serialize() {
-        return null;
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    @Override
+    public String toString() {
+        return "FriendRequestMessage{" +
+                "messageType=" + messageType +
+                ", sender='" + sender + '\'' +
+                ", timeSend=" + timeSend +
+                ", message='" + message + '\'' +
+                ", friend=" + friend +
+                '}';
     }
 }

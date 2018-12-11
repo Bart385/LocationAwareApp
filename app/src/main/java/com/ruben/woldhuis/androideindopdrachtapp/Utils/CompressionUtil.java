@@ -21,8 +21,8 @@ public class CompressionUtil {
         }
         outputStream.close();
         byte[] output = outputStream.toByteArray();
-        Log.d("COMPRESSION_TAG", "Original: " + data.length / 1024 + " Kb");
-        Log.d("COMPRESSION_TAG", "Compressed: " + output.length / 1024 + " Kb");
+        Log.d("COMPRESSION_TAG", "Original: " + data.length + " bytes");
+        Log.d("COMPRESSION_TAG", "Compressed: " + output.length + " bytes");
         return output;
     }
 
@@ -37,8 +37,8 @@ public class CompressionUtil {
         }
         outputStream.close();
         byte[] output = outputStream.toByteArray();
-        Log.d("COMPRESSION_TAG", "Original: " + data.length);
-        Log.d("COMPRESSION_TAG", "Compressed: " + output.length);
+        Log.d("COMPRESSION_TAG", "Compressed: " + data.length + " bytes");
+        Log.d("COMPRESSION_TAG", "Decompressed: " + output.length + " bytes");
         return output;
     }
 
