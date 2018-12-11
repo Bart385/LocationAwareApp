@@ -32,7 +32,7 @@ public class MainActivity extends Activity
                 (Error error) -> {
                     Log.d("ERROR_TAG", "onCreate: ");
                 }, (IMessage message) -> {
-                    Log.d("MESSAGE_TAG", "onCreate: ");
+                    Log.d("MESSAGE_TAG", message.getMessageType().toString());
                 });
         tcpManagerService.submitMessage(new LocationMessage("Phone", new Date(), "Hello", new Location(10.543, 12543.90)));
         mNavigationDrawerFragment = (NavigationDrawerFragment)

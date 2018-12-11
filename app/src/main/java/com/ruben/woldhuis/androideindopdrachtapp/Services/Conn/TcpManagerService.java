@@ -193,11 +193,8 @@ public class TcpManagerService {
          * @return an integer value converted from the byte array
          */
         private int byteArrayToInt(byte[] data) {
-            ByteBuffer intShifter = ByteBuffer.allocate(Integer.SIZE / Byte.SIZE).order(ByteOrder.LITTLE_ENDIAN);
-            intShifter.clear();
-            intShifter.put(data, 0, Integer.SIZE / Byte.SIZE);
-            intShifter.flip();
-            return intShifter.getInt();
+            ByteBuffer wrapped = ByteBuffer.wrap(data);
+            return wrapped.getInt();
         }
 
         /**
