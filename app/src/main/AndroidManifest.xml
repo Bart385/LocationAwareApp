@@ -21,25 +21,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.FriendChatActivity" />
-        <activity android:name=".Activities.MapsActivity" />
-        <activity android:name=".Activities.SettingsActivity" />
+        <activity android:name=".View.Activities.FriendChatActivity" />
+        <activity android:name=".View.Activities.MapsActivity" />
+        <activity android:name=".View.Activities.SettingsActivity" />
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".View.Activities.LoginActivity"
             android:label="@string/title_activity_login"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ruben.woldhuis.androideindopdrachtapp.MainActivity" />
         </activity>
-        <activity android:name=".Activities.ChatActivity" />
-        <activity android:name=".Activities.GlobalChatActivity" />
+        <activity android:name=".View.Activities.ChatActivity" />
+        <activity android:name=".View.Activities.LocationAwareChatActivity" />
         <activity
             android:name=".friend_chat"
             android:label="@string/title_activity_friend_chat" />
         <activity
             android:name=".GlobalChatActivity"
-            android:label="@string/title_activity_global_chat"></activity>
+            android:label="@string/title_activity_global_chat" />
+        <activity android:name=".View.Activities.ProfileActivity"></activity>
     </application>
 
 </manifest>

@@ -1,15 +1,15 @@
-package com.ruben.woldhuis.androideindopdrachtapp.Activities;
+package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
-public class ChatActivity extends Activity {
+public class MapsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_maps);
     }
 }

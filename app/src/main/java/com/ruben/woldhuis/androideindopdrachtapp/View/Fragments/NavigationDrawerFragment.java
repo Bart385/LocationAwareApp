@@ -1,4 +1,4 @@
-package com.ruben.woldhuis.androideindopdrachtapp;
+package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 
 import android.app.ActionBar;
@@ -23,9 +23,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Activities.FriendChatActivity;
-import com.ruben.woldhuis.androideindopdrachtapp.Activities.GlobalChatActivity;
-import com.ruben.woldhuis.androideindopdrachtapp.Activities.SettingsActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.FriendChatActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LocationAwareChatActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
 
 //TODO: Activities omzetten naar NavigationDrawer Activities
 //TODO: Map implementeren in Main screen
@@ -242,7 +243,7 @@ public class NavigationDrawerFragment extends Fragment {
                 intent = new Intent(getActivity(), FriendChatActivity.class);
                 break;
             case 1:
-                intent = new Intent(getActivity(), GlobalChatActivity.class);
+                intent = new Intent(getActivity(), LocationAwareChatActivity.class);
                 break;
             case 2:
                 break;

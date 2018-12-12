@@ -1,4 +1,4 @@
-package com.ruben.woldhuis.androideindopdrachtapp.Interfaces;
+package com.ruben.woldhuis.androideindopdrachtapp.Listeners;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
 

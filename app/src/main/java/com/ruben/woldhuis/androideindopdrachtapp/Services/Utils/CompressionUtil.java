@@ -1,4 +1,4 @@
-package com.ruben.woldhuis.androideindopdrachtapp.Utils;
+package com.ruben.woldhuis.androideindopdrachtapp.Services.Utils;
 
 import android.util.Log;
 

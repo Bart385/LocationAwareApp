@@ -1,6 +1,6 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Messages;
 
-import com.google.gson.Gson;
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
 
 import java.util.Date;
 
@@ -22,8 +22,7 @@ public class IdentificationMessage implements IMessage {
     }
 
     public static IdentificationMessage deserialize(String serialized) {
-        Gson gson = new Gson();
-        return gson.fromJson(serialized, IdentificationMessage.class);
+        return Constants.GSON.fromJson(serialized, IdentificationMessage.class);
     }
 
     @Override
@@ -45,8 +44,8 @@ public class IdentificationMessage implements IMessage {
 
     @Override
     public String serialize() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+
+        return Constants.GSON.toJson(this);
     }
 
     @Override

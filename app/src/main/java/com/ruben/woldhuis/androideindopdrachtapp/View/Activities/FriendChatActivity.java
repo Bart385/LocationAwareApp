@@ -1,4 +1,4 @@
-package com.ruben.woldhuis.androideindopdrachtapp.Activities;
+package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ruben.woldhuis.androideindopdrachtapp.NavigationDrawerFragment;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
-public class GlobalChatActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class FriendChatActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -21,7 +21,7 @@ public class GlobalChatActivity extends Activity implements NavigationDrawerFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_global_chat);
+        setContentView(R.layout.activity_friend_chat);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -29,14 +29,13 @@ public class GlobalChatActivity extends Activity implements NavigationDrawerFrag
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, GlobalChatActivity.PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
     }
 
@@ -69,8 +68,8 @@ public class GlobalChatActivity extends Activity implements NavigationDrawerFrag
         public PlaceholderFragment() {
         }
 
-        public static GlobalChatActivity.PlaceholderFragment newInstance(int sectionNumber) {
-            GlobalChatActivity.PlaceholderFragment fragment = new GlobalChatActivity.PlaceholderFragment();
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -87,10 +86,15 @@ public class GlobalChatActivity extends Activity implements NavigationDrawerFrag
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((GlobalChatActivity) activity).onSectionAttached(
+            ((FriendChatActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
 
 
     }
+
 }
+
+
+
+

@@ -1,6 +1,6 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Messages;
 
-import com.google.gson.Gson;
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Friend;
 
 import java.time.LocalDateTime;
@@ -21,8 +21,7 @@ public class FriendRequestMessage implements IMessage {
     }
 
     public static FriendRequestMessage deserialize(String serialized) {
-        Gson gson = new Gson();
-        return gson.fromJson(serialized, FriendRequestMessage.class);
+        return Constants.GSON.fromJson(serialized, FriendRequestMessage.class);
     }
 
     @Override
@@ -48,8 +47,7 @@ public class FriendRequestMessage implements IMessage {
 
     @Override
     public String serialize() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+        return Constants.GSON.toJson(this);
     }
 
     @Override

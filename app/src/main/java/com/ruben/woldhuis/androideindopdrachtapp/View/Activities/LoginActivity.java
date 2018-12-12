@@ -1,4 +1,4 @@
-package com.ruben.woldhuis.androideindopdrachtapp.Activities;
+package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

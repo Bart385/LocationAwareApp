@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidEindopdrachtApp</string>
+    <string name="title_activity_login">Inloggen</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">Wachtwoord (optioneel)</string>
+    <string name="action_sign_in">Inloggen of Registreren</string>
+    <string name="action_sign_in_short">Inloggen</string>
+    <string name="error_invalid_email">Dit emailadres klopt niet.</string>
+    <string name="error_invalid_password">Dit wachtwoord is te kort.</string>
+    <string name="error_incorrect_password">Dit wachtwoord klopt niet.</string>
+    <string name="error_field_required">Dit is een veplicht veld</string>
+    <string name="permission_rationale">Contacten zijn nodig voor email</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_section1">Vrienden</string>
+    <string name="title_section2">Globaal</string>
+    <string name="title_section3">Evenementen</string>
+    <string name="title_section4">Instellingen</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="title_activity_friend_chat">vrienden_chat</string>
+    <string name="title_activity_global_chat">GlobalChatActivity</string>
+    <string name="navigation_drawer_close">Navigation drawer dicht doen</string>
+    <string name="navigation_drawer_open">Navigation drawer openen</string>
+</resources>

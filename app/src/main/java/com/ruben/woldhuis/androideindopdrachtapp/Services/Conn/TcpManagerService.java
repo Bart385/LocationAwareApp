@@ -3,19 +3,18 @@ package com.ruben.woldhuis.androideindopdrachtapp.Services.Conn;
 import android.util.Log;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Constants;
-import com.ruben.woldhuis.androideindopdrachtapp.Interfaces.TcpErrorListener;
-import com.ruben.woldhuis.androideindopdrachtapp.Interfaces.TcpMessageReceiverListener;
+import com.ruben.woldhuis.androideindopdrachtapp.Listeners.TcpErrorListener;
+import com.ruben.woldhuis.androideindopdrachtapp.Listeners.TcpMessageReceiverListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.DisconnectingMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Utils.CompressionUtil;
-import com.ruben.woldhuis.androideindopdrachtapp.Utils.MessageSerializer;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Utils.CompressionUtil;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Utils.MessageSerializer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.time.LocalDateTime;
 import java.util.concurrent.CompletableFuture;
 import java.util.zip.DataFormatException;
