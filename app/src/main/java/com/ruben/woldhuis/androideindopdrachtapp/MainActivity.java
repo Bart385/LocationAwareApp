@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +19,14 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.LocationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
+
+import java.util.Date;
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
@@ -30,23 +38,35 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        askPermissions();
-        /*
+        //  askPermissions();
+
         TcpManagerService tcpManagerService = TcpManagerService.getInstance(
                 (Error error) -> {
                     Log.d("ERROR_TAG", "onCreate: ");
                 }, (IMessage message) -> {
                     Log.d("MESSAGE_TAG", message.getMessageType().toString());
                 });
-        tcpManagerService.submitMessage(new LocationMessage("Phone", new Date(), "Hello", new Location(10.543, 12543.90)));*/
+        tcpManagerService.submitMessage(new LocationMessage("Phone", new Date(), "Hello", new Location(10.543, 12543.90)));
+        /*Bitmap img = Bitmap.createBitmap(28, 28, Bitmap.Config.RGB_565);
+        Log.d("IMAGE_TAG", img.toString());
+        tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img));
+        //  startBackgroundMessagingService();
+*/
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
     }
 
+    private void startBackgroundMessagingService() {
+        Intent startService = new Intent(this, BackgroundMessageService.class);
+        startService(startService);
+        BackgroundMessageService.setErrorListener(error -> Log.d("ERROR_TAG", error.getMessage()));
+        BackgroundMessageService.setMessageReceiverListener(message -> Log.d("MESSAGE_TAG", message.getMessageType().toString()));
+    }
 
     private void askPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

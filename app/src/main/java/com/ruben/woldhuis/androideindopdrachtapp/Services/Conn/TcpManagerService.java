@@ -53,7 +53,7 @@ public class TcpManagerService {
      * @param message
      */
     public void submitMessage(IMessage message) {
-        CompletableFuture.runAsync(this.connectionService.writeMessageToServer(message));
+        CompletableFuture.runAsync(this.connectionService.writeMessageToServer(message, this.connectionService.toServer));
     }
 
     /**
@@ -138,7 +138,7 @@ public class TcpManagerService {
          *
          * @param message The message that will be send.
          */
-        private Runnable writeMessageToServer(IMessage message) {
+        private Runnable writeMessageToServer(IMessage message, DataOutputStream toServer) {
             return () -> {
                 byte[] buffer = MessageSerializer.serialize(message);
                 try {
@@ -238,7 +238,7 @@ public class TcpManagerService {
          * safely disconnects the TcpConnectionService from the server
          */
         private void disconnect() {
-            writeMessageToServer(new DisconnectingMessage(Constants.USERNAME, LocalDateTime.now(), "Disconnecting..."));
+            writeMessageToServer(new DisconnectingMessage(Constants.USERNAME, LocalDateTime.now(), "Disconnecting..."), toServer);
             setRunning(false);
         }
 

@@ -52,6 +52,6 @@ public class ImageMessage implements IMessage {
 
     @Override
     public String serialize() {
-        return Constants.GSON.toJson(this);
+        return Constants.GSON.toJson(this, ImageMessage.class);
     }
 }
