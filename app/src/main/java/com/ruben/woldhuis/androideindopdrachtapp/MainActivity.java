@@ -22,22 +22,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.MessageReceiver;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
-<<<<<<< Updated upstream
-import java.util.Date;
 
-public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-=======
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
->>>>>>> Stashed changes
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -77,25 +70,20 @@ public class MainActivity extends Activity
         tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img3));
 */
         //  startBackgroundMessagingService();
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-*/
+
 
         instance = this;
-        fragmentManager = getSupportFragmentManager();
-        mapFragment = new SupportMapFragment();
+      // fragmentManager = getSupportFragmentManager();
+      //  mapFragment = new SupportMapFragment();
 
-        fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
+      //  fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
 
-=======
->>>>>>> develop
-=======
+
         MessageReceiver receiver = new MessageReceiver(new Message());
         Intent intent = new Intent(this, BackgroundMessageService.class);
         intent.putExtra("receiver", receiver);
         startService(intent);
 
->>>>>>> Stashed changes
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -107,11 +95,6 @@ public class MainActivity extends Activity
 
     }
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-
-=======
-=======
     public class Message {
         public void displayMessage(int resultCode, Bundle resultData) {
             String message = resultData.getString("message");
@@ -119,7 +102,6 @@ public class MainActivity extends Activity
         }
     }
 
->>>>>>> Stashed changes
     public static Bitmap createImage(int width, int height, int color) {
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -128,7 +110,6 @@ public class MainActivity extends Activity
         canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
         return bitmap;
     }
->>>>>>> develop
 
     private void askPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -219,3 +200,4 @@ public class MainActivity extends Activity
         return instance;
     }
 }
+
