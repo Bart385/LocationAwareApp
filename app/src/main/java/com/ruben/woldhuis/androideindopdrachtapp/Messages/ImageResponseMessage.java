@@ -14,6 +14,10 @@ public class ImageResponseMessage implements IMessage {
         this.timeSend = timeSend;
     }
 
+    public static ImageResponseMessage deserialize(String serialized) {
+        return Constants.GSON.fromJson(serialized, ImageResponseMessage.class);
+    }
+
     @Override
     public MessageType getMessageType() {
         return messageType;

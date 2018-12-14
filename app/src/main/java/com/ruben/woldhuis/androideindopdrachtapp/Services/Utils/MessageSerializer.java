@@ -6,6 +6,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Messages.DisconnectingMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.FriendRequestMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.ImageResponseMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.LocationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.MessageType;
 
@@ -74,6 +75,8 @@ public class MessageSerializer {
                 return IdentificationMessage.deserialize(serialized);
             case Location_Message:
                 return LocationMessage.deserialize(serialized);
+            case ImageResponse_Message:
+                return ImageResponseMessage.deserialize(serialized);
         }
         return null;
     }

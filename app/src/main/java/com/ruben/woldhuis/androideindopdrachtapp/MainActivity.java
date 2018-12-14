@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,20 +20,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.ImageMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.MessageReceiver;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
+<<<<<<< Updated upstream
 import java.util.Date;
 
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+=======
+public class MainActivity extends Activity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
+>>>>>>> Stashed changes
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -51,11 +54,11 @@ public class MainActivity extends FragmentActivity
         setContentView(R.layout.activity_main);
         //  askPermissions();
 
-        TcpManagerService tcpManagerService = TcpManagerService.getInstance(
+   /*     TcpManagerService tcpManagerService = TcpManagerService.getInstance(
                 (Error error) -> {
                     Log.d("ERROR_TAG", error.getMessage());
                 }, (IMessage message) -> {
-                    Log.d("MESSAGE_TAG", message.getMessageType().toString());
+                    Log.d("MESSAGE_TAG", message.serialize());
                 });
         try {
             Thread.sleep(1000);
@@ -63,16 +66,18 @@ public class MainActivity extends FragmentActivity
             e.printStackTrace();
         }
         // tcpManagerService.submitMessage(new IdentificationMessage("Me", new Date(), "Hello world!"));
-        int[] colors = {Color.BLUE, Color.RED, Color.GREEN};
-        Bitmap img = createImage(3840, 2160, Color.MAGENTA);
+        Bitmap img = createImage(1920, 1080, Color.GREEN);
         Log.d("IMAGE_TAG", img.toString());
         tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img));
         Bitmap img2 = createImage(1920, 1080, Color.BLUE);
         Log.d("IMAGE_TAG", img.toString());
         tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img2));
-
-
+        Bitmap img3 = createImage(1920, 1080, Color.RED);
+        Log.d("IMAGE_TAG", img.toString());
+        tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img3));
+*/
         //  startBackgroundMessagingService();
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 */
 
@@ -84,6 +89,13 @@ public class MainActivity extends FragmentActivity
 
 =======
 >>>>>>> develop
+=======
+        MessageReceiver receiver = new MessageReceiver(new Message());
+        Intent intent = new Intent(this, BackgroundMessageService.class);
+        intent.putExtra("receiver", receiver);
+        startService(intent);
+
+>>>>>>> Stashed changes
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -95,9 +107,19 @@ public class MainActivity extends FragmentActivity
 
     }
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 
 =======
+=======
+    public class Message {
+        public void displayMessage(int resultCode, Bundle resultData) {
+            String message = resultData.getString("message");
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+>>>>>>> Stashed changes
     public static Bitmap createImage(int width, int height, int color) {
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -107,13 +129,6 @@ public class MainActivity extends FragmentActivity
         return bitmap;
     }
 >>>>>>> develop
-
-    private void startBackgroundMessagingService() {
-        Intent startService = new Intent(this, BackgroundMessageService.class);
-        startService(startService);
-        BackgroundMessageService.setErrorListener(error -> Log.d("ERROR_TAG", error.getMessage()));
-        BackgroundMessageService.setMessageReceiverListener(message -> Log.d("MESSAGE_TAG", message.getMessageType().toString()));
-    }
 
     private void askPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

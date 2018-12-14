@@ -7,17 +7,16 @@ import com.ruben.woldhuis.androideindopdrachtapp.Listeners.TcpErrorListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Listeners.TcpMessageReceiverListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.DisconnectingMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Utils.CompressionUtil;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Utils.MessageSerializer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.util.concurrent.CompletableFuture;
-import java.util.zip.DataFormatException;
 
 public class TcpManagerService {
     /**
@@ -223,7 +222,7 @@ public class TcpManagerService {
             }
             System.out.println("Got data");
             String data = null;
-
+/*
             try {
                 data = CompressionUtil.decompress(compressedData);
             } catch (IOException e) {
@@ -231,8 +230,14 @@ public class TcpManagerService {
             } catch (DataFormatException e) {
                 e.printStackTrace();
             }
-
-            return MessageSerializer.deserialize(data);
+*/
+            String ser = "";
+            try {
+                ser = new String(compressedData, 0, compressedData.length, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            return MessageSerializer.deserialize(ser);
         }
 
         /**
