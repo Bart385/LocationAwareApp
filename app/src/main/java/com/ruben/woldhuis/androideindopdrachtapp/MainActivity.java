@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.LocationMessage;
@@ -28,11 +30,17 @@ import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawer
 
 import java.util.Date;
 
-public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
+public class MainActivity extends FragmentActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
+
+    private static MainActivity instance;
+
+    private SupportMapFragment mapFragment;
+    private android.support.v4.app.FragmentManager fragmentManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,14 @@ public class MainActivity extends Activity
         tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img));
         //  startBackgroundMessagingService();
 */
+
+        instance = this;
+        fragmentManager = getSupportFragmentManager();
+        mapFragment = new SupportMapFragment();
+
+        fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
+
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -61,6 +77,8 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUpHeader();
 
     }
+
+
 
     private void startBackgroundMessagingService() {
         Intent startService = new Intent(this, BackgroundMessageService.class);
@@ -89,11 +107,6 @@ public class MainActivity extends Activity
                     finish();
                 }
         }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
     }
 
     @Override
@@ -157,5 +170,9 @@ public class MainActivity extends Activity
         }
 
 
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
     }
 }
