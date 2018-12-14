@@ -21,7 +21,7 @@ public class ImageMessage implements IMessage {
         this.extension = extension;
         this.timeSend = timeSend;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image.compress(Bitmap.CompressFormat.JPEG, 50, stream);
         this.base64EncodedString = ImageUtil.toBaste64String(stream.toByteArray());
     }
 

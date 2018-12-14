@@ -13,9 +13,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.MessageReceiver;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.CameraActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
 
@@ -44,7 +41,9 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_test);
+        Intent intent = new Intent(this, CameraActivity.class);
+        startActivity(intent);
         //  askPermissions();
 
    /*     TcpManagerService tcpManagerService = TcpManagerService.getInstance(
@@ -72,13 +71,13 @@ public class MainActivity extends Activity
         //  startBackgroundMessagingService();
 
 
-        instance = this;
-      // fragmentManager = getSupportFragmentManager();
-      //  mapFragment = new SupportMapFragment();
+        //       instance = this;
+        // fragmentManager = getSupportFragmentManager();
+        //  mapFragment = new SupportMapFragment();
 
-      //  fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
+        //  fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
 
-
+/*
         MessageReceiver receiver = new MessageReceiver(new Message());
         Intent intent = new Intent(this, BackgroundMessageService.class);
         intent.putExtra("receiver", receiver);
@@ -92,7 +91,7 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         mNavigationDrawerFragment.setUpHeader();
-
+*/
     }
 
     public class Message {
