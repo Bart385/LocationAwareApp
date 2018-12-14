@@ -61,9 +61,8 @@ public class NavigationDrawerFragment extends Fragment {
             mFromSavedInstanceState = true;
         }
 
-
-
         selectItem(mCurrentSelectedPosition);
+
     }
 
     @Override
@@ -99,6 +98,12 @@ public class NavigationDrawerFragment extends Fragment {
 
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
+    }
+
+    public void setUpHeader(){
+        LayoutInflater inflater = getLayoutInflater();
+        View listHeaderView = inflater.inflate(R.layout.header_layout, null, false);
+        mDrawerListView.addHeaderView(listHeaderView);
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
