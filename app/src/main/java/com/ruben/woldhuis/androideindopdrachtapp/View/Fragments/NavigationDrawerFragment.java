@@ -61,6 +61,8 @@ public class NavigationDrawerFragment extends Fragment {
             mFromSavedInstanceState = true;
         }
 
+
+
         selectItem(mCurrentSelectedPosition);
     }
 
