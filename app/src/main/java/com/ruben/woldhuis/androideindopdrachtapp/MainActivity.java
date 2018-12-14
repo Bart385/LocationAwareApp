@@ -7,6 +7,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,8 +24,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.LocationMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.ImageMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
@@ -42,16 +45,27 @@ public class MainActivity extends Activity
 
         TcpManagerService tcpManagerService = TcpManagerService.getInstance(
                 (Error error) -> {
-                    Log.d("ERROR_TAG", "onCreate: ");
+                    Log.d("ERROR_TAG", error.getMessage());
                 }, (IMessage message) -> {
                     Log.d("MESSAGE_TAG", message.getMessageType().toString());
                 });
-        tcpManagerService.submitMessage(new LocationMessage("Phone", new Date(), "Hello", new Location(10.543, 12543.90)));
-        /*Bitmap img = Bitmap.createBitmap(28, 28, Bitmap.Config.RGB_565);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // tcpManagerService.submitMessage(new IdentificationMessage("Me", new Date(), "Hello world!"));
+        int[] colors = {Color.BLUE, Color.RED, Color.GREEN};
+        Bitmap img = createImage(3840, 2160, Color.MAGENTA);
         Log.d("IMAGE_TAG", img.toString());
         tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img));
+        Bitmap img2 = createImage(1920, 1080, Color.BLUE);
+        Log.d("IMAGE_TAG", img.toString());
+        tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img2));
+
+
         //  startBackgroundMessagingService();
-*/
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -60,6 +74,15 @@ public class MainActivity extends Activity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         mNavigationDrawerFragment.setUpHeader();
 
+    }
+
+    public static Bitmap createImage(int width, int height, int color) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setColor(color);
+        canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
+        return bitmap;
     }
 
     private void startBackgroundMessagingService() {

@@ -35,7 +35,7 @@ public class TcpManagerService {
      */
     private TcpManagerService(TcpErrorListener tcpErrorListener, TcpMessageReceiverListener messageReceiverListener) {
         this.connectionService = new TcpConnectionService(tcpErrorListener, messageReceiverListener);
-        new Thread(this.connectionService.createConnection(this.connectionService)).start();
+        CompletableFuture.runAsync(this.connectionService.createConnection(this.connectionService));
     }
 
     /**
@@ -52,8 +52,8 @@ public class TcpManagerService {
     /**
      * @param message
      */
-    public void submitMessage(IMessage message) {
-        CompletableFuture.runAsync(this.connectionService.writeMessageToServer(message, this.connectionService.toServer));
+    public CompletableFuture submitMessage(IMessage message) {
+        return CompletableFuture.runAsync(this.connectionService.writeMessageToServer(message, this.connectionService.toServer));
     }
 
     /**
@@ -142,6 +142,7 @@ public class TcpManagerService {
             return () -> {
                 byte[] buffer = MessageSerializer.serialize(message);
                 try {
+                    Log.d("SENDING_TAG", "writeMessageToServer: " + message.serialize());
                     toServer.write(buffer, 0, buffer.length);
                     toServer.flush();
                 } catch (IOException e) {
@@ -238,7 +239,7 @@ public class TcpManagerService {
          * safely disconnects the TcpConnectionService from the server
          */
         private void disconnect() {
-            writeMessageToServer(new DisconnectingMessage(Constants.USERNAME, LocalDateTime.now(), "Disconnecting..."), toServer);
+            writeMessageToServer(new DisconnectingMessage(Constants.USERNAME, LocalDateTime.now(), "Disconnecting..."), toServer).run();
             setRunning(false);
         }
 
