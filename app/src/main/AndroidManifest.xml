@@ -16,6 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,17 +41,11 @@
         </activity>
         <activity android:name=".View.Activities.ChatActivity" />
         <activity android:name=".View.Activities.LocationAwareChatActivity" />
-        <activity
-            android:name=".friend_chat"
-            android:label="@string/title_activity_friend_chat" />
-        <activity
-            android:name=".GlobalChatActivity"
-            android:label="@string/title_activity_global_chat" />
-        <activity android:name=".View.Activities.ProfileActivity"></activity>
 
         <service
             android:name=".Services.Conn.BackgroundMessageService"
             android:exported="false" />
     </application>
+
 
 </manifest>

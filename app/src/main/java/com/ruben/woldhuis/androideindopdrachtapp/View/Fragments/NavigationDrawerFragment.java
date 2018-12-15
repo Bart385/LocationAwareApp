@@ -3,7 +3,6 @@ package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -12,6 +11,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,7 +26,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.FriendChatActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LocationAwareChatActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
 
@@ -44,6 +45,7 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    FragmentTransaction fragmentTransaction;
 
 
     public NavigationDrawerFragment() {
@@ -246,19 +248,23 @@ public class NavigationDrawerFragment extends Fragment {
     public void openActivityFromDrawer(int position) {
         Intent intent = null;
         switch (position) {
-            case 0:
-                intent = new Intent(getActivity(), FriendChatActivity.class);
-                break;
             case 1:
-                intent = new Intent(getActivity(), LocationAwareChatActivity.class);
+                FriendsFragment fragment = FriendsFragment.newInstance();
+                fragmentTransaction =
+                        getFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.container, fragment);
                 break;
             case 2:
+                intent = new Intent(getActivity(), LocationAwareChatActivity.class);
                 break;
             case 3:
+                break;
+            case 4:
                 intent = new Intent(getActivity(), SettingsActivity.class);
                 break;
         }
-        startActivity(intent);
+
+        fragmentTransaction.commit();
     }
 
     public static interface NavigationDrawerCallbacks {

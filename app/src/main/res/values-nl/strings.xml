@@ -21,4 +21,5 @@
     <string name="title_activity_global_chat">GlobalChatActivity</string>
     <string name="navigation_drawer_close">Navigation drawer dicht doen</string>
     <string name="navigation_drawer_open">Navigation drawer openen</string>
+    <string name="google_maps_key">AIzaSyAV9VQY-GNfn_j5-LEU-CZxss-eR_hCC8o</string>
 </resources>
