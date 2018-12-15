@@ -23,6 +23,8 @@ import java.net.Socket;
 public class BackgroundMessageService extends IntentService {
     private static final String TAG = "SERVICE_TAG";
     private static final String CHANNEL_ID = "MESSAGE_NOTIFICATION";
+    NotificationCompat.Builder mBuilder;
+    int notificationId = 0;
     private Socket socket;
     private DataOutputStream toServer;
     private DataInputStream fromServer;
@@ -51,8 +53,6 @@ public class BackgroundMessageService extends IntentService {
         notificationManager.createNotificationChannel(channel);
     }
 
-    NotificationCompat.Builder mBuilder;
-
     private Runnable createConnectionAsync() {
         return () -> {
             try {
@@ -68,11 +68,9 @@ public class BackgroundMessageService extends IntentService {
         };
     }
 
-    int notificationId = 0;
-
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if(intent == null){
+        if (intent == null) {
 
         }
         Log.d(TAG, "HANDLING INTENT");

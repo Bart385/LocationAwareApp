@@ -100,7 +100,7 @@ public class NavigationDrawerFragment extends Fragment {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
 
-    public void setUpHeader(){
+    public void setUpHeader() {
         LayoutInflater inflater = getLayoutInflater();
         View listHeaderView = inflater.inflate(R.layout.header_layout, null, false);
         mDrawerListView.addHeaderView(listHeaderView);

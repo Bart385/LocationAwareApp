@@ -2,21 +2,12 @@ package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 
 import android.Manifest;
-import android.app.Fragment;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,16 +17,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
-import com.ruben.woldhuis.androideindopdrachtapp.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -77,7 +61,7 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
                 .build()));
         LatLngBounds bounds = new LatLngBounds.Builder()
                 .include(new LatLng(51.58651785207713, 4.708317190123125))
-                .include(new LatLng(51.61099091944258 , 4.770882942675826))
+                .include(new LatLng(51.61099091944258, 4.770882942675826))
                 .include(new LatLng(51.56619630165785, 4.864953377246138))
                 .include(new LatLng(51.53379788028693, 4.771831899595782))
                 .build();
@@ -142,6 +126,7 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
             return true;
         return false;
     }
+
     private void requestPermission(String permission, int code) {
         requestPermissions(new String[]{permission}, code);
     }

@@ -29,14 +29,24 @@ public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 
+    private static MainActivity instance;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
-
-    private static MainActivity instance;
-
     private SupportMapFragment mapFragment;
     private android.support.v4.app.FragmentManager fragmentManager;
 
+    public static Bitmap createImage(int width, int height, int color) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setColor(color);
+        canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
+        return bitmap;
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,22 +102,6 @@ public class MainActivity extends Activity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         mNavigationDrawerFragment.setUpHeader();
 */
-    }
-
-    public class Message {
-        public void displayMessage(int resultCode, Bundle resultData) {
-            String message = resultData.getString("message");
-            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public static Bitmap createImage(int width, int height, int color) {
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-        paint.setColor(color);
-        canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
-        return bitmap;
     }
 
     private void askPermissions() {
@@ -195,8 +189,11 @@ public class MainActivity extends Activity
 
     }
 
-    public static MainActivity getInstance() {
-        return instance;
+    public class Message {
+        public void displayMessage(int resultCode, Bundle resultData) {
+            String message = resultData.getString("message");
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+        }
     }
 }
 
