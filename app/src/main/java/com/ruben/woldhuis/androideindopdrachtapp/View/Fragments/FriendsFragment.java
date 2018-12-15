@@ -25,9 +25,8 @@ public class FriendsFragment extends Fragment {
         FriendsFragment.instance = instance;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
         return v;
     }

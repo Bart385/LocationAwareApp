@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LocationAwareChatActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
@@ -249,10 +250,13 @@ public class NavigationDrawerFragment extends Fragment {
         Intent intent = null;
         switch (position) {
             case 1:
-                FriendsFragment fragment = FriendsFragment.newInstance();
-                fragmentTransaction =
-                        getFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.container, fragment);
+                Fragment fragment = new FriendsFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(null);
+
+                transaction.commit();
                 break;
             case 2:
                 intent = new Intent(getActivity(), LocationAwareChatActivity.class);
@@ -264,7 +268,7 @@ public class NavigationDrawerFragment extends Fragment {
                 break;
         }
 
-        fragmentTransaction.commit();
+
     }
 
     public static interface NavigationDrawerCallbacks {
