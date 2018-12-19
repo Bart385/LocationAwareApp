@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -71,6 +73,7 @@ public class Camera2Activity extends Activity {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
                 setUpCamera();
+                transformImage(width, height);
                 openCamera();
             }
 
@@ -240,6 +243,7 @@ public class Camera2Activity extends Activity {
         openBackgroundThread();
         if (textureView.isAvailable()) {
             setUpCamera();
+            transformImage(textureView.getWidth(), textureView.getHeight());
             openCamera();
         } else {
             textureView.setSurfaceTextureListener(surfaceTextureListener);
@@ -308,5 +312,24 @@ public class Camera2Activity extends Activity {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    private void transformImage(int width, int height) {
+        if (previewSize == null || textureView == null)
+            return;
+        Matrix matrix = new Matrix();
+        int rotation = getWindowManager().getDefaultDisplay().getRotation();
+        RectF textureRectF = new RectF(0, 0, width, height);
+        RectF previewRectF = new RectF(0, 0, previewSize.getHeight(), previewSize.getWidth());
+        float centerX = textureRectF.centerX();
+        float centerY = textureRectF.centerY();
+        if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
+            previewRectF.offset(centerX - previewRectF.centerX(), centerY - previewRectF.centerY());
+            matrix.setRectToRect(textureRectF, previewRectF, Matrix.ScaleToFit.FILL);
+            float scale = Math.max((float) width / previewSize.getWidth(), (float) height / previewSize.getHeight());
+            matrix.postScale(scale, scale, centerX, centerY);
+            matrix.postRotate(90 * (rotation - 2), centerX, centerY);
+        }
+        textureView.setTransform(matrix);
     }
 }
