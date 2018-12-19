@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.CameraActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
 
@@ -52,7 +52,7 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        Intent intent = new Intent(this, CameraActivity.class);
+        Intent intent = new Intent(this, Camera2Activity.class);
         startActivity(intent);
         //  askPermissions();
 

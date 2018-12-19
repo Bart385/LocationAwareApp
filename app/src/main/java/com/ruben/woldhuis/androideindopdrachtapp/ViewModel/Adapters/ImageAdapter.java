@@ -12,7 +12,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 
 import java.io.File;
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
     private File imagesFile;
 
@@ -21,14 +21,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.camera_image_gallery, parent, false);
-        return new ViewHolder(view);
+        return new ImageViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ImageViewHolder holder, int position) {
         File imageFile = imagesFile.listFiles()[position];
         Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
         holder.getImageView().setImageBitmap(imageBitmap);
@@ -41,10 +41,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return imagesFile.listFiles().length;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
 
-        public ViewHolder(View view) {
+        public ImageViewHolder(View view) {
             super(view);
 
             imageView = view.findViewById(R.id.imageGalleryView);

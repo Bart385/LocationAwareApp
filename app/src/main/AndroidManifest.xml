@@ -47,7 +47,8 @@
             android:name=".Services.Conn.BackgroundMessageService"
             android:exported="false" />
 
-        <activity android:name=".View.Activities.CameraActivity"></activity>
+        <activity android:name=".View.Activities.CameraActivity" />
+        <activity android:name=".View.Activities.Camera2Activity"></activity>
     </application>
 
 </manifest>
