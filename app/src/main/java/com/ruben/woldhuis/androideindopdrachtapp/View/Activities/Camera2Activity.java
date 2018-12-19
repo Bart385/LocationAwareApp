@@ -27,7 +27,9 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.ImageMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,6 +41,7 @@ import java.util.Locale;
 
 
 public class Camera2Activity extends Activity {
+    private final static String TAG = "CAMERA_TAG";
     private final static int CAMERA_REQUEST_CODE = 100;
     private CameraManager cameraManager;
     private CameraDevice cameraDevice;
@@ -56,6 +59,8 @@ public class Camera2Activity extends Activity {
     private CaptureRequest captureRequest;
     private CaptureRequest.Builder captureRequestBuilder;
 
+    private TcpManagerService tcpManagerService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +73,10 @@ public class Camera2Activity extends Activity {
         textureView = findViewById(R.id.texture_view);
         take_picture_button = findViewById(R.id.fab_take_photo);
         take_picture_button.setOnClickListener(this::onTakePhotoButtonClicked);
-
+        tcpManagerService = TcpManagerService.getInstance(
+                error -> Log.e(TAG, error.getMessage()),
+                message -> Log.d(TAG, message.serialize())
+        );
         surfaceTextureListener = new TextureView.SurfaceTextureListener() {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
@@ -188,6 +196,7 @@ public class Camera2Activity extends Activity {
             outputPhoto = new FileOutputStream(createImageFile(galleryFolder));
             textureView.getBitmap()
                     .compress(Bitmap.CompressFormat.PNG, 100, outputPhoto);
+            tcpManagerService.submitMessage(new ImageMessage("Ruben", ".jpg", new Date(), textureView.getBitmap()));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -200,6 +209,7 @@ public class Camera2Activity extends Activity {
                 e.printStackTrace();
             }
         }
+
     }
 
     private void setUpCamera() {
