@@ -3,6 +3,7 @@ package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -26,10 +27,10 @@ import android.util.Size;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.ImageMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,11 +60,13 @@ public class Camera2Activity extends Activity {
     private CaptureRequest captureRequest;
     private CaptureRequest.Builder captureRequestBuilder;
 
-    private TcpManagerService tcpManagerService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera2);
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,
@@ -73,10 +76,7 @@ public class Camera2Activity extends Activity {
         textureView = findViewById(R.id.texture_view);
         take_picture_button = findViewById(R.id.fab_take_photo);
         take_picture_button.setOnClickListener(this::onTakePhotoButtonClicked);
-        tcpManagerService = TcpManagerService.getInstance(
-                error -> Log.e(TAG, error.getMessage()),
-                message -> Log.d(TAG, message.serialize())
-        );
+
         surfaceTextureListener = new TextureView.SurfaceTextureListener() {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
@@ -191,12 +191,20 @@ public class Camera2Activity extends Activity {
 
     public void onTakePhotoButtonClicked(View view) {
         lock();
+        File img = null;
+        try {
+            img = createImageFile(galleryFolder);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (img == null)
+            return;
         FileOutputStream outputPhoto = null;
         try {
-            outputPhoto = new FileOutputStream(createImageFile(galleryFolder));
+            outputPhoto = new FileOutputStream(img);
             textureView.getBitmap()
                     .compress(Bitmap.CompressFormat.PNG, 100, outputPhoto);
-            tcpManagerService.submitMessage(new ImageMessage("Ruben", ".jpg", new Date(), textureView.getBitmap()));
+            // tcpManagerService.submitMessage(new ImageMessage("Ruben", ".jpg", new Date(), textureView.getBitmap()));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -210,6 +218,10 @@ public class Camera2Activity extends Activity {
             }
         }
 
+        Intent imageEditor = new Intent(this, ImageEditorActivity.class);
+        imageEditor.putExtra("IMAGE_PATH", img.getAbsolutePath());
+        startActivity(imageEditor);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     private void setUpCamera() {

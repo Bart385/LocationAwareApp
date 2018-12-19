@@ -49,6 +49,7 @@
 
         <activity android:name=".View.Activities.CameraActivity" />
         <activity android:name=".View.Activities.Camera2Activity"></activity>
+        <activity android:name=".View.Activities.ImageEditorActivity"></activity>
     </application>
 
 </manifest>
