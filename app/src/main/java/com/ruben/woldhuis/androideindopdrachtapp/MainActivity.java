@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,9 +66,9 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
-        Intent intent = new Intent(this, Camera2Activity.class);
-        startActivity(intent);
+        //setContentView(R.layout.activity_test);
+        //Intent intent = new Intent(this, Camera2Activity.class);
+        setContentView(R.layout.activity_main);
         //  askPermissions();
 
    /*     TcpManagerService tcpManagerService = TcpManagerService.getInstance(
@@ -95,18 +96,17 @@ public class MainActivity extends FragmentActivity
         //  startBackgroundMessagingService();
 
 
-        //       instance = this;
-        // fragmentManager = getSupportFragmentManager();
-        //  mapFragment = new SupportMapFragment();
+              instance = this;
+              fragmentManager = getSupportFragmentManager();
+              mapFragment = new SupportMapFragment();
+              fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
 
-        //  fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
 
-/*
-        MessageReceiver receiver = new MessageReceiver(new Message());
+      /*  MessageReceiver receiver = new MessageReceiver(new Message());
         Intent intent = new Intent(this, BackgroundMessageService.class);
         intent.putExtra("receiver", receiver);
         startService(intent);
-
+*/
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);

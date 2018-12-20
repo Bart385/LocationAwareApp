@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextureView
         android:id="@+id/texture_view"
         android:layout_width="match_parent"
@@ -16,6 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
         android:onClick="onTakePhotoButtonClicked"
+        android:theme="@style/Theme.AppCompat"
         android:backgroundTint="#bcd6ff"/>
 
 </RelativeLayout>
