@@ -23,12 +23,7 @@ public class LocationAwareChatActivity extends Activity implements NavigationDra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_aware_chat);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+
 
     }
 

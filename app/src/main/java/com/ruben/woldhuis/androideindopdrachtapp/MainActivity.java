@@ -3,8 +3,10 @@ package com.ruben.woldhuis.androideindopdrachtapp;
 import android.Manifest;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -20,13 +22,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Messages.LocationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
 
-public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends FragmentActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
 
 
     private static MainActivity instance;
@@ -34,6 +46,8 @@ public class MainActivity extends Activity
     private CharSequence mTitle;
     private SupportMapFragment mapFragment;
     private android.support.v4.app.FragmentManager fragmentManager;
+
+    MapFragment mMapFragment;
 
     public static Bitmap createImage(int width, int height, int color) {
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -95,13 +109,26 @@ public class MainActivity extends Activity
 
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         mNavigationDrawerFragment.setUpHeader();
-*/
+
+        //Alles voor de map
+
+        mMapFragment = MapFragment.newInstance();
+        FragmentTransaction fragmentTransaction =
+                getFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.container, mMapFragment);
+        fragmentTransaction.commit();
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+
     }
 
     private void askPermissions() {
@@ -127,11 +154,15 @@ public class MainActivity extends Activity
     }
 
     @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Marker"));
+    }
+
+    @Override
     public void onNavigationDrawerItemSelected(int position) {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+
     }
 
 

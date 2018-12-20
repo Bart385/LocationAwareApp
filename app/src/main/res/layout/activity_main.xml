@@ -8,13 +8,21 @@
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
+
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <!-- The drawer is given a fixed width in dp and extends the full height of
+         the container. -->
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- The drawer is given a fixed width in dp and extends the full height of
-         the container. -->
     <fragment
         android:id="@+id/navigation_drawer"
         class="com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment"
