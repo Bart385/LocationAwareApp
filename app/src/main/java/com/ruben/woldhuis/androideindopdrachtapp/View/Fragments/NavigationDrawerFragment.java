@@ -252,10 +252,8 @@ public class NavigationDrawerFragment extends Fragment {
             case 1:
                 Fragment fragment = new FriendsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
                 transaction.replace(R.id.container, fragment);
                 transaction.addToBackStack(null);
-
                 transaction.commit();
                 break;
             case 2:
