@@ -18,6 +18,7 @@
     <string name="title_section2">Global</string>
     <string name="title_section3">Events</string>
     <string name="title_section4">Settings</string>
+    <string name="title_section5">Camera</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -31,7 +32,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="take_picture" translatable="false">Take Picture</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="have_account">Already have an account? Login</string>
+    <string name="no_have_account">Don\'t have an account? Sign Up</string>
 
 
 </resources>

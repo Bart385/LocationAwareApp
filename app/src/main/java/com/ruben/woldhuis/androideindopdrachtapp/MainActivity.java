@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -34,7 +33,7 @@ public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
 
     private static MainActivity instance;
-    MapFragment mMapFragment;
+    private MapFragment mMapFragment;
     private FirebaseAuth mAuth;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -69,6 +68,7 @@ public class MainActivity extends FragmentActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         mNavigationDrawerFragment.setUpHeader();
+
 
         //Alles voor de map
 
@@ -132,6 +132,8 @@ public class MainActivity extends FragmentActivity
                 break;
             case 4:
                 mTitle = getString(R.string.title_section4);
+            case 5:
+                mTitle = getString(R.string.title_section5);
         }
     }
 
@@ -171,13 +173,6 @@ public class MainActivity extends FragmentActivity
         }
 
 
-    }
-
-    public class Message {
-        public void displayMessage(int resultCode, Bundle resultData) {
-            String message = resultData.getString("message");
-            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-        }
     }
 }
 

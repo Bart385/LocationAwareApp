@@ -1,6 +1,7 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -72,21 +73,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
-                finish();
+                if (task.isSuccessful())
+                    finish();
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setTitle("Error logging in");
+                    builder.setMessage("Username/Password combination does not exist.");
+                    builder.show();
+                }
             }
         });
     }
 
-    /*
-        @Override
-        protected void onStart() {
-            super.onStart();
-
-            if (mAuth.getCurrentUser() != null) {
-                finish();
-            }
-        }
-    */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

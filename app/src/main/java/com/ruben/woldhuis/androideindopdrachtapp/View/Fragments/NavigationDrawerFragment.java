@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LocationAwareChatActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
 
@@ -56,12 +58,10 @@ public class NavigationDrawerFragment extends Fragment {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
-
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
-
         selectItem(mCurrentSelectedPosition);
 
     }
@@ -91,7 +91,8 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section1),
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
-                        getString(R.string.title_section4)
+                        getString(R.string.title_section4),
+                        getString(R.string.title_section5)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -111,7 +112,6 @@ public class NavigationDrawerFragment extends Fragment {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
@@ -164,6 +164,7 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
     }
 
     private void selectItem(int position) {
@@ -264,9 +265,13 @@ public class NavigationDrawerFragment extends Fragment {
             case 4:
                 intent = new Intent(getActivity(), SettingsActivity.class);
                 break;
+            case 5:
+                intent = new Intent(getActivity(), Camera2Activity.class);
+                break;
         }
 
-
+        if (intent != null)
+            startActivity(intent);
     }
 
     public static interface NavigationDrawerCallbacks {

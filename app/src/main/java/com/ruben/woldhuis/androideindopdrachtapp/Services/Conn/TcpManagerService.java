@@ -38,6 +38,15 @@ public class TcpManagerService {
     }
 
     /**
+     * Can return a null pointer in case the
+     *
+     * @return
+     */
+    public static TcpManagerService getInstance() {
+        return instance;
+    }
+
+    /**
      * @param tcpErrorListener
      * @param messageReceiverListener
      * @return

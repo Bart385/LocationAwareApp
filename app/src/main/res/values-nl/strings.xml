@@ -16,10 +16,17 @@
     <string name="title_section2">Globaal</string>
     <string name="title_section3">Evenementen</string>
     <string name="title_section4">Instellingen</string>
+    <string name="title_section5">Camera</string>
     <string name="action_settings">Instellingen</string>
     <string name="title_activity_friend_chat">vrienden_chat</string>
     <string name="title_activity_global_chat">GlobalChatActivity</string>
     <string name="navigation_drawer_close">Navigation drawer dicht doen</string>
     <string name="navigation_drawer_open">Navigation drawer openen</string>
     <string name="google_maps_key">AIzaSyAV9VQY-GNfn_j5-LEU-CZxss-eR_hCC8o</string>
+    <string name="login">Inloggen</string>
+    <string name="sign_up">Maak een account</string>
+    <string name="email">email</string>
+    <string name="password">wachtwoord</string>
+    <string name="have_account">Inloggen</string>
+    <string name="no_have_account">Nieuw account aanmaken</string>
 </resources>
