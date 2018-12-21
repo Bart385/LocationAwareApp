@@ -25,16 +25,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
 
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
-
+    private static final int LOGIN_REQUEST_CODE = 123;
     private static MainActivity instance;
-    private MapFragment mMapFragment;
     private FirebaseAuth mAuth;
+    private MapFragment mMapFragment;
+    private UserPreferencesService userPreferencesService;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private SupportMapFragment mapFragment;
@@ -47,19 +49,19 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userPreferencesService = UserPreferencesService.getInstance(getApplication());
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
         setContentView(R.layout.activity_main);
-        //  askPermissions();
 
+        //  askPermissions();
         instance = this;
         fragmentManager = getSupportFragmentManager();
         mapFragment = new SupportMapFragment();
         fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
-
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -68,7 +70,6 @@ public class MainActivity extends FragmentActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         mNavigationDrawerFragment.setUpHeader();
-
 
         //Alles voor de map
 
@@ -81,8 +82,8 @@ public class MainActivity extends FragmentActivity
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
+
 
     private void askPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

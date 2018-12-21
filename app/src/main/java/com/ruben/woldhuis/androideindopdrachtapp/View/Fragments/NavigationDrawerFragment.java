@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -270,8 +269,10 @@ public class NavigationDrawerFragment extends Fragment {
                 break;
         }
 
-        if (intent != null)
+        if (intent != null) {
             startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+        }
     }
 
     public static interface NavigationDrawerCallbacks {

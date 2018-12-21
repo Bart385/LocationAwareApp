@@ -39,12 +39,7 @@ public class ImageEditorActivity extends Activity {
         imageView = findViewById(R.id.image_editor_image_view);
         send = findViewById(R.id.upload_photo);
         cancel = findViewById(R.id.cancel_upload_photo);
-        tcpManagerService = TcpManagerService.getInstance(error -> {
-
-                },
-                message -> {
-
-                });
+        tcpManagerService = TcpManagerService.getInstance();
         String imagePath = getIntent().getStringExtra("IMAGE_PATH");
         imageFile = new File(imagePath);
 
@@ -55,14 +50,14 @@ public class ImageEditorActivity extends Activity {
 
         cancel.setOnClickListener(view -> {
             finish();
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
 
         send.setOnClickListener(view -> {
             uploadImage();
             deleteFile = false;
             finish();
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
     }
 
@@ -71,7 +66,7 @@ public class ImageEditorActivity extends Activity {
         super.onBackPressed();
         if (deleteFile && imageFile.exists())
             imageFile.delete();
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     private void uploadImage() {

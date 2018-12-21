@@ -44,7 +44,10 @@ public class UserPreferencesService {
      * @return if successful returns the authentication key. Else returns ERROR
      */
     public String getAuthenticationKey() {
-        return this.preferences.getString("authentication_key", "ERROR");
+        String token = this.preferences.getString("authentication_key", "ERROR");
+        if (token.equals("ERROR"))
+            return null;
+        return token;
     }
 
     /**

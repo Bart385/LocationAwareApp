@@ -73,9 +73,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
-                if (task.isSuccessful())
+                if (task.isSuccessful()) {
                     finish();
-                else {
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                     builder.setTitle("Error logging in");
                     builder.setMessage("Username/Password combination does not exist.");
@@ -86,11 +86,20 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setTitle("Not logged in!");
+        builder.setMessage("Please log in to use this app.");
+        builder.show();
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.textViewSignup:
                 finish();
                 startActivity(new Intent(this, SignUpActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 break;
 
             case R.id.buttonLogin:

@@ -204,7 +204,6 @@ public class Camera2Activity extends Activity {
             outputPhoto = new FileOutputStream(img);
             textureView.getBitmap()
                     .compress(Bitmap.CompressFormat.PNG, 100, outputPhoto);
-            // tcpManagerService.submitMessage(new ImageMessage("Ruben", ".jpg", new Date(), textureView.getBitmap()));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -221,7 +220,7 @@ public class Camera2Activity extends Activity {
         Intent imageEditor = new Intent(this, ImageEditorActivity.class);
         imageEditor.putExtra("IMAGE_PATH", img.getAbsolutePath());
         startActivity(imageEditor);
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     private void setUpCamera() {
@@ -353,5 +352,11 @@ public class Camera2Activity extends Activity {
             matrix.postRotate(90 * (rotation - 2), centerX, centerY);
         }
         textureView.setTransform(matrix);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 }
