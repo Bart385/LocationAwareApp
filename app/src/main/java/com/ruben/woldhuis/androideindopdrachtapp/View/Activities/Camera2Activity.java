@@ -29,6 +29,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
@@ -42,6 +43,7 @@ import java.util.Locale;
 
 
 public class Camera2Activity extends Activity {
+
     private final static String TAG = "CAMERA_TAG";
     private final static int CAMERA_REQUEST_CODE = 100;
     private CameraManager cameraManager;
@@ -56,10 +58,12 @@ public class Camera2Activity extends Activity {
     private Handler backgroundHandler;
     private HandlerThread backgroundThread;
     private FloatingActionButton take_picture_button;
+    private Button flash_light_toggle;
     private File galleryFolder;
     private CaptureRequest captureRequest;
     private CaptureRequest.Builder captureRequestBuilder;
-
+    private boolean flashSupported;
+    private boolean flashOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class Camera2Activity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera2);
-
+        flashOn = false;
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
         cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
@@ -76,7 +80,22 @@ public class Camera2Activity extends Activity {
         textureView = findViewById(R.id.texture_view);
         take_picture_button = findViewById(R.id.fab_take_photo);
         take_picture_button.setOnClickListener(this::onTakePhotoButtonClicked);
-
+        flash_light_toggle = findViewById(R.id.flash_light_toggle);
+        flash_light_toggle.setOnClickListener(view -> {
+            try {
+                if (flashSupported) {
+                    if (flashOn) {
+                        cameraManager.setTorchMode(cameraId, false);
+                        flashOn = !flashOn;
+                    } else {
+                        cameraManager.setTorchMode(cameraId, true);
+                        flashOn = !flashOn;
+                    }
+                }
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+        });
         surfaceTextureListener = new TextureView.SurfaceTextureListener() {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
@@ -234,6 +253,8 @@ public class Camera2Activity extends Activity {
                             CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                     previewSize = streamConfigurationMap.getOutputSizes(SurfaceTexture.class)[0];
                     this.cameraId = cameraId;
+                    Boolean available = cameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+                    flashSupported = available != null && available;
                 }
             }
         } catch (CameraAccessException e) {

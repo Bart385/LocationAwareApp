@@ -25,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
@@ -42,6 +43,8 @@ public class MainActivity extends FragmentActivity
     private SupportMapFragment mapFragment;
     private android.support.v4.app.FragmentManager fragmentManager;
 
+    private TcpManagerService tcpManagerService;
+
     public static MainActivity getInstance() {
         return instance;
     }
@@ -56,8 +59,8 @@ public class MainActivity extends FragmentActivity
             startActivity(intent);
         }
         setContentView(R.layout.activity_main);
-
-        //  askPermissions();
+        tcpManagerService = TcpManagerService.getInstance(error -> Log.e("TCP_TAG", error.getMessage()),
+                message -> Log.d("TCP_TAG", message.serialize()));        //  askPermissions();
         instance = this;
         fragmentManager = getSupportFragmentManager();
         mapFragment = new SupportMapFragment();
