@@ -89,7 +89,7 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
         }
     }
 
-    public android.location.Location getGps() {
+    public Location getGps() {
         LocationManager locationManager = (LocationManager) MainActivity.getInstance().getSystemService(LOCATION_SERVICE);
 
         // getting GPS status

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "267617579484",
+    "firebase_url": "https://locationawareapp-d4ad4.firebaseio.com",
+    "project_id": "locationawareapp-d4ad4",
+    "storage_bucket": "locationawareapp-d4ad4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267617579484:android:ec290ab1397babf7",
+        "android_client_info": {
+          "package_name": "com.ruben.woldhuis.androideindopdrachtapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267617579484-bg44a66c4l3c31u284v4sfhgbcbfinit.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ruben.woldhuis.androideindopdrachtapp",
+            "certificate_hash": "80b061bd6fc07cf654cc288810f141058b0ace01"
+          }
+        },
+        {
+          "client_id": "267617579484-r55oogbk6kllqi23kd38tr3t93svusva.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9Y89itWOgx4hH2K5131aIdpPR-WvrpII"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267617579484-r55oogbk6kllqi23kd38tr3t93svusva.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

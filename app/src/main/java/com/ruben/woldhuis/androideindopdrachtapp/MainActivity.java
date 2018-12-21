@@ -3,18 +3,14 @@ package com.ruben.woldhuis.androideindopdrachtapp;
 import android.Manifest;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -26,38 +22,24 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.LocationMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
 
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
 
-
     private static MainActivity instance;
+    MapFragment mMapFragment;
+    private FirebaseAuth mAuth;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private SupportMapFragment mapFragment;
     private android.support.v4.app.FragmentManager fragmentManager;
-
-    MapFragment mMapFragment;
-
-    public static Bitmap createImage(int width, int height, int color) {
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-        paint.setColor(color);
-        canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
-        return bitmap;
-    }
 
     public static MainActivity getInstance() {
         return instance;
@@ -66,47 +48,19 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_test);
-        //Intent intent = new Intent(this, Camera2Activity.class);
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
         setContentView(R.layout.activity_main);
         //  askPermissions();
 
-   /*     TcpManagerService tcpManagerService = TcpManagerService.getInstance(
-                (Error error) -> {
-                    Log.d("ERROR_TAG", error.getMessage());
-                }, (IMessage message) -> {
-                    Log.d("MESSAGE_TAG", message.serialize());
-                });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        // tcpManagerService.submitMessage(new IdentificationMessage("Me", new Date(), "Hello world!"));
-        Bitmap img = createImage(1920, 1080, Color.GREEN);
-        Log.d("IMAGE_TAG", img.toString());
-        tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img));
-        Bitmap img2 = createImage(1920, 1080, Color.BLUE);
-        Log.d("IMAGE_TAG", img.toString());
-        tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img2));
-        Bitmap img3 = createImage(1920, 1080, Color.RED);
-        Log.d("IMAGE_TAG", img.toString());
-        tcpManagerService.submitMessage(new ImageMessage("Phone", ".jpg", new Date(), img3));
-*/
-        //  startBackgroundMessagingService();
+        instance = this;
+        fragmentManager = getSupportFragmentManager();
+        mapFragment = new SupportMapFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
 
-
-              instance = this;
-              fragmentManager = getSupportFragmentManager();
-              mapFragment = new SupportMapFragment();
-              fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
-
-
-      /*  MessageReceiver receiver = new MessageReceiver(new Message());
-        Intent intent = new Intent(this, BackgroundMessageService.class);
-        intent.putExtra("receiver", receiver);
-        startService(intent);
-*/
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -127,7 +81,6 @@ public class MainActivity extends FragmentActivity
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
 
     }
 

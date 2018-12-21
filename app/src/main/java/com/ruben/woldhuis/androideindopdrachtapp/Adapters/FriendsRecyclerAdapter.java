@@ -10,13 +10,33 @@ import android.widget.TextView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ItemFriendActivity;
 
 import java.util.ArrayList;
 
 public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecyclerAdapter.MyViewHolder> {
 
     private ArrayList<Contact> dataSource;
+
+    public FriendsRecyclerAdapter(ArrayList<Contact> dataArgs) {
+        dataSource = dataArgs;
+    }
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_item, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+        Contact contact = dataSource.get(i);
+        myViewHolder.title.setText(contact.getName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return dataSource.size();
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
@@ -29,30 +49,5 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
             view.setBackgroundColor(Color.WHITE);
         }
     }
-
-
-
-
-public FriendsRecyclerAdapter(ArrayList<Contact> dataArgs){
-        dataSource = dataArgs;
-        }
-
-@Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_item, parent, false);
-        return new MyViewHolder(view);
-        }
-
-    @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        Contact contact = dataSource.get(i);
-        myViewHolder.title.setText(contact.getName());
-    }
-
-
-@Override
-public int getItemCount() {
-        return dataSource.size();
-        }
 }
 

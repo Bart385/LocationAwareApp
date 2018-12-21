@@ -16,8 +16,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
+        android:backgroundTint="#bcd6ff"
         android:onClick="onTakePhotoButtonClicked"
-        android:theme="@style/Theme.AppCompat"
-        android:backgroundTint="#bcd6ff"/>
+        android:theme="@style/Theme.AppCompat" />
 
 </RelativeLayout>

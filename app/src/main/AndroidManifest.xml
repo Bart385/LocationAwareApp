@@ -21,7 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -36,14 +38,6 @@
         </activity>
         <activity android:name=".View.Activities.MapsActivity" />
         <activity android:name=".View.Activities.SettingsActivity" />
-        <activity
-            android:name=".View.Activities.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ruben.woldhuis.androideindopdrachtapp.MainActivity" />
-        </activity>
         <activity android:name=".View.Activities.ChatActivity" />
         <activity android:name=".View.Activities.LocationAwareChatActivity" />
         <activity android:name=".View.Activities.ProfileActivity" />
@@ -53,9 +47,10 @@
             android:exported="false" />
 
         <activity android:name=".View.Activities.CameraActivity" />
-        <activity android:name=".View.Activities.Camera2Activity"></activity>
-        <activity android:name=".View.Activities.ImageEditorActivity"></activity>
+        <activity android:name=".View.Activities.Camera2Activity" />
+        <activity android:name=".View.Activities.ImageEditorActivity" />
+        <activity android:name=".View.Activities.LoginActivity" />
+        <activity android:name=".View.Activities.SignUpActivity"></activity>
     </application>
-
 
 </manifest>
