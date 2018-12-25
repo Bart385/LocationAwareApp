@@ -1,9 +1,10 @@
-package com.MessagingProtocol.Messages;
+package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages;
 
-import com.Constants;
-import com.Entities.User;
-import com.MessagingProtocol.IMessage;
-import com.MessagingProtocol.MessageType;
+
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 
 public class ImageMessage implements IMessage {
     private MessageType messageType = MessageType.Image_Message;
