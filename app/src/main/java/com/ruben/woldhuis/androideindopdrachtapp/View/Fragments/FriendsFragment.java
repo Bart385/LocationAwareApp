@@ -25,6 +25,8 @@ public class FriendsFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    ArrayList<Contact> friend;
+
     private static FriendsFragment instance;
 
     public static FriendsFragment newInstance() {
@@ -40,27 +42,25 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ArrayList<Contact> friend = new ArrayList<>();
+        friend = new ArrayList<>();
         friend.add(new Contact("Panda"));
 
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
 
         mRecyclerView = v.findViewById(R.id.Friend_RecyclerView);
-        mLayoutManager = new LinearLayoutManager(this.getActivity());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new FriendsRecyclerAdapter(friend);
         mRecyclerView.setAdapter(mAdapter);
 
-        mRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int i = mRecyclerView.getChildLayoutPosition(view);
-                getActivity().getIntent().putExtra("ContactObject", (Serializable) friend.get(i));
-                FragmentManager fragmentManager = getFragmentManager();
-                Fragment chatFragment = new ChatFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, chatFragment);
-            }
+        mRecyclerView.setOnClickListener(view -> {
+            int i = mRecyclerView.getChildLayoutPosition(view);
+            getActivity().getIntent().putExtra("ContactObject", (Serializable) friend.get(i));
+            FragmentManager fragmentManager = getFragmentManager();
+            Fragment chatFragment = new ChatFragment();
+            fragmentManager.beginTransaction().replace(R.id.container, chatFragment);
+            System.out.println("het werkt?");
         });
 
         return v;

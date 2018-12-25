@@ -18,6 +18,7 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
 
     private ArrayList<Contact> dataSource;
 
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public View background;
@@ -30,18 +31,15 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
         }
     }
 
-
-
-
-public FriendsRecyclerAdapter(ArrayList<Contact> dataArgs){
+    public FriendsRecyclerAdapter(ArrayList<Contact> dataArgs){
         dataSource = dataArgs;
         }
 
-@Override
+        @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_item, parent, false);
         return new MyViewHolder(view);
-        }
+    }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
@@ -49,9 +47,8 @@ public FriendsRecyclerAdapter(ArrayList<Contact> dataArgs){
         myViewHolder.title.setText(contact.getName());
     }
 
-
-@Override
-public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return dataSource.size();
         }
 }

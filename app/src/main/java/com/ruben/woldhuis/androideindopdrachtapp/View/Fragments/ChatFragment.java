@@ -15,6 +15,11 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 
 public class ChatFragment extends Fragment {
 
+    public static ChatFragment newInstance(){
+        ChatFragment chat = new ChatFragment();
+        return chat;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -22,7 +27,7 @@ public class ChatFragment extends Fragment {
         Contact contact = (Contact) i.getSerializableExtra("ContactObject");
 
         View v = inflater.inflate(R.layout.fragment_friend_chat, container, false);
-        TextView Naam = v.findViewById(R.id.chat_naam);
+        TextView Naam = v.findViewById(R.id.chat_name);
         Naam.setText(contact.getName());
 
         return v;
