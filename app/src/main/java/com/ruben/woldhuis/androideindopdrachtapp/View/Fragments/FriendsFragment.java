@@ -12,13 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.FriendsRecyclerAdapter;
+import com.ruben.woldhuis.androideindopdrachtapp.CustomListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends Fragment  implements View.OnClickListener{
 
 
     private RecyclerView mRecyclerView;
@@ -51,21 +52,26 @@ public class FriendsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new FriendsRecyclerAdapter(friend);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setOnClickListener(this);
 
-        mRecyclerView.setOnClickListener(view -> {
-            int i = mRecyclerView.getChildLayoutPosition(view);
-            getActivity().getIntent().putExtra("ContactObject", (Serializable) friend.get(i));
+        mAdapter = new FriendsRecyclerAdapter(getContext(), friend, (v1, position) -> {
+            getActivity().getIntent().putExtra("ContactObject", (Serializable) friend.get(position));
             FragmentManager fragmentManager = getFragmentManager();
             Fragment chatFragment = new ChatFragment();
             fragmentManager.beginTransaction().replace(R.id.container, chatFragment);
             System.out.println("het werkt?");
         });
+        mRecyclerView.setAdapter(mAdapter);
 
         return v;
 
     }
 
 
+    @Override
+    public void onClick(View view) {
+        ChatFragment chatFragment = ChatFragment.newInstance();
+        System.out.println("Stilldoesntwork");
+
+    }
 }
