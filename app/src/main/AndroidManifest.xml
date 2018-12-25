@@ -44,7 +44,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ruben.woldhuis.androideindopdrachtapp.MainActivity" />
         </activity>
-        <activity android:name=".View.Activities.LocationAwareChatActivity" />
         <activity android:name=".View.Activities.ProfileActivity" />
         <activity android:name=".View.Activities.ChatActivity"></activity>
         <service
