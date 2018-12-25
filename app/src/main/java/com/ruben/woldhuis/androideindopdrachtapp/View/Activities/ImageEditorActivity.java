@@ -11,13 +11,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Constants;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 
 import java.io.File;
-import java.util.Date;
 
 public class ImageEditorActivity extends Activity {
     private TcpManagerService tcpManagerService;
@@ -74,6 +71,6 @@ public class ImageEditorActivity extends Activity {
     private void uploadImage() {
         if (image == null)
             return;
-       // tcpManagerService.submitMessage(new ImageMessage(Constants.USERNAME, ".jpg", new Date(), image));
+        // tcpManagerService.submitMessage(new ImageMessage(Constants.USERNAME, ".jpg", new Date(), image));
     }
 }

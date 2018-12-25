@@ -34,8 +34,6 @@ import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
-import java.util.Date;
-
 
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
@@ -73,7 +71,7 @@ public class MainActivity extends FragmentActivity
                         public void onComplete(@NonNull Task<GetTokenResult> task) {
                             if (task.isSuccessful()) {
                                 String idToken = task.getResult().getToken();
-                                //tcpManagerService.submitMessage(new IdentificationMessage(mAuth.getUid(), new Date(), "PlaceHolder", idToken));
+                                tcpManagerService.submitMessage(new IdentificationMessage(idToken, Constants.USERNAME));
                             } else
                                 Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
                         }
