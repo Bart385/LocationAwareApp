@@ -5,8 +5,7 @@ import android.util.Log;
 import com.ruben.woldhuis.androideindopdrachtapp.Constants;
 import com.ruben.woldhuis.androideindopdrachtapp.Listeners.TcpErrorListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Listeners.TcpMessageReceiverListener;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.DisconnectingMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Utils.MessageSerializer;
 
 import java.io.DataInputStream;
@@ -150,7 +149,7 @@ public class TcpManagerService {
             return () -> {
                 byte[] buffer = MessageSerializer.serialize(message);
                 try {
-                    Log.d("SENDING_TAG", "writeMessageToServer: " + message.serialize());
+                    Log.d("SENDING_TAG", "writeMessageToServer: " + message.toJson());
                     toServer.write(buffer, 0, buffer.length);
                     toServer.flush();
                 } catch (IOException e) {
@@ -253,7 +252,6 @@ public class TcpManagerService {
          * safely disconnects the TcpConnectionService from the server
          */
         private void disconnect() {
-            writeMessageToServer(new DisconnectingMessage(Constants.USERNAME, LocalDateTime.now(), "Disconnecting..."), toServer).run();
             setRunning(false);
         }
 

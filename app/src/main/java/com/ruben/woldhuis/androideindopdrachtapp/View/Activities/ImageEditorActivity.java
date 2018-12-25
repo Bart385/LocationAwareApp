@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Constants;
-import com.ruben.woldhuis.androideindopdrachtapp.Messages.ImageMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 
@@ -41,7 +41,7 @@ public class ImageEditorActivity extends Activity {
         send = findViewById(R.id.upload_photo);
         cancel = findViewById(R.id.cancel_upload_photo);
         tcpManagerService = TcpManagerService.getInstance(error -> Log.e("TCP_TAG", error.getMessage()),
-                message -> Log.d("TCP_TAG", message.serialize()));
+                message -> Log.d("TCP_TAG", message.toJson()));
         String imagePath = getIntent().getStringExtra("IMAGE_PATH");
         imageFile = new File(imagePath);
 
@@ -74,6 +74,6 @@ public class ImageEditorActivity extends Activity {
     private void uploadImage() {
         if (image == null)
             return;
-        tcpManagerService.submitMessage(new ImageMessage(Constants.USERNAME, ".jpg", new Date(), image));
+       // tcpManagerService.submitMessage(new ImageMessage(Constants.USERNAME, ".jpg", new Date(), image));
     }
 }
