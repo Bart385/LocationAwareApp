@@ -1,6 +1,8 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Models;
 
-public class Contact {
+import java.io.Serializable;
+
+public class Contact implements Serializable {
     private String name;
 
     public Contact(String name) {

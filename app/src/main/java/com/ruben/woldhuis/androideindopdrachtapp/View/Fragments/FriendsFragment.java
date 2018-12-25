@@ -19,7 +19,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FriendsFragment extends Fragment  implements View.OnClickListener{
+public class FriendsFragment extends Fragment  implements Serializable{
 
 
     private RecyclerView mRecyclerView;
@@ -52,26 +52,10 @@ public class FriendsFragment extends Fragment  implements View.OnClickListener{
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setOnClickListener(this);
-
-        mAdapter = new FriendsRecyclerAdapter(getContext(), friend, (v1, position) -> {
-            getActivity().getIntent().putExtra("ContactObject", (Serializable) friend.get(position));
-            FragmentManager fragmentManager = getFragmentManager();
-            Fragment chatFragment = new ChatFragment();
-            fragmentManager.beginTransaction().replace(R.id.container, chatFragment);
-            System.out.println("het werkt?");
-        });
+        mAdapter = new FriendsRecyclerAdapter(getContext(), friend);
         mRecyclerView.setAdapter(mAdapter);
 
         return v;
-
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        ChatFragment chatFragment = ChatFragment.newInstance();
-        System.out.println("Stilldoesntwork");
 
     }
 }
