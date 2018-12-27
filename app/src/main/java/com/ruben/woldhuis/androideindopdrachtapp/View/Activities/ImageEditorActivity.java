@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -37,8 +36,7 @@ public class ImageEditorActivity extends Activity {
         imageView = findViewById(R.id.image_editor_image_view);
         send = findViewById(R.id.upload_photo);
         cancel = findViewById(R.id.cancel_upload_photo);
-        tcpManagerService = TcpManagerService.getInstance(error -> Log.e("TCP_TAG", error.getMessage()),
-                message -> Log.d("TCP_TAG", message.toJson()));
+        tcpManagerService = TcpManagerService.getInstance();
         String imagePath = getIntent().getStringExtra("IMAGE_PATH");
         imageFile = new File(imagePath);
 

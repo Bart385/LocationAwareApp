@@ -12,15 +12,52 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Imag
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.LocationUpdateMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.SignOutMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.TextMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
 
 public class BackgroundMessageService extends IntentService {
     private static final String TAG = "BACKGROUND_MESSAGE_TAG";
     private TcpManagerService tcpManagerService;
+    private PushNotification pushNotification;
 
     public BackgroundMessageService() {
         super("Messaging service");
+
+    }
+
+    private void handleLocationUpdateMessage(LocationUpdateMessage message) {
+        Log.d(TAG, message.toJson());
+    }
+
+    private void handleImageUploadedMessage(ImageUploadedMessage message) {
+        Log.d(TAG, message.toJson());
+    }
+
+    private void handleSignOutMessage(SignOutMessage message) {
+        Log.d(TAG, message.toJson());
+    }
+
+    private void handleImageMessage(ImageMessage message) {
+        Log.d(TAG, message.toJson());
+    }
+
+    private void handleAudioMessage(AudioMessage message) {
+        Log.d(TAG, message.toJson());
+    }
+
+    private void handleTextMessage(TextMessage message) {
+        Log.d(TAG, message.toJson());
+    }
+
+    private void handleIdentificationMessage(IdentificationMessage message) {
+        Log.d(TAG, message.toJson());
+        pushNotification.SendIdentificationNotification(message, getApplicationContext());
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+        pushNotification = PushNotification.getInstance(getApplicationContext());
         tcpManagerService = TcpManagerService.getInstance();
-        tcpManagerService.subscribeToErrorEvents(error -> Log.e(TAG, error.getMessage()));
+        tcpManagerService.subscribeToErrorEvents(error -> Log.e(TAG+"_ERROR", error.getMessage()));
         tcpManagerService.subscribeToMessageEvents(message -> {
             switch (message.getMessageType()) {
                 case LocationUpdate_Message:
@@ -46,38 +83,5 @@ public class BackgroundMessageService extends IntentService {
                     break;
             }
         });
-    }
-
-    private void handleLocationUpdateMessage(LocationUpdateMessage message) {
-        
-    }
-
-    private void handleImageUploadedMessage(ImageUploadedMessage message) {
-
-    }
-
-    private void handleSignOutMessage(SignOutMessage message) {
-
-    }
-
-    private void handleImageMessage(ImageMessage message) {
-
-    }
-
-    private void handleAudioMessage(AudioMessage message) {
-
-    }
-
-    private void handleTextMessage(TextMessage message) {
-
-    }
-
-    private void handleIdentificationMessage(IdentificationMessage message) {
-
-    }
-
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-
     }
 }

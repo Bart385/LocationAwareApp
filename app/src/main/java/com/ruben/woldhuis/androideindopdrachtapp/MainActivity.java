@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
@@ -50,6 +51,8 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent messagingServiceIntent = new Intent(this, BackgroundMessageService.class);
+        startService(messagingServiceIntent);
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() == null) {
