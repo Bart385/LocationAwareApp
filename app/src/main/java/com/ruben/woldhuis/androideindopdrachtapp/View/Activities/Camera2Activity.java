@@ -99,7 +99,7 @@ public class Camera2Activity extends Activity {
         surfaceTextureListener = new TextureView.SurfaceTextureListener() {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
-                setUpCamera();
+                setUpCamera(width, height);
                 transformImage(width, height);
                 openCamera();
             }
@@ -242,7 +242,7 @@ public class Camera2Activity extends Activity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
-    private void setUpCamera() {
+    private void setUpCamera(int width, int height) {
         try {
             for (String cameraId : cameraManager.getCameraIdList()) {
                 CameraCharacteristics cameraCharacteristics =
@@ -255,6 +255,7 @@ public class Camera2Activity extends Activity {
                     this.cameraId = cameraId;
                     Boolean available = cameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
                     flashSupported = available != null && available;
+                    previewSize = chooseOptimalSize(streamConfigurationMap.getOutputSizes(SurfaceTexture.class), width, height);
                 }
             }
         } catch (CameraAccessException e) {
@@ -284,7 +285,7 @@ public class Camera2Activity extends Activity {
         super.onResume();
         openBackgroundThread();
         if (textureView.isAvailable()) {
-            setUpCamera();
+            setUpCamera(textureView.getWidth(), textureView.getHeight());
             transformImage(textureView.getWidth(), textureView.getHeight());
             openCamera();
         } else {
