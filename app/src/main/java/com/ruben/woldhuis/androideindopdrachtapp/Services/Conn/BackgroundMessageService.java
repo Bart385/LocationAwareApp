@@ -1,108 +1,83 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Services.Conn;
 
 import android.app.IntentService;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.AudioMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageUploadedMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.LocationUpdateMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.SignOutMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.TextMessage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
-
-/**
- * Handles the notifications
- */
 public class BackgroundMessageService extends IntentService {
-    private static final String TAG = "SERVICE_TAG";
-    private static final String CHANNEL_ID = "MESSAGE_NOTIFICATION";
-    NotificationCompat.Builder mBuilder;
-    int notificationId = 0;
-    private Socket socket;
-    private DataOutputStream toServer;
-    private DataInputStream fromServer;
+    private static final String TAG = "BACKGROUND_MESSAGE_TAG";
+    private TcpManagerService tcpManagerService;
 
     public BackgroundMessageService() {
-        super("Background messaging service");
-    }
-
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
-
-        return START_STICKY;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        //   createNotificationChannel();
-        //  CompletableFuture.runAsync(createConnectionAsync());
-    }
-
-    private void createNotificationChannel() {
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Message", NotificationManager.IMPORTANCE_DEFAULT);
-        channel.setDescription("Channel for issuing message notifications.");
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(channel);
-    }
-
-    private Runnable createConnectionAsync() {
-        return () -> {
-            try {
-                this.socket = new Socket(Constants.SERVER_HOSTNAME, Constants.SERVER_PORT);
-                this.toServer = new DataOutputStream(socket.getOutputStream());
-                this.toServer.flush();
-                this.fromServer = new DataInputStream(socket.getInputStream());
-                Log.d(TAG, "Connected to server");
-                fromServer.read();
-            } catch (IOException e) {
-                e.printStackTrace();
+        super("Messaging service");
+        tcpManagerService = TcpManagerService.getInstance();
+        tcpManagerService.subscribeToErrorEvents(error -> Log.e(TAG, error.getMessage()));
+        tcpManagerService.subscribeToMessageEvents(message -> {
+            switch (message.getMessageType()) {
+                case LocationUpdate_Message:
+                    handleLocationUpdateMessage((LocationUpdateMessage) message);
+                    break;
+                case ImageUploaded_Message:
+                    handleImageUploadedMessage((ImageUploadedMessage) message);
+                    break;
+                case SignOut_Message:
+                    handleSignOutMessage((SignOutMessage) message);
+                    break;
+                case Image_Message:
+                    handleImageMessage((ImageMessage) message);
+                    break;
+                case Audio_Message:
+                    handleAudioMessage((AudioMessage) message);
+                    break;
+                case Text_Message:
+                    handleTextMessage((TextMessage) message);
+                    break;
+                case Identification_Message:
+                    handleIdentificationMessage((IdentificationMessage) message);
+                    break;
             }
-        };
+        });
+    }
+
+    private void handleLocationUpdateMessage(LocationUpdateMessage message) {
+        
+    }
+
+    private void handleImageUploadedMessage(ImageUploadedMessage message) {
+
+    }
+
+    private void handleSignOutMessage(SignOutMessage message) {
+
+    }
+
+    private void handleImageMessage(ImageMessage message) {
+
+    }
+
+    private void handleAudioMessage(AudioMessage message) {
+
+    }
+
+    private void handleTextMessage(TextMessage message) {
+
+    }
+
+    private void handleIdentificationMessage(IdentificationMessage message) {
+
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent == null) {
 
-        }
-        Log.d(TAG, "HANDLING INTENT");
-        ResultReceiver receiver = intent.getParcelableExtra("receiver");
-
-        for (int i = 0; i < 5; i++) {
-            Log.d(TAG, "Counting... " + i);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        Bundle bundle = new Bundle();
-        bundle.putString("message", "Counting done...");
-        receiver.send(1234, bundle);
-             /*   NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(android.support.v4.R.drawable.notification_bg)
-                .setContentTitle("My notification")
-                .setContentText("Much longer text that cannot fit one line...")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Much longer text that cannot fit one line..."))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        for (int i = 0; i < 10; i++) {
-            notificationManager.notify(notificationId, mBuilder.build());
-            notificationId++;
-            try {
-                Thread.sleep(2500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }*/
     }
 }

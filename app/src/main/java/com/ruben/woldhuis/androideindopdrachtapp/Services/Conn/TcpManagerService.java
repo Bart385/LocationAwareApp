@@ -27,31 +27,20 @@ public class TcpManagerService {
     private TcpConnectionService connectionService;
 
     /**
-     * @param tcpErrorListener
-     * @param messageReceiverListener
+
      */
-    private TcpManagerService(TcpErrorListener tcpErrorListener, TcpMessageReceiverListener messageReceiverListener) {
-        this.connectionService = new TcpConnectionService(tcpErrorListener, messageReceiverListener);
+    private TcpManagerService() {
+        this.connectionService = new TcpConnectionService();
         CompletableFuture.runAsync(this.connectionService.createConnection(this.connectionService));
     }
 
+
     /**
-     * Can return a null pointer in case the
-     *
      * @return
      */
     public static TcpManagerService getInstance() {
-        return instance;
-    }
-
-    /**
-     * @param tcpErrorListener
-     * @param messageReceiverListener
-     * @return
-     */
-    public static TcpManagerService getInstance(TcpErrorListener tcpErrorListener, TcpMessageReceiverListener messageReceiverListener) {
         if (instance == null)
-            instance = new TcpManagerService(tcpErrorListener, messageReceiverListener);
+            instance = new TcpManagerService();
         return instance;
     }
 
@@ -65,14 +54,14 @@ public class TcpManagerService {
     /**
      * @param tcpErrorListener
      */
-    public void changeTcpErrorListener(TcpErrorListener tcpErrorListener) {
+    public void subscribeToErrorEvents(TcpErrorListener tcpErrorListener) {
         this.connectionService.setErrorListener(tcpErrorListener);
     }
 
     /**
      * @param tcpMessageReceiverListener
      */
-    public void changeTcpMessageReceiverListener(TcpMessageReceiverListener tcpMessageReceiverListener) {
+    public void subscribeToMessageEvents(TcpMessageReceiverListener tcpMessageReceiverListener) {
         this.connectionService.setMessageReceiverListener(tcpMessageReceiverListener);
     }
 
@@ -109,12 +98,9 @@ public class TcpManagerService {
         /**
          * TcpConnectionService constructor
          * Creates the connection when it's called
-         *
-         * @param errorListener sets the TcpErrorListener
          */
-        private TcpConnectionService(TcpErrorListener errorListener, TcpMessageReceiverListener messageReceiverListener) {
-            this.errorListener = errorListener;
-            this.messageReceiverListener = messageReceiverListener;
+        private TcpConnectionService() {
+
         }
 
 

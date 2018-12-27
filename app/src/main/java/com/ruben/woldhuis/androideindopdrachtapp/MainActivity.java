@@ -24,10 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GetTokenResult;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
@@ -46,8 +43,6 @@ public class MainActivity extends FragmentActivity
     private SupportMapFragment mapFragment;
     private android.support.v4.app.FragmentManager fragmentManager;
 
-    private TcpManagerService tcpManagerService;
-
     public static MainActivity getInstance() {
         return instance;
     }
@@ -56,30 +51,23 @@ public class MainActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
-        tcpManagerService = TcpManagerService.getInstance(error -> {
-                },
-                message -> {
-                });
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         } else {
             mAuth.getCurrentUser().getIdToken(true)
-                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<GetTokenResult> task) {
-                            if (task.isSuccessful()) {
-                                String idToken = task.getResult().getToken();
-                                tcpManagerService.submitMessage(new IdentificationMessage(idToken, Constants.USERNAME));
-                            } else
-                                Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
-                        }
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String idToken = task.getResult().getToken();
+                            TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, Constants.USERNAME));
+                        } else
+                            Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
+
                     });
         }
         setContentView(R.layout.activity_main);
-        tcpManagerService = TcpManagerService.getInstance(error -> Log.e("TCP_TAG", error.getMessage()),
-                message -> Log.d("TCP_TAG", message.toJson()));        //  askPermissions();
+        //  askPermissions();
         instance = this;
         fragmentManager = getSupportFragmentManager();
         mapFragment = new SupportMapFragment();
