@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
 
 //TODO: Activities omzetten naar NavigationDrawer Activities
@@ -103,6 +104,13 @@ public class NavigationDrawerFragment extends Fragment {
     public void setUpHeader() {
         LayoutInflater inflater = getLayoutInflater();
         View listHeaderView = inflater.inflate(R.layout.header_layout, null, false);
+        listHeaderView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         mDrawerListView.addHeaderView(listHeaderView);
     }
 
@@ -261,6 +269,7 @@ public class NavigationDrawerFragment extends Fragment {
                 intent = new Intent(getActivity(), SettingsActivity.class);
                 break;
         }
+        startActivity(intent);
 
 
     }

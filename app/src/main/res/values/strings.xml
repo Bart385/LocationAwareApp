@@ -33,5 +33,11 @@
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="take_picture" translatable="false">Take Picture</string>
 
+    <string name="confirm_changes">Confirm changes</string>
+    <string name="error_code_emailadres">ERROR COULDNT FIND EMAIL</string>
+
+    <string name="profile_name">profile name</string>
+
+
 
 </resources>
