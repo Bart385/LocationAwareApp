@@ -26,10 +26,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
@@ -114,14 +116,9 @@ public class NavigationDrawerFragment extends Fragment {
     public void setUpHeader() {
         LayoutInflater inflater = getLayoutInflater();
         View listHeaderView = inflater.inflate(R.layout.header_layout, null, false);
-        TextView name = listHeaderView.findViewById(R.id.header_textName);
-
-        listHeaderView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                startActivity(intent);
-            }
+        listHeaderView.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), ProfileActivity.class);
+            startActivity(intent);
         });
         mDrawerListView.addHeaderView(listHeaderView);
     }
@@ -164,6 +161,14 @@ public class NavigationDrawerFragment extends Fragment {
                     SharedPreferences sp = PreferenceManager
                             .getDefaultSharedPreferences(getActivity());
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
+                }
+
+                if (FirebaseAuth.getInstance().getCurrentUser() != null){
+                    ImageView image = drawerView.findViewById(R.id.header_profile_image);
+                    TextView name = drawerView.findViewById(R.id.header_textName);
+                    TextView email = drawerView.findViewById(R.id.header_textEmail);
+                    name.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                    email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 }
 
                 getActivity().invalidateOptionsMenu();
