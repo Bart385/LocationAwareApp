@@ -28,7 +28,6 @@ public class FriendsFragment extends Fragment  implements Serializable{
 
     ArrayList<Contact> friend;
 
-
     public static FriendsFragment newInstance() {
         return new FriendsFragment();
     }

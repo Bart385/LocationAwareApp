@@ -27,8 +27,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
@@ -112,6 +114,8 @@ public class NavigationDrawerFragment extends Fragment {
     public void setUpHeader() {
         LayoutInflater inflater = getLayoutInflater();
         View listHeaderView = inflater.inflate(R.layout.header_layout, null, false);
+        TextView name = listHeaderView.findViewById(R.id.header_textName);
+
         listHeaderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -283,7 +287,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (intent != null) {
             startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+         //   getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
         }
     }
 
