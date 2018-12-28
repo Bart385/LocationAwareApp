@@ -44,7 +44,7 @@ public class FriendsFragment extends Fragment  implements Serializable{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         friend = new ArrayList<>();
-        friend.add(new Contact("Panda"));
+        friend.add(new Contact("Panda", "dsa", "das"));
 
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
 

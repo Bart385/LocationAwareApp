@@ -1,8 +1,11 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -24,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
@@ -61,7 +65,7 @@ public class NavigationDrawerFragment extends Fragment {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
-
+        GoogleAccount(getContext());
         selectItem(mCurrentSelectedPosition);
 
     }
@@ -276,5 +280,13 @@ public class NavigationDrawerFragment extends Fragment {
 
     public static interface NavigationDrawerCallbacks {
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    public static Contact GoogleAccount(Context context){
+        Account[] accounts = AccountManager.get(context).getAccounts();
+        System.out.println("Hierwerkt t wel" + accounts.toString());
+
+        String mail = accounts[0].type;
+        return null;
     }
 }
