@@ -3,6 +3,7 @@ package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.FriendsRecyclerAdapter;
+import com.ruben.woldhuis.androideindopdrachtapp.CustomListener;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends Fragment  implements Serializable{
 
 
     private static FriendsFragment instance;
@@ -23,8 +26,9 @@ public class FriendsFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public FriendsFragment() {
-    }
+    ArrayList<Contact> friend;
+
+    private static FriendsFragment instance;
 
     public static FriendsFragment newInstance() {
         return new FriendsFragment();
@@ -36,21 +40,19 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ArrayList<Contact> friend = new ArrayList<>();
-        friend.add(new Contact("Panda"));
+        friend = new ArrayList<>();
+        friend.add(new Contact("Panda", "dsa", "das"));
 
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
 
         mRecyclerView = v.findViewById(R.id.Friend_RecyclerView);
-        mLayoutManager = new LinearLayoutManager(this.getActivity());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new FriendsRecyclerAdapter(friend);
+        mAdapter = new FriendsRecyclerAdapter(getContext(), friend);
         mRecyclerView.setAdapter(mAdapter);
 
         return v;
 
-
     }
-
 }

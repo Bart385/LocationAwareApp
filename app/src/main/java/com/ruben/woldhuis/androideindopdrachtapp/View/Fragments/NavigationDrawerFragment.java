@@ -1,8 +1,11 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -13,6 +16,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,7 +29,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LocationAwareChatActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
@@ -61,6 +68,7 @@ public class NavigationDrawerFragment extends Fragment {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
+
         selectItem(mCurrentSelectedPosition);
 
     }
@@ -104,6 +112,13 @@ public class NavigationDrawerFragment extends Fragment {
     public void setUpHeader() {
         LayoutInflater inflater = getLayoutInflater();
         View listHeaderView = inflater.inflate(R.layout.header_layout, null, false);
+        listHeaderView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         mDrawerListView.addHeaderView(listHeaderView);
     }
 
@@ -250,14 +265,11 @@ public class NavigationDrawerFragment extends Fragment {
             case 1:
                 Fragment fragment = new FriendsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
                 transaction.replace(R.id.container, fragment);
                 transaction.addToBackStack(null);
-
                 transaction.commit();
                 break;
             case 2:
-                intent = new Intent(getActivity(), LocationAwareChatActivity.class);
                 break;
             case 3:
                 break;
@@ -268,6 +280,7 @@ public class NavigationDrawerFragment extends Fragment {
                 intent = new Intent(getActivity(), Camera2Activity.class);
                 break;
         }
+        startActivity(intent);
 
         if (intent != null) {
             startActivity(intent);
@@ -277,5 +290,13 @@ public class NavigationDrawerFragment extends Fragment {
 
     public static interface NavigationDrawerCallbacks {
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    public static Contact GoogleAccount(Context context){
+        Account[] accounts = AccountManager.get(context).getAccounts();
+        System.out.println("Hierwerkt t wel" + accounts.toString());
+
+        String mail = accounts[0].type;
+        return null;
     }
 }

@@ -29,4 +29,7 @@
     <string name="password">wachtwoord</string>
     <string name="have_account">Inloggen</string>
     <string name="no_have_account">Nieuw account aanmaken</string>
+    <string name="confirm_changes">Bevestig</string>
+    <string name="error_code_emailadres">ERROR KAN EMAIL NIET VINDEN</string>
+    <string name="profile_name">profiel naam</string>
 </resources>

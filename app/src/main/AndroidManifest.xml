@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
 
     <uses-feature android:name="android.hardware.camera2.full" />
 
@@ -38,14 +39,24 @@
         </activity>
         <activity android:name=".View.Activities.MapsActivity" />
         <activity android:name=".View.Activities.SettingsActivity" />
+        <activity
+            android:name=".View.Activities.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ruben.woldhuis.androideindopdrachtapp.MainActivity" />
+        </activity>
         <activity android:name=".View.Activities.ChatActivity" />
         <activity android:name=".View.Activities.LocationAwareChatActivity" />
         <activity android:name=".View.Activities.ProfileActivity" />
-
+        <activity android:name=".View.Activities.ChatActivity"></activity>
         <service
             android:name=".Services.Conn.BackgroundMessageService"
             android:exported="false" />
 
+        <activity android:name=".View.Activities.Camera2Activity"></activity>
+        <activity android:name=".View.Activities.ImageEditorActivity"></activity>
         <activity android:name=".View.Activities.Camera2Activity" />
         <activity android:name=".View.Activities.ImageEditorActivity" />
         <activity android:name=".View.Activities.LoginActivity" />

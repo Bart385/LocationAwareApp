@@ -39,5 +39,11 @@
     <string name="have_account">Already have an account? Login</string>
     <string name="no_have_account">Don\'t have an account? Sign Up</string>
 
+    <string name="confirm_changes">Confirm changes</string>
+    <string name="error_code_emailadres">ERROR COULDNT FIND EMAIL</string>
+
+    <string name="profile_name">profile name</string>
+
+
 
 </resources>
