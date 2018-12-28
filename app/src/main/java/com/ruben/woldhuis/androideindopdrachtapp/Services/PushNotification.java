@@ -20,20 +20,20 @@ import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity
 public class PushNotification {
     private NotificationManagerCompat notificationManager;
     private static PushNotification instance;
-    private static final String NOTIFICAITON_CHANNEL = "notification_channel";
+    private static final String NOTIFICATION_CHANNEL = "notification_channel";
 
     private PushNotification(Context context) {
         notificationManager = NotificationManagerCompat.from(context);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel sightChannel = new NotificationChannel(
-                    NOTIFICAITON_CHANNEL,
-                    "Nearby sight",
+            NotificationChannel chatChannel = new NotificationChannel(
+                    NOTIFICATION_CHANNEL,
+                    "New Chat Message",
                     NotificationManager.IMPORTANCE_HIGH
             );
-            sightChannel.setDescription("the notification appears when a user is near a sight with the tour running");
+            chatChannel.setDescription("A notification appears when another user sends a message");
 
             NotificationManager manager = context.getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(sightChannel);
+            manager.createNotificationChannel(chatChannel);
         }
     }
 
@@ -44,7 +44,7 @@ public class PushNotification {
     }
 
     public void SendTextMessageNotification(TextMessage message, Context context) {
-        Notification notification = new NotificationCompat.Builder(context, NOTIFICAITON_CHANNEL)
+        Notification notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
                 .setContentTitle(message.getTarget().getFirstName())
                 .setContentText(message.getTextMessage())
@@ -62,7 +62,7 @@ public class PushNotification {
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Log.d("PUSH_NOTIFICATION_TAG", "SendIdentificationNotification: ");
-        Notification notification = new NotificationCompat.Builder(context, NOTIFICAITON_CHANNEL)
+        Notification notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
                 .setContentTitle(message.getMessageType().name())
                 .setContentText(message.getFireBaseToken())

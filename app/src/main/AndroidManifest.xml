@@ -50,16 +50,12 @@
         <activity android:name=".View.Activities.ChatActivity" />
         <activity android:name=".View.Activities.LocationAwareChatActivity" />
         <activity android:name=".View.Activities.ProfileActivity" />
-        <activity android:name=".View.Activities.ChatActivity"></activity>
         <service
             android:name=".Services.Conn.BackgroundMessageService"
             android:exported="false" />
 
         <activity android:name=".View.Activities.Camera2Activity"></activity>
         <activity android:name=".View.Activities.ImageEditorActivity"></activity>
-        <activity android:name=".View.Activities.Camera2Activity" />
-        <activity android:name=".View.Activities.ImageEditorActivity" />
-        <activity android:name=".View.Activities.LoginActivity" />
         <activity android:name=".View.Activities.SignUpActivity" />
     </application>
 

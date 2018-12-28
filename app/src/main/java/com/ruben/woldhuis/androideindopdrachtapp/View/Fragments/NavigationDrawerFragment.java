@@ -280,7 +280,6 @@ public class NavigationDrawerFragment extends Fragment {
                 intent = new Intent(getActivity(), Camera2Activity.class);
                 break;
         }
-        startActivity(intent);
 
         if (intent != null) {
             startActivity(intent);
