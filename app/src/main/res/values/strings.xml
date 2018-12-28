@@ -43,6 +43,11 @@
     <string name="error_code_emailadres">ERROR COULDNT FIND EMAIL</string>
 
     <string name="profile_name">profile name</string>
+    <string name="settings">settings</string>
+
+    <string name="name">Name</string>
+    <string name="phonenumber">Phone number</string>
+    <string name="photo">Photo</string>
 
 
 

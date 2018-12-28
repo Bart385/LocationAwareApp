@@ -32,4 +32,8 @@
     <string name="confirm_changes">Bevestig</string>
     <string name="error_code_emailadres">ERROR KAN EMAIL NIET VINDEN</string>
     <string name="profile_name">profiel naam</string>
+    <string name="settings">Instellingen</string>
+    <string name="name">Naam</string>
+    <string name="phonenumber">Telefoonnummer</string>
+    <string name="photo">Foto</string>
 </resources>
