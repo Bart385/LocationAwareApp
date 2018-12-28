@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
 public class SettingsActivity extends Activity {
@@ -37,12 +38,9 @@ public class SettingsActivity extends Activity {
 
         Button button = findViewById(R.id.settings_confirmbutton);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                
-            }
-        });
+        //TODO: Settings update dit werkt nu nog niet want ik kan niet alle dingen aanroepen.
+
+        button.setOnClickListener(view -> {});
 
 
 
