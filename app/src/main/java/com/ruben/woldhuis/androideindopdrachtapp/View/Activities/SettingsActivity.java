@@ -36,8 +36,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     TextView phoneNumber;
     ImageView imageView;
 
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    /*FirebaseStorage storage;
+    StorageReference storageReference;*/
 
     private final int PICK_IMAGE_REQUEST = 71;
     private Uri filePath;
@@ -114,7 +114,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void uploadImage() {
+   /* private void uploadImage() {
 
         if(filePath != null)
         {
@@ -147,6 +147,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                         }
                     });
         }
-    }
+    }*/
 
 }
