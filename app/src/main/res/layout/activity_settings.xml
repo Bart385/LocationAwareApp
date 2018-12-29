@@ -22,37 +22,11 @@
                 android:id="@+id/settings_confirmbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="Button"
+                android:layout_marginTop="84dp"
+                android:text="@string/confirm_changes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Settings_email" />
-
-            <EditText
-                android:id="@+id/settings_phonenumber"
-                android:layout_width="199dp"
-                android:layout_height="51dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/settings_profilename" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="48dp"
-                android:text="@string/phonenumber"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -80,6 +54,19 @@
                 app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+            <Button
+                android:id="@+id/forgotpassword_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="20dp"
+                android:text="Forgot password?"
+                app:layout_constraintBottom_toTopOf="@+id/settings_confirmbutton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Settings_email" />
+
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
@@ -96,13 +83,13 @@
                 android:id="@+id/Settings_email"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="56dp"
                 android:text="TextView"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_phonenumber" />
+                app:layout_constraintTop_toBottomOf="@+id/settings_profilename" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
