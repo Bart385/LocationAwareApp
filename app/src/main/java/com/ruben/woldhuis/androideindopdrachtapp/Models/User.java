@@ -1,14 +1,20 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+@Entity(tableName = "USER_MODEL")
 public class User {
-    //TODO: Add useful identification variables to User class.
     private String name;
     private String email;
+    @NonNull
+    @PrimaryKey
     private String uid;
 
     private Location location;
 
-    public User(String name, String email, String uid) {
+    public User(String name, String email, @NonNull String uid) {
         this.name = name;
         this.email = email;
         this.uid = uid;
@@ -22,6 +28,7 @@ public class User {
         return email;
     }
 
+    @NonNull
     public String getUid() {
         return uid;
     }
@@ -39,7 +46,6 @@ public class User {
         return "User{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", uid='" + uid + '\'' +
-                '}';
+                ", uid='" + uid + '}';
     }
 }

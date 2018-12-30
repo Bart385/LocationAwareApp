@@ -12,4 +12,5 @@ public class Constants {
     public static String USERNAME;
 
     public static String FireBaseToken;
+    public static String uid;
 }

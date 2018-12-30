@@ -56,21 +56,7 @@ public class MainActivity extends FragmentActivity
         startService(messagingServiceIntent);
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser() == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        } else {
-            mAuth.getCurrentUser().getIdToken(true)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            String idToken = task.getResult().getToken();
-                            Constants.FireBaseToken = idToken;
-                            TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, Constants.USERNAME));
-                        } else
-                            Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
-
-                    });
-        }
+        authenticateWithServer();
         setContentView(R.layout.activity_main);
         //  askPermissions();
         instance = this;
@@ -97,6 +83,27 @@ public class MainActivity extends FragmentActivity
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    private void authenticateWithServer() {
+        if (mAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        } else if (userPreferencesService.getAuthenticationKey() == null) {
+            mAuth.getCurrentUser().getIdToken(true)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String idToken = task.getResult().getToken();
+                            if (idToken != null) {
+                                UserPreferencesService.getInstance(getApplication()).saveAuthenticationKey(idToken);
+                                TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, Constants.USERNAME));
+                            }
+                        } else
+                            Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
+                    });
+        } else {
+            TcpManagerService.getInstance().submitMessage(new IdentificationMessage(userPreferencesService.getAuthenticationKey(), userPreferencesService.getScreenName()));
+        }
     }
 
     private void askPermissions() {
