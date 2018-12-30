@@ -64,6 +64,7 @@ public class MainActivity extends FragmentActivity
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             String idToken = task.getResult().getToken();
+                            Constants.FireBaseToken = idToken;
                             TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, Constants.USERNAME));
                         } else
                             Log.e("IDENTIFICATION_TAG", task.getException().getMessage());

@@ -23,7 +23,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/chat_message_box"
             android:layout_width="269dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"

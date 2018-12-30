@@ -1,118 +1,45 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Models;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 public class User {
-    /**
-     *
-     */
-    private String firstName;
-    /**
-     *
-     */
-    private String lastName;
-    /**
-     *
-     */
-    private Date birthday;
-    /**
-     *
-     */
+    //TODO: Add useful identification variables to User class.
+    private String name;
+    private String email;
+    private String uid;
+
     private Location location;
-    /**
-     *
-     */
-    private ArrayList<String> imageIDs;
 
-    /**
-     * @param firstName
-     * @param lastName
-     * @param birthday
-     * @param location
-     */
-    public User(String firstName, String lastName, Date birthday, Location location, ArrayList<String> imageIDs) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.location = location;
-        this.imageIDs = imageIDs;
+    public User(String name, String email, String uid) {
+        this.name = name;
+        this.email = email;
+        this.uid = uid;
     }
 
-    /**
-     * @return
-     */
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * @param firstName
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getEmail() {
+        return email;
     }
 
-    /**
-     * @return
-     */
-    public String getLastName() {
-        return lastName;
+    public String getUid() {
+        return uid;
     }
 
-    /**
-     * @param lastName
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * @return
-     */
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    /**
-     * @param birthday
-     */
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    /**
-     * @return
-     */
     public Location getLocation() {
         return location;
     }
 
-    /**
-     * @param location
-     */
     public void setLocation(Location location) {
         this.location = location;
     }
 
-    /**
-     * @return
-     */
-    public ArrayList<String> getImageIDs() {
-        return imageIDs;
-    }
-
-    /**
-     * @param imageIDs
-     */
-    public void setImageIDs(ArrayList<String> imageIDs) {
-        this.imageIDs = imageIDs;
-    }
-
-    /**
-     * @param imageID
-     */
-    public void addImageID(String imageID) {
-        this.imageIDs.add(imageID);
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", uid='" + uid + '\'' +
+                '}';
     }
 }

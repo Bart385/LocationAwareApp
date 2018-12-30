@@ -10,17 +10,19 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 
+import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageUploadedMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
 
 public class PushNotification {
     private NotificationManagerCompat notificationManager;
     private static PushNotification instance;
     private static final String NOTIFICATION_CHANNEL = "notification_channel";
+    private static final String TAG = "PUSH_NOTIFICATION_TAG";
 
     private PushNotification(Context context) {
         notificationManager = NotificationManagerCompat.from(context);
@@ -43,30 +45,40 @@ public class PushNotification {
         return instance;
     }
 
-    public void SendTextMessageNotification(TextMessage message, Context context) {
+    public void sendTextMessageNotification(TextMessage message, Context context) {
+        Intent resultIntent = new Intent(context, ChatActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
         Notification notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
-                .setContentTitle(message.getTarget().getFirstName())
+                .setSmallIcon(R.drawable.twitter_button)
+                .setContentTitle(message.getMessageType().name())
                 .setContentText(message.getTextMessage())
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(resultPendingIntent)
                 .build();
 
         notificationManager.notify(1, notification);
     }
 
-    public void SendIdentificationNotification(IdentificationMessage message, Context context) {
-        Intent resultIntent = new Intent(context, Camera2Activity.class);
+    public void sendImageMessageNotification(ImageUploadedMessage message, Context context) {
+
+    }
+
+    public void sendIdentificationNotification(IdentificationMessage message, Context context) {
+        Intent resultIntent = new Intent(context, MainActivity.class);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Log.d("PUSH_NOTIFICATION_TAG", "SendIdentificationNotification: ");
         Notification notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                .setSmallIcon(R.drawable.twitter_button)
                 .setContentTitle(message.getMessageType().name())
                 .setContentText(message.getFireBaseToken())
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(resultPendingIntent)
                 .build();
 

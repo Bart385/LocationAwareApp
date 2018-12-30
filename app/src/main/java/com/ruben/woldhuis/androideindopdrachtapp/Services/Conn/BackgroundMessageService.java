@@ -50,14 +50,14 @@ public class BackgroundMessageService extends IntentService {
 
     private void handleIdentificationMessage(IdentificationMessage message) {
         Log.d(TAG, message.toJson());
-        pushNotification.SendIdentificationNotification(message, getApplicationContext());
+        pushNotification.sendIdentificationNotification(message, getApplicationContext());
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         pushNotification = PushNotification.getInstance(getApplicationContext());
         tcpManagerService = TcpManagerService.getInstance();
-        tcpManagerService.subscribeToErrorEvents(error -> Log.e(TAG+"_ERROR", error.getMessage()));
+        tcpManagerService.subscribeToErrorEvents(error -> Log.e(TAG + "_ERROR", error.getMessage()));
         tcpManagerService.subscribeToMessageEvents(message -> {
             switch (message.getMessageType()) {
                 case LocationUpdate_Message:

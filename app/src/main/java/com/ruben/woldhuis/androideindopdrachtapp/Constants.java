@@ -10,4 +10,6 @@ public class Constants {
     public static final Gson GSON = new Gson();
 
     public static String USERNAME;
+
+    public static String FireBaseToken;
 }
