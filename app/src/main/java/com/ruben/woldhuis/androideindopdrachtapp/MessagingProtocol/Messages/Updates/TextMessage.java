@@ -1,9 +1,10 @@
-package com.MessagingProtocol.Messages.Updates;
+package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates;
 
-import com.Constants;
-import com.Entities.User;
-import com.MessagingProtocol.IMessage;
-import com.MessagingProtocol.MessageType;
+
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 
 public class TextMessage implements IMessage {
     private MessageType messageType = MessageType.Text_Message;

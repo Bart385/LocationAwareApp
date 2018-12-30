@@ -1,9 +1,10 @@
-package com.MessagingProtocol.Messages.Replies;
+package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies;
 
-import com.Constants;
-import com.Entities.User;
-import com.MessagingProtocol.IMessage;
-import com.MessagingProtocol.MessageType;
+
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 
 public class FriendReply implements IMessage {
     private MessageType messageType = MessageType.FriendReply_Message;

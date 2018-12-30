@@ -1,9 +1,10 @@
-package com.MessagingProtocol.Messages.Updates;
+package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates;
 
-import com.Constants;
-import com.Entities.Location;
-import com.MessagingProtocol.IMessage;
-import com.MessagingProtocol.MessageType;
+
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
 
 public class LocationUpdateMessage implements IMessage {
     private MessageType messageType = MessageType.LocationUpdate_Message;

@@ -1,8 +1,9 @@
-package com.MessagingProtocol.Messages.Requests;
+package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests;
 
-import com.Constants;
-import com.MessagingProtocol.IMessage;
-import com.MessagingProtocol.MessageType;
+
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
 
 public class FriendRequest implements IMessage {
     private MessageType messageType = MessageType.FriendRequest_Message;

@@ -1,8 +1,9 @@
-package com.MessagingProtocol.Messages.Updates;
+package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates;
 
-import com.Constants;
-import com.MessagingProtocol.IMessage;
-import com.MessagingProtocol.MessageType;
+
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
 
 public class SignOutMessage implements IMessage {
     private MessageType messageType = MessageType.SignOut_Message;
