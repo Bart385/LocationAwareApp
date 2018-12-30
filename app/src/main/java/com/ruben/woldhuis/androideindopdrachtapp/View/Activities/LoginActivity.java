@@ -16,7 +16,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GetTokenResult;
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 
@@ -82,9 +85,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                                        public void onComplete(@NonNull Task<GetTokenResult> task) {
                                                            if (task.isSuccessful()) {
                                                                String idToken = task.getResult().getToken();
-                                                               //  TcpManagerService.getInstance().submitMessage(new IdentificationMessage(mAuth.getUid(), new Date(), "PlaceHolder", idToken));
+                                                               TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, Constants.USERNAME));
                                                            } else
                                                                Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
+
                                                        }
                                                    }
                             );
