@@ -19,10 +19,10 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
 
 public class PushNotification {
-    private NotificationManagerCompat notificationManager;
-    private static PushNotification instance;
     private static final String NOTIFICATION_CHANNEL = "notification_channel";
     private static final String TAG = "PUSH_NOTIFICATION_TAG";
+    private static PushNotification instance;
+    private NotificationManagerCompat notificationManager;
 
     private PushNotification(Context context) {
         notificationManager = NotificationManagerCompat.from(context);

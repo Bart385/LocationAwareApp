@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,20 +25,16 @@ import com.google.firebase.storage.UploadTask;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.UUID;
 
 public class SettingsActivity extends Activity implements View.OnClickListener {
+    private final int PICK_IMAGE_REQUEST = 71;
     FirebaseUser firebaseApp;
     TextView displayNameTB;
     TextView email;
     TextView phoneNumber;
     ImageView imageView;
-
     FirebaseStorage storage;
     StorageReference storageReference;
-
-    private final int PICK_IMAGE_REQUEST = 71;
     private Uri filePath;
 
     @Override
@@ -52,7 +47,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
         imageView = findViewById(R.id.previewImage_settings);
 
-         firebaseApp = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseApp = FirebaseAuth.getInstance().getCurrentUser();
 
         String settingsEmail = firebaseApp.getEmail();
         String settingsDisplayName = firebaseApp.getDisplayName();
@@ -65,7 +60,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         displayNameTB.setText(settingsDisplayName);
 
 
-
         findViewById(R.id.settings_confirmbutton).setOnClickListener(this);
         findViewById(R.id.forgotpassword_button).setOnClickListener(this);
         findViewById(R.id.changeprofilepicture_button).setOnClickListener(this);
@@ -74,9 +68,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.settings_confirmbutton:
-                if (displayNameTB != null){
+                if (displayNameTB != null) {
                     UserProfileChangeRequest profileChangeRequest =
                             new UserProfileChangeRequest.Builder().setDisplayName(String.valueOf(displayNameTB.getText())).build();
                     firebaseApp.updateProfile(profileChangeRequest).addOnCompleteListener(task -> {
@@ -87,7 +81,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 uploadImage();
                 break;
             case R.id.forgotpassword_button:
-                Toast toast =  Toast.makeText(getBaseContext(), R.string.newpassword, Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getBaseContext(), R.string.newpassword, Toast.LENGTH_LONG);
                 toast.show();
                 FirebaseAuth.getInstance().sendPasswordResetEmail(firebaseApp.getEmail());
                 break;
@@ -103,19 +97,17 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
-        {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -123,8 +115,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
     private void uploadImage() {
 
-        if(filePath != null)
-        {
+        if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
@@ -142,15 +133,15 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(SettingsActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingsActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         }
                     });
         }

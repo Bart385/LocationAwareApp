@@ -1,24 +1,18 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,15 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LocationAwareChatActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
-
-import java.io.IOException;
 
 //TODO: Activities omzetten naar NavigationDrawer Activities
 //TODO: Map implementeren in Main screen
@@ -166,7 +155,7 @@ public class NavigationDrawerFragment extends Fragment {
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
                 }
 
-                if (FirebaseAuth.getInstance().getCurrentUser() != null){
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                     ImageView image = drawerView.findViewById(R.id.header_profile_image);
                     TextView name = drawerView.findViewById(R.id.header_textName);
                     TextView email = drawerView.findViewById(R.id.header_textEmail);
@@ -299,7 +288,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (intent != null) {
             startActivity(intent);
-         //   getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+            //   getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
         }
     }
 

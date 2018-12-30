@@ -17,16 +17,15 @@ import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecyclerAdapter.MyViewHolder> implements Serializable{
+public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecyclerAdapter.MyViewHolder> implements Serializable {
 
     Context mContext;
 
     private ArrayList<Contact> dataSource;
 
-    public FriendsRecyclerAdapter(Context context,ArrayList<Contact> dataArgs)
-    {
+    public FriendsRecyclerAdapter(Context context, ArrayList<Contact> dataArgs) {
         dataSource = dataArgs;
-        this.mContext =  context;
+        this.mContext = context;
     }
 
     @Override
@@ -47,8 +46,7 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
     }
 
 
-
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
 
         public View background;
