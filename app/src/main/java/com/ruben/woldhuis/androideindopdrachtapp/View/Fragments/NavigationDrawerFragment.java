@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -39,6 +40,8 @@ import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LocationAwareChatActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
+
+import java.io.IOException;
 
 //TODO: Activities omzetten naar NavigationDrawer Activities
 //TODO: Map implementeren in Main screen
@@ -169,6 +172,10 @@ public class NavigationDrawerFragment extends Fragment {
                     TextView email = drawerView.findViewById(R.id.header_textEmail);
                     name.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                     email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                    if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null) {
+                        image.setImageURI(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl());
+
+                    }
                 }
 
                 getActivity().invalidateOptionsMenu();
@@ -300,11 +307,4 @@ public class NavigationDrawerFragment extends Fragment {
         void onNavigationDrawerItemSelected(int position);
     }
 
-    public static Contact GoogleAccount(Context context){
-        Account[] accounts = AccountManager.get(context).getAccounts();
-        System.out.println("Hierwerkt t wel" + accounts.toString());
-
-        String mail = accounts[0].type;
-        return null;
-    }
 }

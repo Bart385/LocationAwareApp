@@ -51,6 +51,7 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Intent messagingServiceIntent = new Intent(this, BackgroundMessageService.class);
         startService(messagingServiceIntent);
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
@@ -116,6 +117,8 @@ public class MainActivity extends FragmentActivity
                     Log.d("PERMISSION_TAG", "No location permission");
                     finish();
                 }
+                break;
+
         }
     }
 

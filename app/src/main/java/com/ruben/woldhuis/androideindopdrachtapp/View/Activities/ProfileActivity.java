@@ -1,31 +1,43 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
+import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends Activity {
+
+
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        TextView profileName = findViewById(R.id.profiletext_edit);
-        TextView profilEmail = findViewById(R.id.emailtext_edit);
+        TextView profileName = findViewById(R.id.profil_name);
+        TextView profilEmail = findViewById(R.id.profile_emailChange);
+        ImageView image = findViewById(R.id.profile_imageView);
 
-        profileName.setText(UserPreferencesService.getInstance(getApplication()).getScreenName());
-        profilEmail.setText(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey());
+        profileName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        profilEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
-        Button confirmButton = findViewById(R.id.profile_saveButton);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
-        confirmButton.setOnClickListener(view ->
-                UserPreferencesService.getInstance(getApplication()).saveScreenName(profileName.getText().toString()));
-                UserPreferencesService.getInstance(getApplication()).saveAuthenticationKey(profilEmail.getText().toString());
+        StorageReference ref = storageReference.child("images/profilepicture" + FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
+//TODO: Zorgen dat hij de foto op een imageview kan zetten.....
+        Picasso.get().load(Uri.parse("images/profilepicture" + FirebaseAuth.getInstance().getCurrentUser().getEmail())).into(image);
+        System.out.println(image.toString());
     }
 }

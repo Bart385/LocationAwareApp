@@ -14,19 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 
 public class SettingsActivity extends Activity implements View.OnClickListener {
@@ -36,8 +36,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     TextView phoneNumber;
     ImageView imageView;
 
-    /*FirebaseStorage storage;
-    StorageReference storageReference;*/
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     private final int PICK_IMAGE_REQUEST = 71;
     private Uri filePath;
@@ -46,6 +46,11 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        imageView = findViewById(R.id.previewImage_settings);
 
          firebaseApp = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -79,6 +84,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                         toast.show();
                     });
                 }
+                uploadImage();
                 break;
             case R.id.forgotpassword_button:
                 Toast toast =  Toast.makeText(getBaseContext(), R.string.newpassword, Toast.LENGTH_LONG);
@@ -87,6 +93,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.changeprofilepicture_button:
                 chooseImage();
+
         }
     }
 
@@ -114,7 +121,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         }
     }
 
-   /* private void uploadImage() {
+    private void uploadImage() {
 
         if(filePath != null)
         {
@@ -122,7 +129,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            StorageReference ref = storageReference.child("images/profilepicture" + firebaseApp.getEmail());
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -147,6 +154,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                         }
                     });
         }
-    }*/
+    }
 
 }
