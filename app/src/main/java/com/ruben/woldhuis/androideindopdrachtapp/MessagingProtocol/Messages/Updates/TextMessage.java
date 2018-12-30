@@ -1,10 +1,9 @@
-package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages;
+package com.MessagingProtocol.Messages.Updates;
 
-
-import com.ruben.woldhuis.androideindopdrachtapp.Constants;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
+import com.Constants;
+import com.Entities.User;
+import com.MessagingProtocol.IMessage;
+import com.MessagingProtocol.MessageType;
 
 public class TextMessage implements IMessage {
     private MessageType messageType = MessageType.Text_Message;
@@ -18,7 +17,7 @@ public class TextMessage implements IMessage {
         this.target = target;
     }
 
-    public static TextMessage deserialize(String json) {
+    public static TextMessage fromJson(String json) {
         return Constants.GSON.fromJson(json, TextMessage.class);
     }
 

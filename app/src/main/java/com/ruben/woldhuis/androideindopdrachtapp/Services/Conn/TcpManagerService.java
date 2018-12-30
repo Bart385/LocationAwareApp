@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 public class TcpManagerService {
@@ -55,25 +56,39 @@ public class TcpManagerService {
      * @param tcpErrorListener
      */
     public void subscribeToErrorEvents(TcpErrorListener tcpErrorListener) {
-        this.connectionService.setErrorListener(tcpErrorListener);
+        this.connectionService.addErrorListener(tcpErrorListener);
+    }
+
+    /**
+     * @param tcpErrorListener
+     */
+    public void unsubscribeFromErrorEvents(TcpErrorListener tcpErrorListener) {
+        this.connectionService.removeErrorListener(tcpErrorListener);
     }
 
     /**
      * @param tcpMessageReceiverListener
      */
     public void subscribeToMessageEvents(TcpMessageReceiverListener tcpMessageReceiverListener) {
-        this.connectionService.setMessageReceiverListener(tcpMessageReceiverListener);
+        this.connectionService.addMessageReceiverListener(tcpMessageReceiverListener);
+    }
+
+    /**
+     * @param tcpMessageReceiverListener
+     */
+    public void unsubscribeFromMessageEvents(TcpMessageReceiverListener tcpMessageReceiverListener) {
+        this.connectionService.removeMessageReceiverListener(tcpMessageReceiverListener);
     }
 
     private class TcpConnectionService {
         /**
          * TcpMessageReceiverListener variable has a callback to send the decoded message back to the app.
          */
-        private TcpMessageReceiverListener messageReceiverListener;
+        private ArrayList<TcpMessageReceiverListener> messageReceiverListeners;
         /**
          * TcpErrorListener variable has a callback that get's called when something breaks in this class.
          */
-        private TcpErrorListener errorListener;
+        private ArrayList<TcpErrorListener> errorListeners;
         /**
          * TcpSocket
          */
@@ -100,7 +115,8 @@ public class TcpManagerService {
          * Creates the connection when it's called
          */
         private TcpConnectionService() {
-
+            messageReceiverListeners = new ArrayList<>();
+            errorListeners = new ArrayList<>();
         }
 
 
@@ -138,7 +154,7 @@ public class TcpManagerService {
                     toServer.write(buffer, 0, buffer.length);
                     toServer.flush();
                 } catch (IOException e) {
-                    errorListener.onTcpError(new Error(e));
+                    errorListeners.forEach(listener -> listener.onTcpError(new Error(e)));
                 }
 
             };
@@ -147,8 +163,15 @@ public class TcpManagerService {
         /**
          * @param errorListener
          */
-        private void setErrorListener(TcpErrorListener errorListener) {
-            this.errorListener = errorListener;
+        private void addErrorListener(TcpErrorListener errorListener) {
+            this.errorListeners.add(errorListener);
+        }
+
+        /**
+         * @param errorListener
+         */
+        private void removeErrorListener(TcpErrorListener errorListener) {
+            this.errorListeners.remove(errorListener);
         }
 
         /**
@@ -165,14 +188,15 @@ public class TcpManagerService {
         private Runnable receiveMessageFromServer() {
             return () -> {
                 while (running) {
+                    IMessage message = getMessage();
                     Log.d("RECEIVING_TAG", "in receiveMessage");
-                    if (messageReceiverListener == null) {
-                        errorListener.onTcpError(new Error("No messageReceiverListener available"));
+                    if (messageReceiverListeners.isEmpty()) {
+                        errorListeners.forEach(listener -> listener.onTcpError(new Error("No messageReceiverListener available")));
                     } else {
-                        IMessage message = getMessage();
                         if (message == null)
-                            errorListener.onTcpError(new Error("Couldn't decode a message from the server."));
-                        else messageReceiverListener.onMessageReceived(message);
+                            errorListeners.forEach(listener -> listener.onTcpError(new Error("Couldn't decode a message from the server.")));
+                        else
+                            messageReceiverListeners.forEach(listener -> listener.onMessageReceived(message));
                     }
                 }
             };
@@ -199,6 +223,8 @@ public class TcpManagerService {
             while (bytesRead < prefix.length) {
                 try {
                     bytesRead += fromServer.read(prefix, bytesRead, prefix.length - bytesRead);
+                    if (bytesRead < 0)
+                        return null;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -209,6 +235,8 @@ public class TcpManagerService {
             while (bytesRead < compressedData.length) {
                 try {
                     bytesRead += fromServer.read(compressedData, bytesRead, compressedData.length - bytesRead);
+                    if (bytesRead < 0)
+                        return null;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -230,7 +258,7 @@ public class TcpManagerService {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            return MessageSerializer.deserialize(ser);
+            return MessageSerializer.deserialize(compressedData, false);
         }
 
         /**
@@ -245,8 +273,15 @@ public class TcpManagerService {
          *
          * @param messageReceiverListener sets the TcpMessageReceiverListener
          */
-        private void setMessageReceiverListener(TcpMessageReceiverListener messageReceiverListener) {
-            this.messageReceiverListener = messageReceiverListener;
+        private void addMessageReceiverListener(TcpMessageReceiverListener messageReceiverListener) {
+            this.messageReceiverListeners.add(messageReceiverListener);
+        }
+
+        /**
+         * @param messageReceiverListener
+         */
+        private void removeMessageReceiverListener(TcpMessageReceiverListener messageReceiverListener) {
+            this.messageReceiverListeners.remove(messageReceiverListener);
         }
 
         /**

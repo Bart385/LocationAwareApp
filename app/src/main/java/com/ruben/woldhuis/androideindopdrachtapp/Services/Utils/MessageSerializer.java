@@ -4,15 +4,16 @@ import android.util.Log;
 
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.AudioMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.IdentificationMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageUploadedMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.LocationUpdateMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.SignOutMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.TextMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.LocationUpdateMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.SignOutMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 //TODO: Implement compression success/failed flag to byte[]
 public class MessageSerializer {
@@ -52,10 +53,17 @@ public class MessageSerializer {
     }
 
     /**
-     * @param json
+     * @param data
+     * @param compressed
      * @return
      */
-    public static IMessage deserialize(String json) {
+    public static IMessage deserialize(byte[] data, boolean compressed) {
+        String json;
+        try {
+            json = new String(data, 0, data.length, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
         System.out.println(json);
         String[] elements = json.split(",");
         String messageType = "";
@@ -70,19 +78,29 @@ public class MessageSerializer {
         MessageType type = MessageType.valueOf(messageType);
         switch (type) {
             case Identification_Message:
-                return IdentificationMessage.deserialize(json);
+                return IdentificationMessage.fromJson(json);
             case Text_Message:
-                return TextMessage.deserialize(json);
-            case Audio_Message:
-                return AudioMessage.deserialize(json);
-            case Image_Message:
-                return ImageMessage.deserialize(json);
+                return TextMessage.fromJson(json);
+            case UploadAudioReply_Message:
+                return UploadAudioMessageReply.fromJson(json);
+            case UploadImageRequest_Message:
+                return UploadImageRequest.fromJson(json);
             case SignOut_Message:
-                return SignOutMessage.deserialize(json);
-            case ImageUploaded_Message:
-                return ImageUploadedMessage.deserialize(json);
+                return SignOutMessage.fromJson(json);
+            case UploadImageReply_Message:
+                return UploadImageReply.fromJson(json);
             case LocationUpdate_Message:
-                return LocationUpdateMessage.deserialize(json);
+                return LocationUpdateMessage.fromJson(json);
+            case UploadAudioRequest_Message:
+                break;
+            case FriendsRequest_Message:
+                break;
+            case FriendRequest_Message:
+                break;
+            case FriendsReply_Message:
+                break;
+            case FriendReply_Message:
+                break;
         }
         return null;
     }

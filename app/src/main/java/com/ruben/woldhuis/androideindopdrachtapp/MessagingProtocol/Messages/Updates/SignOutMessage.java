@@ -1,9 +1,8 @@
-package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages;
+package com.MessagingProtocol.Messages.Updates;
 
-
-import com.ruben.woldhuis.androideindopdrachtapp.Constants;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
+import com.Constants;
+import com.MessagingProtocol.IMessage;
+import com.MessagingProtocol.MessageType;
 
 public class SignOutMessage implements IMessage {
     private MessageType messageType = MessageType.SignOut_Message;
@@ -15,7 +14,7 @@ public class SignOutMessage implements IMessage {
         this.signOut = signOut;
     }
 
-    public static SignOutMessage deserialize(String json) {
+    public static SignOutMessage fromJson(String json) {
         return Constants.GSON.fromJson(json, SignOutMessage.class);
     }
 

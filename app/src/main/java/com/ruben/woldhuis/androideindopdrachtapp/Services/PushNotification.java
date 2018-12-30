@@ -12,9 +12,9 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.IdentificationMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageUploadedMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.TextMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
 
@@ -63,7 +63,7 @@ public class PushNotification {
         notificationManager.notify(1, notification);
     }
 
-    public void sendImageMessageNotification(ImageUploadedMessage message, Context context) {
+    public void sendImageMessageNotification(UploadAudioMessageReply message, Context context) {
 
     }
 

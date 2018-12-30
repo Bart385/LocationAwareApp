@@ -8,9 +8,4 @@ public class Constants {
     public static final String SERVER_HOSTNAME = "206.189.106.64";
     public static final int SERVER_PORT = 9000;
     public static final Gson GSON = new Gson();
-
-    public static String USERNAME;
-
-    public static String FireBaseToken;
-    public static String uid;
 }

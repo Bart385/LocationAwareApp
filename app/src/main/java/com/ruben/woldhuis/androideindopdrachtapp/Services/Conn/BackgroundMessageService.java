@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.AudioMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.IdentificationMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.ImageUploadedMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.LocationUpdateMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.SignOutMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.TextMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.LocationUpdateMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.SignOutMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
 
 public class BackgroundMessageService extends IntentService {
@@ -28,7 +27,7 @@ public class BackgroundMessageService extends IntentService {
         Log.d(TAG, message.toJson());
     }
 
-    private void handleImageUploadedMessage(ImageUploadedMessage message) {
+    private void handleImageUploadedMessage(UploadAudioMessageReply message) {
         Log.d(TAG, message.toJson());
     }
 
@@ -36,11 +35,11 @@ public class BackgroundMessageService extends IntentService {
         Log.d(TAG, message.toJson());
     }
 
-    private void handleImageMessage(ImageMessage message) {
+    private void handleImageMessage(UploadImageRequest message) {
         Log.d(TAG, message.toJson());
     }
 
-    private void handleAudioMessage(AudioMessage message) {
+    private void handleAudioMessage(UploadAudioMessageReply message) {
         Log.d(TAG, message.toJson());
     }
 
@@ -63,23 +62,33 @@ public class BackgroundMessageService extends IntentService {
                 case LocationUpdate_Message:
                     handleLocationUpdateMessage((LocationUpdateMessage) message);
                     break;
-                case ImageUploaded_Message:
-                    handleImageUploadedMessage((ImageUploadedMessage) message);
+                case UploadImageReply_Message:
+                    handleImageUploadedMessage((UploadAudioMessageReply) message);
                     break;
                 case SignOut_Message:
                     handleSignOutMessage((SignOutMessage) message);
                     break;
-                case Image_Message:
-                    handleImageMessage((ImageMessage) message);
+                case UploadImageRequest_Message:
+                    handleImageMessage((UploadImageRequest) message);
                     break;
-                case Audio_Message:
-                    handleAudioMessage((AudioMessage) message);
+                case UploadAudioReply_Message:
+                    handleAudioMessage((UploadAudioMessageReply) message);
                     break;
                 case Text_Message:
                     handleTextMessage((TextMessage) message);
                     break;
                 case Identification_Message:
                     handleIdentificationMessage((IdentificationMessage) message);
+                    break;
+                case FriendReply_Message:
+                    break;
+                case FriendsReply_Message:
+                    break;
+                case FriendRequest_Message:
+                    break;
+                case FriendsRequest_Message:
+                    break;
+                case UploadAudioRequest_Message:
                     break;
             }
         });

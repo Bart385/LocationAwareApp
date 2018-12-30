@@ -1,31 +1,28 @@
-package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages;
+package com.MessagingProtocol.Messages.Requests;
 
+import com.Constants;
+import com.Entities.User;
+import com.MessagingProtocol.IMessage;
+import com.MessagingProtocol.MessageType;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Constants;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
-
-public class ImageMessage implements IMessage {
-    private MessageType messageType = MessageType.Image_Message;
+public class UploadImageRequest implements IMessage {
+    private MessageType messageType = MessageType.UploadImageRequest_Message;
     private String fireBaseToken;
     private String imageName;
     private String imageExtension;
     private String base64EncodedImage;
-    private String textMessage;
     private User target;
 
-    public ImageMessage(String fireBaseToken, String imageName, String imageExtension, String base64EncodedImage, String textMessage, User target) {
+    public UploadImageRequest(String fireBaseToken, String imageName, String imageExtension, String base64EncodedImage, User target) {
         this.fireBaseToken = fireBaseToken;
         this.imageName = imageName;
         this.imageExtension = imageExtension;
         this.base64EncodedImage = base64EncodedImage;
-        this.textMessage = textMessage;
         this.target = target;
     }
 
-    public static ImageMessage deserialize(String json) {
-        return Constants.GSON.fromJson(json, ImageMessage.class);
+    public static UploadImageRequest fromJson(String json) {
+        return Constants.GSON.fromJson(json, UploadImageRequest.class);
     }
 
     @Override
@@ -50,14 +47,9 @@ public class ImageMessage implements IMessage {
         return base64EncodedImage;
     }
 
-    public String getTextMessage() {
-        return textMessage;
-    }
-
     public User getTarget() {
         return target;
     }
-
 
     @Override
     public String toJson() {

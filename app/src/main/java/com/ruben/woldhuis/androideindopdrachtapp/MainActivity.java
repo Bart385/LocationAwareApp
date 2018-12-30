@@ -25,7 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
@@ -86,10 +86,12 @@ public class MainActivity extends FragmentActivity
     }
 
     private void authenticateWithServer() {
+        TcpManagerService.getInstance().subscribeToErrorEvents(error -> Log.e("MAIN_ACTIVITY_TAG", error.getMessage()));
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-        } else if (userPreferencesService.getAuthenticationKey() == null) {
+        } else {
+            Log.d("MAIN_ACTIVITY_TAG", userPreferencesService.getAuthenticationKey());
             mAuth.getCurrentUser().getIdToken(true)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -101,9 +103,10 @@ public class MainActivity extends FragmentActivity
                         } else
                             Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
                     });
-        } else {
+        } /*else {
+            Log.d("MAIN_ACTIVITY_TAG", userPreferencesService.getAuthenticationKey());
             TcpManagerService.getInstance().submitMessage(new IdentificationMessage(userPreferencesService.getAuthenticationKey()));
-        }
+        }*/
     }
 
     private void askPermissions() {

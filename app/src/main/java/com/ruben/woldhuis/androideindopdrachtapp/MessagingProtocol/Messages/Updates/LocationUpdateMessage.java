@@ -1,10 +1,9 @@
-package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages;
+package com.MessagingProtocol.Messages.Updates;
 
-
-import com.ruben.woldhuis.androideindopdrachtapp.Constants;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
+import com.Constants;
+import com.Entities.Location;
+import com.MessagingProtocol.IMessage;
+import com.MessagingProtocol.MessageType;
 
 public class LocationUpdateMessage implements IMessage {
     private MessageType messageType = MessageType.LocationUpdate_Message;
@@ -16,7 +15,7 @@ public class LocationUpdateMessage implements IMessage {
         this.location = location;
     }
 
-    public static LocationUpdateMessage deserialize(String json) {
+    public static LocationUpdateMessage fromJson(String json) {
         return Constants.GSON.fromJson(json, LocationUpdateMessage.class);
     }
 

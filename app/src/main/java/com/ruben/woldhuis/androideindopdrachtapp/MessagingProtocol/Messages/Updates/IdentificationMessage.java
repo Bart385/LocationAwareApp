@@ -1,9 +1,8 @@
-package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages;
+package com.MessagingProtocol.Messages.Updates;
 
-
-import com.ruben.woldhuis.androideindopdrachtapp.Constants;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
+import com.Constants;
+import com.MessagingProtocol.IMessage;
+import com.MessagingProtocol.MessageType;
 
 public class IdentificationMessage implements IMessage {
     private MessageType messageType = MessageType.Identification_Message;
@@ -13,7 +12,7 @@ public class IdentificationMessage implements IMessage {
         this.fireBaseToken = fireBaseToken;
     }
 
-    public static IdentificationMessage deserialize(String json) {
+    public static IdentificationMessage fromJson(String json) {
         return Constants.GSON.fromJson(json, IdentificationMessage.class);
     }
 

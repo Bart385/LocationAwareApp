@@ -7,11 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Constants;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.TextMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 
 public class ChatActivity extends Activity {
     @Override
@@ -34,7 +34,7 @@ public class ChatActivity extends Activity {
         sendButton.setOnClickListener(view -> {
             //TODO: implement message logic
             //TcpManagerService.getInstance().submitMessage();
-            TcpManagerService.getInstance().submitMessage(new TextMessage(Constants.FireBaseToken, input.getText().toString(), null));
+            TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), null));
         });
 
     }
