@@ -16,7 +16,7 @@ public interface UserDAO {
     @Query("SELECT * FROM USER_MODEL")
     LiveData<List<User>> getAllUsers();
 
-    @Query("SELECT * FROM USER_MODEL WHERE uid = :uid")
+    @Query("SELECT * FROM USER_MODEL WHERE user_uid = :uid")
     LiveData<User> getUser(String uid);
 
     @Insert

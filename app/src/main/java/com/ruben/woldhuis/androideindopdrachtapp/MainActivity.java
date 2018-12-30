@@ -96,13 +96,13 @@ public class MainActivity extends FragmentActivity
                             String idToken = task.getResult().getToken();
                             if (idToken != null) {
                                 UserPreferencesService.getInstance(getApplication()).saveAuthenticationKey(idToken);
-                                TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, Constants.USERNAME));
+                                TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken));
                             }
                         } else
                             Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
                     });
         } else {
-            TcpManagerService.getInstance().submitMessage(new IdentificationMessage(userPreferencesService.getAuthenticationKey(), userPreferencesService.getScreenName()));
+            TcpManagerService.getInstance().submitMessage(new IdentificationMessage(userPreferencesService.getAuthenticationKey()));
         }
     }
 
