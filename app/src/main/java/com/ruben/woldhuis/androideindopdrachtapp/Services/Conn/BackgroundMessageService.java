@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.LocationUpdateMessage;
@@ -27,7 +28,7 @@ public class BackgroundMessageService extends IntentService {
         Log.d(TAG, message.toJson());
     }
 
-    private void handleImageUploadedMessage(UploadAudioMessageReply message) {
+    private void handleImageUploadedMessage(UploadImageReply message) {
         Log.d(TAG, message.toJson());
     }
 
@@ -63,7 +64,7 @@ public class BackgroundMessageService extends IntentService {
                     handleLocationUpdateMessage((LocationUpdateMessage) message);
                     break;
                 case UploadImageReply_Message:
-                    handleImageUploadedMessage((UploadAudioMessageReply) message);
+                    handleImageUploadedMessage((UploadImageReply) message);
                     break;
                 case SignOut_Message:
                     handleSignOutMessage((SignOutMessage) message);

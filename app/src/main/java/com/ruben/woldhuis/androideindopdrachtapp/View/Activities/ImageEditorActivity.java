@@ -10,14 +10,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.Base64;
 
 public class ImageEditorActivity extends Activity {
-    private TcpManagerService tcpManagerService;
-
     private File imageFile;
     private Bitmap image;
     private ImageView imageView;
@@ -36,7 +39,6 @@ public class ImageEditorActivity extends Activity {
         imageView = findViewById(R.id.image_editor_image_view);
         send = findViewById(R.id.upload_photo);
         cancel = findViewById(R.id.cancel_upload_photo);
-        tcpManagerService = TcpManagerService.getInstance();
         String imagePath = getIntent().getStringExtra("IMAGE_PATH");
         imageFile = new File(imagePath);
 
@@ -69,6 +71,10 @@ public class ImageEditorActivity extends Activity {
     private void uploadImage() {
         if (image == null)
             return;
-        // tcpManagerService.submitMessage(new ImageMessage(Constants.USERNAME, ".jpg", new Date(), image));
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] data = byteArrayOutputStream.toByteArray();
+        User user = new User("Ruben", "rubenwoldhuis@gmail.com", "gv27K98cpUWmOyFuI08koW996eK2");
+        TcpManagerService.getInstance().submitMessage(new UploadImageRequest(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), "Testing", ".jpg", Base64.getEncoder().encodeToString(data), user));
     }
 }
