@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
@@ -25,7 +26,7 @@ public class ChatActivity extends Activity {
         EditText input = findViewById(R.id.chat_message_box);
 
         Button sendButton = findViewById(R.id.send_button);
-        Button imagebutton = findViewById(R.id.sendImage_button);
+        ImageButton imagebutton = findViewById(R.id.sendImage_button);
         imagebutton.setOnClickListener(view -> {
             //TODO: implement message logic for images
             Intent intent = new Intent(this, Camera2Activity.class);

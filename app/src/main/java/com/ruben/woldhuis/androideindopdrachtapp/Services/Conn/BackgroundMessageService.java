@@ -46,6 +46,7 @@ public class BackgroundMessageService extends IntentService {
 
     private void handleTextMessage(TextMessage message) {
         Log.d(TAG, message.toJson());
+        pushNotification.sendTextMessageNotification(message, getApplicationContext());
     }
 
     private void handleIdentificationMessage(IdentificationMessage message) {
