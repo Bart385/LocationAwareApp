@@ -51,7 +51,6 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Intent messagingServiceIntent = new Intent(this, BackgroundMessageService.class);
         startService(messagingServiceIntent);
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
