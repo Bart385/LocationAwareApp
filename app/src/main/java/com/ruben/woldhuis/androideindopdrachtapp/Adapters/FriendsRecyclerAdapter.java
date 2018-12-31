@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
 
@@ -21,9 +21,9 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
 
     Context mContext;
 
-    private ArrayList<Contact> dataSource;
+    private ArrayList<User> dataSource;
 
-    public FriendsRecyclerAdapter(Context context, ArrayList<Contact> dataArgs) {
+    public FriendsRecyclerAdapter(Context context, ArrayList<User> dataArgs) {
         dataSource = dataArgs;
         this.mContext = context;
     }
@@ -36,8 +36,8 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        Contact contact = dataSource.get(i);
-        myViewHolder.title.setText(contact.getName());
+        User user = dataSource.get(i);
+        myViewHolder.title.setText(user.getName());
     }
 
     @Override
@@ -59,7 +59,7 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
 
             View finalView = view;
             view.setOnClickListener((View v) -> {
-                Contact i = dataSource.get(getAdapterPosition());
+                User i = dataSource.get(getAdapterPosition());
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("ContactObject", (Serializable) i);
                 context.startActivity(intent);

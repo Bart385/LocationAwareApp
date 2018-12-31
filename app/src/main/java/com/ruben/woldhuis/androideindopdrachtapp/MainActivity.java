@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         } else {
-            Log.d("MAIN_ACTIVITY_TAG", userPreferencesService.getAuthenticationKey());
+            //Log.d("MAIN_ACTIVITY_TAG", userPreferencesService.getAuthenticationKey());
             mAuth.getCurrentUser().getIdToken(true)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {

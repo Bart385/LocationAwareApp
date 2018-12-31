@@ -6,8 +6,10 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
+
 @Entity(tableName = "USER_MODEL")
-public class User {
+public class User implements Serializable {
     @ColumnInfo(name = "user_name")
     private String name;
     @ColumnInfo(name = "user_email")

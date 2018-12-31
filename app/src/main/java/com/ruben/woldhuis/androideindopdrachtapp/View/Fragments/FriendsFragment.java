@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.FriendsRecyclerAdapter;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
 import java.io.Serializable;
@@ -20,7 +20,7 @@ public class FriendsFragment extends Fragment implements Serializable {
 
 
     private static FriendsFragment instance;
-    ArrayList<Contact> friend;
+    ArrayList<User> friend;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -36,7 +36,7 @@ public class FriendsFragment extends Fragment implements Serializable {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         friend = new ArrayList<>();
-        friend.add(new Contact("Panda", "dsa", "das"));
+        friend.add(new User("Test", "digitallego3@gmail.com", null));
 
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
 

@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Contact;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
@@ -19,7 +19,7 @@ public class ChatActivity extends Activity {
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         setContentView(R.layout.activity_friend_chat);
-        Contact contact = (Contact) i.getSerializableExtra("ContactObject");
+        User user = (User) i.getSerializableExtra("ContactObject");
 
         ListView Naam = findViewById(R.id.messages_view);
         EditText input = findViewById(R.id.chat_message_box);
@@ -34,7 +34,7 @@ public class ChatActivity extends Activity {
         sendButton.setOnClickListener(view -> {
             //TODO: implement message logic
             //TcpManagerService.getInstance().submitMessage();
-            TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), null));
+            TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), user));
         });
 
     }
