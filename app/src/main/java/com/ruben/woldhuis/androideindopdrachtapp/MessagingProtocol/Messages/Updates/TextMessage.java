@@ -6,7 +6,9 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 
-public class TextMessage implements IMessage {
+import java.io.Serializable;
+
+public class TextMessage implements IMessage, Serializable {
     private MessageType messageType = MessageType.Text_Message;
     private String fireBaseToken;
     private String textMessage;

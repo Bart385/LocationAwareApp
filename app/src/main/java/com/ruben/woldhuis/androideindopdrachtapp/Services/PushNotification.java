@@ -48,6 +48,8 @@ public class PushNotification {
     public void sendTextMessageNotification(TextMessage message, Context context) {
         Intent resultIntent = new Intent(context, ChatActivity.class);
 
+        resultIntent.putExtra("message", message);
+
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

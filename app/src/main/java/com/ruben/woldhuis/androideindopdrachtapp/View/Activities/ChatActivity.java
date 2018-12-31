@@ -3,11 +3,13 @@ package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.ChatAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.FriendsRecyclerAdapter;
@@ -17,21 +19,30 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 
-public class ChatActivity extends Activity {
-    ChatAdapter mAdapter;
+import java.util.ArrayList;
 
+public class ChatActivity extends Activity {
+    RecyclerView.LayoutManager mLayoutManager;
+    RecyclerView.Adapter mAdapter;
+    ArrayList<TextMessage> messages;
+    RecyclerView mRecyclerView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent i = getIntent();
         setContentView(R.layout.activity_friend_chat);
+        Intent i = getIntent();
+        messages = new ArrayList<>();
         User user = (User) i.getSerializableExtra("ContactObject");
-
-        RecyclerView Naam = findViewById(R.id.messages_view);
+        TextMessage message = (TextMessage) i.getSerializableExtra("message");
+        mRecyclerView = findViewById(R.id.messages_view);
+        addMess(message);
         EditText input = findViewById(R.id.chat_message_box);
 
-        mAdapter = new FriendsRecyclerAdapter(getApplicationContext(), );
-        //mRecyclerView.setAdapter(mAdapter);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new ChatAdapter(getApplicationContext(), messages);
+        mRecyclerView.setAdapter(mAdapter);
 
         Button sendButton = findViewById(R.id.send_button);
         ImageButton imagebutton = findViewById(R.id.sendImage_button);
@@ -44,6 +55,7 @@ public class ChatActivity extends Activity {
             //TODO: implement message logic
             //TcpManagerService.getInstance().submitMessage();
             TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), user));
+            addMess(new TextMessage(null,input.getText().toString(), null));
         });
 
     }
@@ -53,5 +65,13 @@ public class ChatActivity extends Activity {
 
         super.onBackPressed();
 
+    }
+
+    public void addMess(TextMessage msg){
+        if (msg != null) {
+            messages.add(msg);
+            mAdapter = new ChatAdapter(getApplicationContext(), messages);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 }

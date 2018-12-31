@@ -14,7 +14,9 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Upda
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.SignOutMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class BackgroundMessageService extends IntentService {
@@ -49,7 +51,6 @@ public class BackgroundMessageService extends IntentService {
 
     private void handleTextMessage(TextMessage message) {
         Log.d(TAG, message.toJson());
-
         pushNotification.sendTextMessageNotification(message, getApplicationContext());
     }
 
