@@ -13,6 +13,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requ
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadAudioMessageRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationFailedMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationSuccesfulMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.LocationUpdateMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.SignOutMessage;
@@ -126,6 +127,8 @@ public class MessageSerializer {
                         return FriendsRequest.fromJson(json);
                     case AuthenticationFailed_Message:
                         return AuthenticationFailedMessage.fromJson(json);
+                    case AuthenticationSuccessful_Message:
+                        return AuthenticationSuccesfulMessage.fromJson(json);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
