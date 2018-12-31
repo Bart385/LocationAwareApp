@@ -1,10 +1,8 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +35,7 @@ public class ChatAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.android
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         message = dataSource.get(i);
-       myViewHolder.title.setText(message.getTextMessage());
+        myViewHolder.title.setText(message.getTextMessage());
     }
 
 
@@ -48,12 +46,14 @@ public class ChatAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.android
 
     public int test() {
         int layout;
-        if (message.getSender().getEmail() != null) {
-            if (message.getSender().getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
-                layout = R.layout.my_message;
-            } else
-                layout = R.layout.your_message;
-            return layout;
+        if (message != null) {
+            if (message.getSender().getEmail() != null) {
+                if (message.getSender().getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
+                    layout = R.layout.my_message;
+                } else
+                    layout = R.layout.your_message;
+                return layout;
+            }
         }
         return R.layout.your_message;
     }
