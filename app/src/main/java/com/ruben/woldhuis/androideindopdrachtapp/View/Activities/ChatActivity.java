@@ -33,6 +33,8 @@ public class ChatActivity extends Activity {
         User user = (User) i.getSerializableExtra("ContactObject");
         TextMessage message = (TextMessage) i.getSerializableExtra("message");
         mRecyclerView = findViewById(R.id.messages_view);
+        mAdapter = new ChatAdapter(getApplicationContext(), messages);
+        mRecyclerView.setAdapter(mAdapter);
         addMess(message);
         EditText input = findViewById(R.id.chat_message_box);
 
@@ -68,8 +70,7 @@ public class ChatActivity extends Activity {
     public void addMess(TextMessage msg) {
         if (msg != null) {
             messages.add(msg);
-            mAdapter = new ChatAdapter(getApplicationContext(), messages);
-            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
         }
     }
 }
