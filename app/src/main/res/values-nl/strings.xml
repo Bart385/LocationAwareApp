@@ -37,4 +37,6 @@
     <string name="phonenumber">Telefoonnummer</string>
     <string name="photo">Foto</string>
     <string name="newpassword"> U heeft een mail ontvangen waarin u uw mail kunt resetten</string>
+    <string name="write_message">Schrijf een bericht</string>
+
 </resources>

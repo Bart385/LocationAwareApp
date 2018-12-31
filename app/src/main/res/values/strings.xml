@@ -49,7 +49,7 @@
     <string name="phonenumber">Phone number</string>
     <string name="photo">Photo</string>
 
-    <string name="newpassword"> U recieved a mail for a new password in the given email adress.</string>
-
+    <string name="newpassword"> U received a mail for a new password in the given email adress.</string>
+    <string name="write_message">Write a Message</string>
 
 </resources>
