@@ -47,7 +47,7 @@ public class PushNotification {
 
     public void sendTextMessageNotification(TextMessage message, Context context) {
         Intent resultIntent = new Intent(context, ChatActivity.class);
-
+        resultIntent.putExtra("ContactObject", message.getSender());
         resultIntent.putExtra("message", message);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
