@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.ruben.woldhuis.androideindopdrachtapp.Adapters.ChatAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
@@ -13,6 +14,8 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Upda
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.SignOutMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
+
+import java.util.ArrayList;
 
 public class BackgroundMessageService extends IntentService {
     private static final String TAG = "BACKGROUND_MESSAGE_TAG";
@@ -46,6 +49,7 @@ public class BackgroundMessageService extends IntentService {
 
     private void handleTextMessage(TextMessage message) {
         Log.d(TAG, message.toJson());
+
         pushNotification.sendTextMessageNotification(message, getApplicationContext());
     }
 
