@@ -5,19 +5,16 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Adapters.ChatAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationSuccesfulMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.LocationUpdateMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.SignOutMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
-
-import java.io.Serializable;
-import java.util.ArrayList;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 
 public class BackgroundMessageService extends IntentService {
     private static final String TAG = "BACKGROUND_MESSAGE_TAG";
@@ -59,6 +56,10 @@ public class BackgroundMessageService extends IntentService {
         pushNotification.sendIdentificationNotification(message, getApplicationContext());
     }
 
+    private void handleAuthenticationSuccessfulMessage(AuthenticationSuccesfulMessage message) {
+        UserPreferencesService.getInstance(getApplication()).saveCurrentUser(message.getUser());
+    }
+
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         pushNotification = PushNotification.getInstance(getApplicationContext());
@@ -96,6 +97,11 @@ public class BackgroundMessageService extends IntentService {
                 case FriendsRequest_Message:
                     break;
                 case UploadAudioRequest_Message:
+                    break;
+                case AuthenticationFailed_Message:
+                    break;
+                case AuthenticationSuccessful_Message:
+                    handleAuthenticationSuccessfulMessage((AuthenticationSuccesfulMessage) message);
                     break;
             }
         });

@@ -75,6 +75,6 @@ public class ImageEditorActivity extends Activity {
         image.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] data = byteArrayOutputStream.toByteArray();
         User user = new User("Ruben", "rubenwoldhuis@gmail.com", "gv27K98cpUWmOyFuI08koW996eK2");
-        TcpManagerService.getInstance().submitMessage(new UploadImageRequest(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), "Testing", ".jpg", Base64.getEncoder().encodeToString(data), user));
+        TcpManagerService.getInstance().submitMessage(new UploadImageRequest(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), "Testing", ".jpg", Base64.getEncoder().encodeToString(data), user, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
     }
 }

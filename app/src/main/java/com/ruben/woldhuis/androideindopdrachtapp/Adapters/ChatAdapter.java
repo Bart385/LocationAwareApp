@@ -1,9 +1,7 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -14,9 +12,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,7 +39,6 @@ public class ChatAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.android
         message = dataSource.get(i);
        myViewHolder.title.setText(message.getTextMessage());
     }
-
 
 
     @Override

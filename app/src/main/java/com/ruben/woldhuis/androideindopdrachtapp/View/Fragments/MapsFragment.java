@@ -8,21 +8,17 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
-import java.util.Iterator;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -31,11 +27,11 @@ import static android.content.Context.LOCATION_SERVICE;
 public class MapsFragment extends SupportMapFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveListener, LocationListener {
     private static final int REQUEST_PERMISSIONS_ID = 1;
     private static final int BOUND_PADDING = 100;
+    double latitude;
+    double longitude;
     private GoogleMap mMap;
     private Queue<Runnable> runnables;
     private android.location.Location location;
-    double latitude;
-    double longitude;
 
     public MapsFragment() {
         // Required empty public constructor
@@ -55,8 +51,9 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d("MAP_READY_TAG", "onMapReady: ");
         mMap = googleMap;
-
+/*
         if (!checkPermission(Manifest.permission.ACCESS_FINE_LOCATION))
             requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_PERMISSIONS_ID);
         else
@@ -90,7 +87,10 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
             Runnable runnable = iterator.next();
             runnable.run();
 
-        }
+        }*/
+        MarkerOptions options = new MarkerOptions();
+        options = options.position(new LatLng(1.00543, 3.50435));
+        mMap.addMarker(options);
     }
 
     public Location getGps() {

@@ -1,25 +1,23 @@
-package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests;
-
+package com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Constants;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 
-public class FriendRequest implements IMessage {
-    private MessageType messageType = MessageType.FriendRequest_Message;
+public class AuthenticationSuccesfulMessage implements IMessage {
+    private MessageType messageType = MessageType.AuthenticationSuccessful_Message;
     private String fireBaseToken;
-    private String friendEmail;
-    private User sender;
+    private User user;
+    private User sender = null;
 
-    public FriendRequest(String fireBaseToken, String friendEmail, User sender) {
+    public AuthenticationSuccesfulMessage(String fireBaseToken, User user) {
         this.fireBaseToken = fireBaseToken;
-        this.friendEmail = friendEmail;
-        this.sender = sender;
+        this.user = user;
     }
 
-    public static FriendRequest fromJson(String json) {
-        return Constants.GSON.fromJson(json, FriendRequest.class);
+    public static AuthenticationSuccesfulMessage fromJson(String json) {
+        return Constants.GSON.fromJson(json, AuthenticationSuccesfulMessage.class);
     }
 
     @Override
@@ -37,8 +35,8 @@ public class FriendRequest implements IMessage {
         return fireBaseToken;
     }
 
-    public String getFriendEmail() {
-        return friendEmail;
+    public User getUser() {
+        return user;
     }
 
     @Override

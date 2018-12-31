@@ -18,12 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
@@ -34,7 +30,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawer
 
 
 public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnMapReadyCallback {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private static MainActivity instance;
     private FirebaseAuth mAuth;
     private MapFragment mMapFragment;
@@ -81,7 +77,7 @@ public class MainActivity extends FragmentActivity
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mapFragment.onCreate(savedInstanceState);
     }
 
     private void authenticateWithServer() {
@@ -108,6 +104,10 @@ public class MainActivity extends FragmentActivity
         }*/
     }
 
+    private void setupGoogleMaps() {
+
+    }
+
     private void askPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
@@ -132,13 +132,15 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Marker"));
-    }
-
+    /*
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            Log.d("MAPS_TAG", "onMapReady: ");
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(0, 0))
+                    .title("Marker"));
+        }
+    */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
 

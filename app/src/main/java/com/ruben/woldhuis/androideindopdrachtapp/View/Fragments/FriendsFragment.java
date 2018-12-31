@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.FriendsRecyclerAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;

@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
+
 public class UserPreferencesService {
     /**
      *
@@ -64,5 +67,19 @@ public class UserPreferencesService {
      */
     public String getScreenName() {
         return this.preferences.getString("name", "ERROR");
+    }
+
+    public void saveCurrentUser(User user) {
+        String json = Constants.GSON.toJson(user);
+        SharedPreferences.Editor editor = this.preferences.edit();
+        editor.putString("current_user", json);
+        editor.apply();
+    }
+
+    public User getCurrentUser() {
+        String json = this.preferences.getString("current_user", "ERROR");
+        if (json.equals("ERROR"))
+            return null;
+        return Constants.GSON.fromJson(json, User.class);
     }
 }

@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.ChatAdapter;
-import com.ruben.woldhuis.androideindopdrachtapp.Adapters.FriendsRecyclerAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
@@ -54,8 +53,8 @@ public class ChatActivity extends Activity {
         sendButton.setOnClickListener(view -> {
             //TODO: implement message logic
             //TcpManagerService.getInstance().submitMessage();
-            TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), user));
             addMess(new TextMessage(null,input.getText().toString(), null));
+            TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), user, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
         });
 
     }
