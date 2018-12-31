@@ -8,8 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.ChatAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
@@ -25,6 +23,7 @@ public class ChatActivity extends Activity {
     RecyclerView.Adapter mAdapter;
     ArrayList<TextMessage> messages;
     RecyclerView mRecyclerView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,7 @@ public class ChatActivity extends Activity {
         sendButton.setOnClickListener(view -> {
             //TODO: implement message logic
             //TcpManagerService.getInstance().submitMessage();
-            addMess(new TextMessage(null,input.getText().toString(), null));
+            addMess(new TextMessage(null, input.getText().toString(), null, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
             TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), user, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
         });
 
@@ -66,7 +65,7 @@ public class ChatActivity extends Activity {
 
     }
 
-    public void addMess(TextMessage msg){
+    public void addMess(TextMessage msg) {
         if (msg != null) {
             messages.add(msg);
             mAdapter = new ChatAdapter(getApplicationContext(), messages);
