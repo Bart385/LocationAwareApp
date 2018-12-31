@@ -48,8 +48,8 @@ public class ChatAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.android
 
     public int test() {
         int layout;
-        if (message != null) {
-            if (message.equals(FirebaseAuth.getInstance().getCurrentUser())) {
+        if (message.getSender().getEmail() != null) {
+            if (message.getSender().getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
                 layout = R.layout.my_message;
             } else
                 layout = R.layout.your_message;

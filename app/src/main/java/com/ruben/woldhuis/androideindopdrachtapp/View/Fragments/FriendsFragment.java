@@ -37,6 +37,8 @@ public class FriendsFragment extends Fragment implements Serializable {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         friend = new ArrayList<>();
         friend.add(new User("Test", "digitallego3@gmail.com", "1vG9DOn2rfh1KCo6CKNR9l5NYSB3"));
+        friend.add(new User("Ruben", "rubenwoldhuis@gmail.com", "gv27K98cpUWmOyFuI08koW996eK2"));
+        friend.add(new User("Bart", "bart.vanes1@gmail.com", "M8bMsIsr40Zg7uEgbRFMhldkoEl2"));
 
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
 
