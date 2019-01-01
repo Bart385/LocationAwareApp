@@ -18,14 +18,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
 
@@ -37,7 +41,6 @@ public class MainActivity extends FragmentActivity
     private UserPreferencesService userPreferencesService;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
-    private SupportMapFragment mapFragment;
     private android.support.v4.app.FragmentManager fragmentManager;
 
     public static MainActivity getInstance() {
@@ -55,9 +58,9 @@ public class MainActivity extends FragmentActivity
         setContentView(R.layout.activity_main);
         //  askPermissions();
         instance = this;
+        mMapFragment = new MapFragment();
         fragmentManager = getSupportFragmentManager();
-        mapFragment = new SupportMapFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, mMapFragment).commit();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -69,15 +72,8 @@ public class MainActivity extends FragmentActivity
 
         //Alles voor de map
 
-        mMapFragment = MapFragment.newInstance();
-        FragmentTransaction fragmentTransaction =
-                getFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.container, mMapFragment);
-        fragmentTransaction.commit();
-
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.onCreate(savedInstanceState);
+        mMapFragment.getMapAsync(googleMap -> mMapFragment.addMarker(googleMap));
+        mMapFragment.onCreate(savedInstanceState);
     }
 
     private void authenticateWithServer() {

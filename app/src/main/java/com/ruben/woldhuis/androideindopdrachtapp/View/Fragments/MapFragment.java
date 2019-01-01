@@ -24,7 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class MapsFragment extends SupportMapFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveListener, LocationListener {
+public class MapFragment extends SupportMapFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveListener, LocationListener {
     private static final int REQUEST_PERMISSIONS_ID = 1;
     private static final int BOUND_PADDING = 100;
     double latitude;
@@ -33,7 +33,7 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
     private Queue<Runnable> runnables;
     private android.location.Location location;
 
-    public MapsFragment() {
+    public MapFragment() {
         // Required empty public constructor
     }
 
@@ -88,9 +88,8 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
             runnable.run();
 
         }*/
-        MarkerOptions options = new MarkerOptions();
-        options = options.position(new LatLng(1.00543, 3.50435));
-        mMap.addMarker(options);
+
+
     }
 
     public Location getGps() {
@@ -124,6 +123,7 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
     public Location getLocation() {
         return location;
     }
+
 
     private boolean checkPermission(String permission) {
         if (ActivityCompat.checkSelfPermission(getContext(), permission) == PackageManager.PERMISSION_GRANTED)
@@ -166,4 +166,11 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
         return false;
     }
 
+    public void addMarker(GoogleMap googleMap) {
+        Location location;
+        location = getGps();
+        MarkerOptions options = new MarkerOptions();
+        options = options.position(new LatLng(location.getLatitude(), location.getLongitude()));
+        googleMap.addMarker(options);
+    }
 }
