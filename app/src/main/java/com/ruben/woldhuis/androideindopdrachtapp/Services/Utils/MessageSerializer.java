@@ -4,10 +4,12 @@ import android.util.Log;
 
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.IMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.EventCreationReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.FriendReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.FriendsReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.EventCreationRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendsRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadAudioMessageRequest;
@@ -129,6 +131,10 @@ public class MessageSerializer {
                         return AuthenticationFailedMessage.fromJson(json);
                     case AuthenticationSuccessful_Message:
                         return AuthenticationSuccesfulMessage.fromJson(json);
+                    case EventCreationRequest_Message:
+                        return EventCreationRequest.fromJson(json);
+                    case EventCreationReply_Message:
+                        return EventCreationReply.fromJson(json);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
