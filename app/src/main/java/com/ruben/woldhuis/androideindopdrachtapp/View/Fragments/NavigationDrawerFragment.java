@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.SettingsActivity;
 
@@ -191,7 +192,6 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
             System.out.println("Deze" + position);
-            //TODO: Methode aanmaken die case aanroept met methode om de goede activity aan te zetten.
             openActivityFromDrawer(position);
         }
         if (mDrawerLayout != null) {
@@ -277,6 +277,7 @@ public class NavigationDrawerFragment extends Fragment {
             case 2:
                 break;
             case 3:
+                intent = new Intent(getActivity(), EventActivity.class);
                 break;
             case 4:
                 intent = new Intent(getActivity(), SettingsActivity.class);

@@ -42,6 +42,7 @@
         </activity>
         <activity android:name=".View.Activities.MapsActivity" />
         <activity android:name=".View.Activities.SettingsActivity" />
+        <activity android:name=".View.Activities.EventActivity"></activity>
         <activity
             android:name=".View.Activities.LoginActivity"
             android:label="@string/title_activity_login"
