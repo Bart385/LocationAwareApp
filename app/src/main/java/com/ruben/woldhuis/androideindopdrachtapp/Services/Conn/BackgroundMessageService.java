@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.EventCreationReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
@@ -60,6 +61,10 @@ public class BackgroundMessageService extends IntentService {
         UserPreferencesService.getInstance(getApplication()).saveCurrentUser(message.getUser());
     }
 
+    private void handleEventCreationReply(EventCreationReply message) {
+        Log.d(TAG, message.toJson());
+    }
+
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         pushNotification = PushNotification.getInstance(getApplicationContext());
@@ -102,6 +107,11 @@ public class BackgroundMessageService extends IntentService {
                     break;
                 case AuthenticationSuccessful_Message:
                     handleAuthenticationSuccessfulMessage((AuthenticationSuccesfulMessage) message);
+                    break;
+                case EventCreationReply_Message:
+                    handleEventCreationReply((EventCreationReply) message);
+                    break;
+                case EventCreationRequest_Message:
                     break;
             }
         });
