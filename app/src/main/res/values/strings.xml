@@ -54,4 +54,7 @@
     <string name="default_notification_channel_id" translatable="false">FCM_Notification</string>
     <string name="fcm_message" translatable="false">FCM Message</string>
 
+    <string name="AddeventTitle">Set your name for the event here the event will be made on your position</string>
+    <string name="eventTitle">Event Title</string>
+
 </resources>

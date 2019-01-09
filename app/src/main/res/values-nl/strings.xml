@@ -38,5 +38,7 @@
     <string name="photo">Foto</string>
     <string name="newpassword"> U heeft een mail ontvangen waarin u uw mail kunt resetten</string>
     <string name="write_message">Schrijf een bericht</string>
+    <string name="AddeventTitle">Vul je naam in voor het event en het event wordt gemaakt op jouw locatie</string>
+    <string name="eventTitle">Event Titel</string>
 
 </resources>
