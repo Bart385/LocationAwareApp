@@ -51,5 +51,7 @@
 
     <string name="newpassword"> U received a mail for a new password in the given email adress.</string>
     <string name="write_message">Write a Message</string>
+    <string name="default_notification_channel_id" translatable="false">FCM_Notification</string>
+    <string name="fcm_message" translatable="false">FCM Message</string>
 
 </resources>

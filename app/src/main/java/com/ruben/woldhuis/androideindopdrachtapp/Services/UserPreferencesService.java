@@ -53,6 +53,19 @@ public class UserPreferencesService {
         return token;
     }
 
+    public void saveFireBaseMessagingId(String fireBaseMessagingToken) {
+        SharedPreferences.Editor editor = this.preferences.edit();
+        editor.putString("firebase_messaging_token", fireBaseMessagingToken);
+        editor.apply();
+    }
+
+    public String getFireBaseMessagingId() {
+        String token = this.preferences.getString("firebase_messaging_token", "ERROR");
+        if (token.equals("ERROR"))
+            return null;
+        return token;
+    }
+
     /**
      * @param name
      */
@@ -82,4 +95,6 @@ public class UserPreferencesService {
             return null;
         return Constants.GSON.fromJson(json, User.class);
     }
+
+
 }

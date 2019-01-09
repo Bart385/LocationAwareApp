@@ -86,7 +86,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener {
                                                            if (task.isSuccessful()) {
                                                                String idToken = task.getResult().getToken();
                                                                UserPreferencesService.getInstance(getApplication()).saveAuthenticationKey(idToken);
-                                                               TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken));
+                                                               TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, UserPreferencesService.getInstance(getApplication()).getFireBaseMessagingId()));
                                                            } else
                                                                Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
 

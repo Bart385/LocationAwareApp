@@ -16,8 +16,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
@@ -29,6 +35,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawer
 
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    private static final String TAG = "MAIN_ACTIVITY_TAG";
     private static MainActivity instance;
     private FirebaseAuth mAuth;
     private MapFragment mMapFragment;
@@ -41,6 +48,8 @@ public class MainActivity extends FragmentActivity
         return instance;
     }
 
+    //TODO: Check for googleplayservices
+    /*https://firebase.google.com/docs/cloud-messaging/android/client*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +57,25 @@ public class MainActivity extends FragmentActivity
         startService(messagingServiceIntent);
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         mAuth = FirebaseAuth.getInstance();
-        authenticateWithServer();
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        userPreferencesService.saveFireBaseMessagingId(token);
+                        authenticateWithServer();
+                        // Log and toast
+                        Log.d(TAG, token);
+                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
         setContentView(R.layout.activity_main);
         //  askPermissions();
         instance = this;
@@ -66,7 +93,7 @@ public class MainActivity extends FragmentActivity
 
         //Alles voor de map
 
-        mMapFragment.getMapAsync(googleMap -> mMapFragment.addMarker(googleMap));
+        //   mMapFragment.getMapAsync(googleMap -> mMapFragment.addMarker(googleMap));
         mMapFragment.onCreate(savedInstanceState);
     }
 
@@ -83,7 +110,7 @@ public class MainActivity extends FragmentActivity
                             String idToken = task.getResult().getToken();
                             if (idToken != null) {
                                 UserPreferencesService.getInstance(getApplication()).saveAuthenticationKey(idToken);
-                                TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken));
+                                TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, userPreferencesService.getFireBaseMessagingId()));
                             }
                         } else
                             Log.e("IDENTIFICATION_TAG", task.getException().getMessage());

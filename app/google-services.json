@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "267617579484-0u0cg0umqjiqa7a48jrp0ftnb4d73k3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ruben.woldhuis.androideindopdrachtapp",
+            "certificate_hash": "7ad585f68991886b2547ca179048344188fbcbb8"
+          }
+        },
+        {
           "client_id": "267617579484-r55oogbk6kllqi23kd38tr3t93svusva.apps.googleusercontent.com",
           "client_type": 3
         }
