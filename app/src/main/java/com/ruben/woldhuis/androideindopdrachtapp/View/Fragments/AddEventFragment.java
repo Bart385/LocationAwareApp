@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Application;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
-
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,18 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.EventCreationReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.EventCreationRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
-
-import java.util.Queue;
 
 import static android.content.Context.LOCATION_SERVICE;
 import static com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventActivity.openMap;
@@ -51,12 +44,11 @@ public class AddEventFragment extends Fragment {
         TextView EventName = view.findViewById(R.id.eventTitle);
         Button cancelButton = view.findViewById(R.id.EventCancelButton);
         Button confirmButton = view.findViewById(R.id.confirmAddEvent);
-
         Application app = getActivity().getApplication();
         confirmButton.setOnClickListener(view1 -> {
             TcpManagerService.getInstance().submitMessage(new EventCreationRequest(
-                    FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),
-                    UserPreferencesService.getInstance(app).getCurrentUser(),
+                    UserPreferencesService.getInstance(getActivity().getApplication()).getAuthenticationKey(),
+                    UserPreferencesService.getInstance(getActivity().getApplication()).getCurrentUser(),
                     getGps(),
                     String.valueOf(EventName.getText())
             ));
@@ -87,7 +79,27 @@ public class AddEventFragment extends Fragment {
                 if (ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return null;
                 }
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(android.location.Location location) {
+
+                    }
+
+                    @Override
+                    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String s) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String s) {
+
+                    }
+                });
                 if (locationManager != null) {
                     locationLocationmng = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     location = new Location(locationLocationmng.getLatitude(), locationLocationmng.getLongitude());

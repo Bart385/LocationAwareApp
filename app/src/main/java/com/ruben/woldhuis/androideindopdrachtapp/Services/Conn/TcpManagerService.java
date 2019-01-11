@@ -32,7 +32,7 @@ public class TcpManagerService {
      */
     private TcpManagerService() {
         this.connectionService = new TcpConnectionService();
-        CompletableFuture.runAsync(this.connectionService.createConnection(this.connectionService));
+        CompletableFuture.runAsync(this.connectionService.createConnection());
     }
 
 
@@ -49,7 +49,7 @@ public class TcpManagerService {
      * @param message
      */
     public CompletableFuture submitMessage(IMessage message) {
-        return CompletableFuture.runAsync(this.connectionService.writeMessageToServer(message, this.connectionService.toServer));
+        return CompletableFuture.runAsync(this.connectionService.writeMessageToServer(message));
     }
 
     /**
@@ -125,16 +125,15 @@ public class TcpManagerService {
          *
          * @throws IOException thrown when the socket disconnects during the DataOutputStream flushing.
          */
-        private Runnable createConnection(TcpConnectionService tcpConnectionService) {
+        private Runnable createConnection() {
             return () -> {
                 try {
-                    tcpConnectionService.socket = new Socket(Constants.SERVER_HOSTNAME, Constants.SERVER_PORT);
-                    tcpConnectionService.toServer = new DataOutputStream(socket.getOutputStream());
-                    tcpConnectionService.toServer.flush();
-
-                    tcpConnectionService.fromServer = new DataInputStream(socket.getInputStream());
-                    tcpConnectionService.setRunning(true);
-                    tcpConnectionService.startMessageReceiver();
+                    socket = new Socket(Constants.SERVER_HOSTNAME, Constants.SERVER_PORT);
+                    toServer = new DataOutputStream(socket.getOutputStream());
+                    toServer.flush();
+                    fromServer = new DataInputStream(socket.getInputStream());
+                    setRunning(true);
+                    startMessageReceiver();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -146,7 +145,7 @@ public class TcpManagerService {
          *
          * @param message The message that will be send.
          */
-        private Runnable writeMessageToServer(IMessage message, DataOutputStream toServer) {
+        private Runnable writeMessageToServer(IMessage message) {
             return () -> {
                 byte[] buffer = MessageSerializer.serialize(message);
                 try {
@@ -190,6 +189,8 @@ public class TcpManagerService {
                 while (running) {
                     IMessage message = getMessage();
                     Log.d("RECEIVING_TAG", "in receiveMessage");
+                    Log.d("RECEIVING_TAG", "GOT: " + message.toJson());
+
                     if (messageReceiverListeners.isEmpty()) {
                         errorListeners.forEach(listener -> listener.onTcpError(new Error("No messageReceiverListener available")));
                     } else {

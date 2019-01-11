@@ -72,9 +72,6 @@
         <activity android:name=".View.Activities.LocationAwareChatActivity" />
         <activity android:name=".View.Activities.ProfileActivity" />
 
-        <service
-            android:name=".Services.Conn.BackgroundMessageService"
-            android:exported="false" />
         <service android:name=".Services.C2DM.FCMReceiverService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
