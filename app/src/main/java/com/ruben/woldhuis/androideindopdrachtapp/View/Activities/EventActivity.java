@@ -18,6 +18,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requ
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Meetup;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.AddEventFragment;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment;
 
