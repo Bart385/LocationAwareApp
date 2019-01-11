@@ -1,4 +1,4 @@
-package com.ruben.woldhuis.androideindopdrachtapp.ViewModel.Adapters;
+package com.ruben.woldhuis.androideindopdrachtapp.Adapters;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

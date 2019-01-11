@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
 
-public class LocationAwareChatActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class LocationAwareChatActivity extends Activity{
+
+
+    /*implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -85,5 +88,5 @@ public class LocationAwareChatActivity extends Activity implements NavigationDra
         }
 
 
-    }
+    }*/
 }

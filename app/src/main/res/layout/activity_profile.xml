@@ -22,56 +22,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="213dp"
         android:text="@string/profile_name"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/profil_name"
         android:layout_width="122dp"
         android:layout_height="28dp"
-        android:layout_marginStart="84dp"
+        android:layout_marginStart="31dp"
         android:layout_marginTop="60dp"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/profile_emailAdress"
+        app:layout_constraintStart_toEndOf="@+id/text1"
         app:layout_constraintTop_toBottomOf="@+id/profile_imageView" />
 
     <TextView
         android:id="@+id/profile_emailChange"
         android:layout_width="wrap_content"
         android:layout_height="26dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="33dp"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/profile_emailAdress"
-        app:layout_constraintTop_toBottomOf="@+id/text1" />
+        app:layout_constraintTop_toBottomOf="@+id/profil_name" />
 
     <TextView
         android:id="@+id/profile_emailAdress"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="37dp"
         android:text="Email Adress"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text1" />
-
-    <Button
-        android:id="@+id/profile_saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:text="@string/confirm_changes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.558"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_emailChange" />
 
 </android.support.constraint.ConstraintLayout>
