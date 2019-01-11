@@ -76,12 +76,7 @@ public class Camera2Activity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera2);
-        Intent intent = getIntent();
-        fromChat = intent.getBooleanExtra("fromChat", false);
-        if (fromChat) {
-            target = (User) intent.getSerializableExtra("target");
-            Log.d(TAG, target.toString());
-        }
+
         flashOn = false;
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
@@ -148,6 +143,12 @@ public class Camera2Activity extends Activity {
                 Camera2Activity.this.cameraDevice = null;
             }
         };
+        Intent intent = getIntent();
+        fromChat = intent.getBooleanExtra("fromChat", false);
+        if (fromChat) {
+            target = (User) intent.getSerializableExtra("target");
+            Log.d(TAG, target.toString());
+        }
     }
 
     @Override

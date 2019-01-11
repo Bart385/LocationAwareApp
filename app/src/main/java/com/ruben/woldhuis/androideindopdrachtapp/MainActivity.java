@@ -54,6 +54,12 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                String value = getIntent().getExtras().getString(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
+        }
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         mAuth = FirebaseAuth.getInstance();
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);

@@ -103,7 +103,6 @@ public class FCMReceiverService extends FirebaseMessagingService {
         Log.d(TAG, "Short lived task is done.");
     }
 
-
     /**
      * Create and show a simple notification containing the received FCM message.
      *
