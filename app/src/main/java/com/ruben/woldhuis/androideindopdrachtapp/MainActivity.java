@@ -93,7 +93,7 @@ public class MainActivity extends FragmentActivity
 
         //Alles voor de map
 
-        //   mMapFragment.getMapAsync(googleMap -> mMapFragment.addMarker(googleMap));
+        mMapFragment.getMapAsync(googleMap -> mMapFragment.addMarker(googleMap));
         mMapFragment.onCreate(savedInstanceState);
     }
 
@@ -133,7 +133,6 @@ public class MainActivity extends FragmentActivity
                     Constants.GPS_REQUEST);
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -149,15 +148,9 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    /*
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            Log.d("MAPS_TAG", "onMapReady: ");
-            googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(0, 0))
-                    .title("Marker"));
-        }
-    */
+
+
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
 

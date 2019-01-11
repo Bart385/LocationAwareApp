@@ -167,10 +167,10 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     }
 
     public void addMarker(GoogleMap googleMap) {
-        Location location;
-        location = getGps();
-        MarkerOptions options = new MarkerOptions();
-        options = options.position(new LatLng(location.getLatitude(), location.getLongitude()));
-        googleMap.addMarker(options);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        googleMap.setMyLocationEnabled(true);
     }
 }
