@@ -30,7 +30,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
 import java.io.File;
@@ -64,6 +66,8 @@ public class Camera2Activity extends Activity {
     private CaptureRequest.Builder captureRequestBuilder;
     private boolean flashSupported;
     private boolean flashOn;
+    private boolean fromChat;
+    private User target;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,7 @@ public class Camera2Activity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera2);
+
         flashOn = false;
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
@@ -138,6 +143,12 @@ public class Camera2Activity extends Activity {
                 Camera2Activity.this.cameraDevice = null;
             }
         };
+        Intent intent = getIntent();
+        fromChat = intent.getBooleanExtra("fromChat", false);
+        if (fromChat) {
+            target = (User) intent.getSerializableExtra("target");
+            Log.d(TAG, target.toString());
+        }
     }
 
     @Override
@@ -235,11 +246,14 @@ public class Camera2Activity extends Activity {
                 e.printStackTrace();
             }
         }
-
-        Intent imageEditor = new Intent(this, ImageEditorActivity.class);
-        imageEditor.putExtra("IMAGE_PATH", img.getAbsolutePath());
-        startActivity(imageEditor);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        if (fromChat) {
+            Intent imageEditor = new Intent(this, ImageEditorActivity.class);
+            imageEditor.putExtra("IMAGE_PATH", img.getAbsolutePath());
+            imageEditor.putExtra("target", target);
+            startActivity(imageEditor);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        }
+        Toast.makeText(getApplicationContext(), "Saved image to: " + img.getAbsolutePath(), Toast.LENGTH_LONG).show();
     }
 
     private void setUpCamera(int width, int height) {

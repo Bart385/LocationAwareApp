@@ -30,7 +30,7 @@ public class ChatActivity extends Activity {
         setContentView(R.layout.activity_friend_chat);
         Intent i = getIntent();
         messages = new ArrayList<>();
-        User user = (User) i.getSerializableExtra("ContactObject");
+        User target = (User) i.getSerializableExtra("ContactObject");
         TextMessage message = (TextMessage) i.getSerializableExtra("message");
         mRecyclerView = findViewById(R.id.messages_view);
         mAdapter = new ChatAdapter(getApplicationContext(), messages);
@@ -49,13 +49,15 @@ public class ChatActivity extends Activity {
         imagebutton.setOnClickListener(view -> {
             //TODO: implement message logic for images
             Intent intent = new Intent(this, Camera2Activity.class);
+            intent.putExtra("fromChat", true);
+            intent.putExtra("target", target);
             startActivity(intent);
         });
         sendButton.setOnClickListener(view -> {
             //TODO: implement message logic
             //TcpManagerService.getInstance().submitMessage();
             addMess(new TextMessage(null, input.getText().toString(), null, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
-            TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), user, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
+            TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), target, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
         });
 
     }

@@ -1,6 +1,7 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class ImageEditorActivity extends Activity {
     private FloatingActionButton send;
     private FloatingActionButton cancel;
     private boolean deleteFile = true;
+    private User target;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +36,8 @@ public class ImageEditorActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        Intent intent = getIntent();
+        target = (User) intent.getSerializableExtra("target");
         setContentView(R.layout.activity_image_editor);
         imageView = findViewById(R.id.image_editor_image_view);
         send = findViewById(R.id.upload_photo);

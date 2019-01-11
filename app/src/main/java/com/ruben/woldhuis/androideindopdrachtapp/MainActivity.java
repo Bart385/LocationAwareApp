@@ -25,8 +25,9 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.BackgroundMessageService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.MessageHandler;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment;
@@ -53,8 +54,12 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent messagingServiceIntent = new Intent(this, BackgroundMessageService.class);
-        startService(messagingServiceIntent);
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                String value = getIntent().getExtras().getString(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
+        }
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         mAuth = FirebaseAuth.getInstance();
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
@@ -98,6 +103,8 @@ public class MainActivity extends FragmentActivity
     }
 
     private void authenticateWithServer() {
+        TcpManagerService.getInstance().subscribeToMessageEvents(message ->
+                MessageHandler.getInstance(PushNotification.getInstance(getApplicationContext()), getApplication()).handleMessage(message));
         TcpManagerService.getInstance().subscribeToErrorEvents(error -> Log.e("MAIN_ACTIVITY_TAG", error.getMessage()));
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -133,6 +140,7 @@ public class MainActivity extends FragmentActivity
                     Constants.GPS_REQUEST);
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -147,8 +155,6 @@ public class MainActivity extends FragmentActivity
 
         }
     }
-
-
 
 
     @Override

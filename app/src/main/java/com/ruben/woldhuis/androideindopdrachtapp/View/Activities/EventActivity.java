@@ -1,24 +1,16 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
 
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.firebase.database.core.view.EventGenerator;
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.AllEventsAdapter;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.EventCreationRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Meetup;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.AddEventFragment;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment;
 
@@ -34,6 +26,15 @@ public class EventActivity extends FragmentActivity {
     private MapFragment mapFragment;
     private FragmentManager fragmentManager;
     private AddEventFragment addEventFragment;
+
+    public static void openMap(FragmentManager support) {
+        MapFragment mapFragment;
+        FragmentManager fragmentManager;
+
+        mapFragment = new MapFragment();
+        fragmentManager = support;
+        fragmentManager.beginTransaction().replace(R.id.eventMapFragment, mapFragment).commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +58,7 @@ public class EventActivity extends FragmentActivity {
         addEventFragment = new AddEventFragment();
 
         addEventButton.setOnClickListener(view -> {
-        fragmentManager.beginTransaction().replace(R.id.eventMapFragment, addEventFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.eventMapFragment, addEventFragment).commit();
         });
-    }
-
-    public static void openMap(FragmentManager support){
-        MapFragment mapFragment;
-        FragmentManager fragmentManager;
-
-        mapFragment = new MapFragment();
-        fragmentManager = support;
-        fragmentManager.beginTransaction().replace(R.id.eventMapFragment, mapFragment).commit();
     }
 }

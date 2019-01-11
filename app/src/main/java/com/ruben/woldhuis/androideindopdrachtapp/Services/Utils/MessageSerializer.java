@@ -7,11 +7,17 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.MessageType;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.EventCreationReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.FriendReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.FriendsReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.GetAllEventsReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.SubscribeToEventReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UnsubscribeFromEventReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.EventCreationRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendsRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.GetAllEventsRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.SubscribeToEventRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UnsubscribeFromEventRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadAudioMessageRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationFailedMessage;
@@ -129,12 +135,24 @@ public class MessageSerializer {
                         return FriendsRequest.fromJson(json);
                     case AuthenticationFailed_Message:
                         return AuthenticationFailedMessage.fromJson(json);
-                    case AuthenticationSuccessful_Message:
-                        return AuthenticationSuccesfulMessage.fromJson(json);
                     case EventCreationRequest_Message:
                         return EventCreationRequest.fromJson(json);
                     case EventCreationReply_Message:
                         return EventCreationReply.fromJson(json);
+                    case GetAllEventsReply_Message:
+                        return GetAllEventsReply.fromJson(json);
+                    case GetAllEventsRequest_Message:
+                        return GetAllEventsRequest.fromJson(json);
+                    case SubscribeToEventReply_Message:
+                        return SubscribeToEventReply.fromJson(json);
+                    case SubscribeToEventRequest_Message:
+                        return SubscribeToEventRequest.fromJson(json);
+                    case AuthenticationSuccessful_Message:
+                        return AuthenticationSuccesfulMessage.fromJson(json);
+                    case UnsubscribeFromEventReply_Message:
+                        return UnsubscribeFromEventReply.fromJson(json);
+                    case UnsubscribeFromEventRequest_Message:
+                        return UnsubscribeFromEventRequest.fromJson(json);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

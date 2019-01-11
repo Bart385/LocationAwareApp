@@ -14,7 +14,10 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 
 public class FCMReceiverService extends FirebaseMessagingService {
     private static final String TAG = "FCM_RECEIVER_TAG";
@@ -100,7 +103,6 @@ public class FCMReceiverService extends FirebaseMessagingService {
         Log.d(TAG, "Short lived task is done.");
     }
 
-
     /**
      * Create and show a simple notification containing the received FCM message.
      *
@@ -146,7 +148,6 @@ public class FCMReceiverService extends FirebaseMessagingService {
      * @param token The new token.
      */
     private void sendRegistrationTokenToServer(String token) {
-        //TODO: Implement sending token
-        //   TcpManagerService.getInstance().submitMessage()
+        TcpManagerService.getInstance().submitMessage(new IdentificationMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), token));
     }
 }
