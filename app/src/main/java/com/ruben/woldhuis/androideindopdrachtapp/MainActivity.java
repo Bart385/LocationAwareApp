@@ -18,11 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.MessageHandler;
@@ -63,36 +60,51 @@ public class MainActivity extends FragmentActivity
         mAuth = FirebaseAuth.getInstance();
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
-                        userPreferencesService.saveFireBaseMessagingId(token);
-                        authenticateWithServer();
-                        // Log and toast
-                        Log.d(TAG, token);
-                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "getInstanceId failed", task.getException());
+                        return;
                     }
+
+                    // Get new Instance ID token
+                    String token = task.getResult().getToken();
+                    userPreferencesService.saveFireBaseMessagingId(token);
+                    authenticateWithServer();
+                    // Log and toast
+                    Log.d(TAG, token);
+                    Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                 });
+
         setContentView(R.layout.activity_main);
         //  askPermissions();
         instance = this;
-        mMapFragment = new MapFragment();
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, mMapFragment).commit();
+        mMapFragment = new
+
+                MapFragment();
+
+        fragmentManager =
+
+                getSupportFragmentManager();
+        fragmentManager.beginTransaction().
+
+                replace(R.id.container, mMapFragment).
+
+                commit();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+
+                getSupportFragmentManager().
+
+                        findFragmentById(R.id.navigation_drawer);
+
+        mTitle =
+
+                getTitle();
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                (DrawerLayout)
+
+                        findViewById(R.id.drawer_layout));
         mNavigationDrawerFragment.setUpHeader();
 
         //Alles voor de map
@@ -104,7 +116,7 @@ public class MainActivity extends FragmentActivity
 
     private void authenticateWithServer() {
         TcpManagerService.getInstance().subscribeToMessageEvents(message ->
-                MessageHandler.getInstance(PushNotification.getInstance(getApplicationContext()), getApplication()).handleMessage(message));
+                MessageHandler.getInstance(PushNotification.getInstance(getApplication()), getApplication()).handleMessage(message));
         TcpManagerService.getInstance().subscribeToErrorEvents(error -> Log.e("MAIN_ACTIVITY_TAG", error.getMessage()));
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);

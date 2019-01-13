@@ -56,5 +56,8 @@
 
     <string name="AddeventTitle">Set your name for the event here the event will be made on your position</string>
     <string name="eventTitle">Event Title</string>
+    <string name="unregisteredSourceNotification">Got a message from an unregistered source</string>
+    <string name="unsubSuccessful">You successfully unsubscribed from</string>
+    <string name="subSuccessful">You successfully subscribed to</string>
 
 </resources>
