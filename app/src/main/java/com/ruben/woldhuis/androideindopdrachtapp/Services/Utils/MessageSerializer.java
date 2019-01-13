@@ -22,6 +22,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requ
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationFailedMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationSuccesfulMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.EventChatMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.LocationUpdateMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.SignOutMessage;
@@ -153,6 +154,8 @@ public class MessageSerializer {
                         return UnsubscribeFromEventReply.fromJson(json);
                     case UnsubscribeFromEventRequest_Message:
                         return UnsubscribeFromEventRequest.fromJson(json);
+                    case EventChat_Message:
+                        return EventChatMessage.fromJson(json);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

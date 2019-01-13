@@ -56,8 +56,7 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
-                String value = getIntent().getExtras().getString(key);
-                Log.d(TAG, "Key: " + key + " Value: " + value);
+                Log.d(TAG, "onCreate: " + key);
             }
         }
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
