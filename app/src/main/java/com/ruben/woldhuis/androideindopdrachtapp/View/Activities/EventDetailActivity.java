@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.AllEventParticipantsAdapter;
-import com.ruben.woldhuis.androideindopdrachtapp.Adapters.AllEventsAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 

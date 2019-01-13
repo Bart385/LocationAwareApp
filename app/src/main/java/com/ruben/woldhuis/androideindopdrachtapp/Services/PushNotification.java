@@ -1,19 +1,23 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Services;
 
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
 
-import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.EventCreationReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.FriendReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.FriendsReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.EventChatMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
@@ -23,9 +27,11 @@ public class PushNotification {
     private static final String TAG = "PUSH_NOTIFICATION_TAG";
     private static PushNotification instance;
     private NotificationManagerCompat notificationManager;
+    private Application application;
 
-    private PushNotification(Context context) {
-        notificationManager = NotificationManagerCompat.from(context);
+    private PushNotification(Application application) {
+        this.application = application;
+        notificationManager = NotificationManagerCompat.from(application);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel chatChannel = new NotificationChannel(
                     NOTIFICATION_CHANNEL,
@@ -34,27 +40,27 @@ public class PushNotification {
             );
             chatChannel.setDescription("A notification appears when another user sends a message");
 
-            NotificationManager manager = context.getSystemService(NotificationManager.class);
+            NotificationManager manager = application.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(chatChannel);
         }
     }
 
-    public static PushNotification getInstance(Context context) {
+    public static PushNotification getInstance(Application application) {
         if (instance == null)
-            instance = new PushNotification(context);
+            instance = new PushNotification(application);
         return instance;
     }
 
-    public void sendTextMessageNotification(TextMessage message, Context context) {
-        Intent resultIntent = new Intent(context, ChatActivity.class);
+    public void sendTextMessageNotification(TextMessage message) {
+        Intent resultIntent = new Intent(application, ChatActivity.class);
         resultIntent.putExtra("ContactObject", message.getSender());
         resultIntent.putExtra("message", message);
 
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
+        Notification notification = new NotificationCompat.Builder(application, NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.twitter_button)
                 .setContentTitle(message.getMessageType().name())
                 .setContentText(message.getTextMessage())
@@ -65,25 +71,32 @@ public class PushNotification {
         notificationManager.notify(1, notification);
     }
 
-    public void sendImageMessageNotification(UploadAudioMessageReply message, Context context) {
+    public void sendEventChatMessageNotification(EventChatMessage message) {
 
     }
 
-    public void sendIdentificationNotification(IdentificationMessage message, Context context) {
-        Intent resultIntent = new Intent(context, MainActivity.class);
+    public void sendEventCreationNotification(EventCreationReply message) {
 
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addNextIntentWithParentStack(resultIntent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 
-        Notification notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
-                .setSmallIcon(R.drawable.twitter_button)
-                .setContentTitle(message.getMessageType().name())
-                .setContentText(message.getFireBaseToken())
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(resultPendingIntent)
-                .build();
+    public void sendFriendRequestNotification(FriendRequest message) {
 
-        notificationManager.notify(1, notification);
+    }
+
+    public void sendFriendReplyNotification(FriendReply message) {
+
+    }
+
+    public void sendFriendsReplyNotification(FriendsReply message) {
+
+    }
+
+    public void sendAudioMessageNotification(UploadAudioMessageReply message) {
+
+    }
+
+    public void sendImageMessageNotification(UploadImageReply message) {
+
     }
 }
+

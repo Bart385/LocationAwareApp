@@ -1,18 +1,8 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
-
-public class LocationAwareChatActivity extends Activity{
+public class LocationAwareChatActivity extends Activity {
 
 
     /*implements NavigationDrawerFragment.NavigationDrawerCallbacks {

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Meetup;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventDetailActivity;

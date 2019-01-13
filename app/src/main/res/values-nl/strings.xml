@@ -40,5 +40,8 @@
     <string name="write_message">Schrijf een bericht</string>
     <string name="AddeventTitle">Vul je naam in voor het event en het event wordt gemaakt op jouw locatie</string>
     <string name="eventTitle">Event Titel</string>
+    <string name="unregisteredSourceNotification">Bericht ontvangen van een ongeregistreerde verzender</string>
+    <string name="unsubSuccessful">Je bent nu niet meer geabonneerd op</string>
+    <string name="subSuccessful">Je bent nu geabonneerd op</string>
 
 </resources>
