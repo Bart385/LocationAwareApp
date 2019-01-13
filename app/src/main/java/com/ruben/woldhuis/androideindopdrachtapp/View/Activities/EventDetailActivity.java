@@ -46,5 +46,7 @@ public class EventDetailActivity extends Activity implements Serializable {
 
         mAdapter = new AllEventParticipantsAdapter(this, allUsers);
         mRecyclerView.setAdapter(mAdapter);
+
+        //TODO: Alles invullen voor Event Detail
     }
 }

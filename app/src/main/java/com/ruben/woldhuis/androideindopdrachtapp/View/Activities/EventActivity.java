@@ -45,6 +45,8 @@ public class EventActivity extends FragmentActivity {
         meetups = new ArrayList<>();
         meetups.add(new Meetup("Test", LocalTime.MIDNIGHT, new Location(1.0, 2.0)));
 
+        //TODO: Alle events opvragen.
+
         FloatingActionButton addEventButton = findViewById(R.id.AddEventButton);
 
         mRecyclerView = findViewById(R.id.AllEventRecyclerview);

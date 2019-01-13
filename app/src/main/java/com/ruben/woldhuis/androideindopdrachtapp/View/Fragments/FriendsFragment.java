@@ -42,6 +42,8 @@ public class FriendsFragment extends Fragment implements Serializable {
 
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
 
+        //TODO: netter opzetten is nu heel kaal
+
         mRecyclerView = v.findViewById(R.id.Friend_RecyclerView);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);

@@ -54,7 +54,7 @@ public class AllEventsAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.an
             title = (TextView) view.findViewById(R.id.event_name_TextView);
 
 
-            //TODO: Event veraderen naar Meetup ff wachten op antwoord
+            //TODO: Event veraderen naar Meetup ff wachten op antwoord want welke is het?
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
