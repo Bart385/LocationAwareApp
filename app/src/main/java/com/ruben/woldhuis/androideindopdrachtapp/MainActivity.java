@@ -99,6 +99,7 @@ public class MainActivity extends FragmentActivity
 
         mMapFragment.getMapAsync(googleMap -> mMapFragment.addMarker(googleMap));
         mMapFragment.onCreate(savedInstanceState);
+
     }
 
     private void authenticateWithServer() {

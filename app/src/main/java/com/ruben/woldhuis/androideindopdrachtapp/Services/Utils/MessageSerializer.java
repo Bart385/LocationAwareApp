@@ -9,6 +9,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Repl
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.FriendsReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.GetAllEventsReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.SubscribeToEventReply;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.SyncMissedMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UnsubscribeFromEventReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
@@ -17,6 +18,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requ
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendsRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.GetAllEventsRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.SubscribeToEventRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.SyncMissedMessagesRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UnsubscribeFromEventRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadAudioMessageRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
@@ -156,6 +158,10 @@ public class MessageSerializer {
                         return UnsubscribeFromEventRequest.fromJson(json);
                     case EventChat_Message:
                         return EventChatMessage.fromJson(json);
+                    case SyncMissedMessagesReply_Message:
+                        return SyncMissedMessageReply.fromJson(json);
+                    case SyncMissedMessagesRequest_Message:
+                        return SyncMissedMessagesRequest.fromJson(json);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
