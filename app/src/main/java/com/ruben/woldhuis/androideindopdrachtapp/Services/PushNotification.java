@@ -13,7 +13,6 @@ import android.support.v4.app.TaskStackBuilder;
 
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.EventCreationReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.FriendReply;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.FriendsReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendRequest;
@@ -21,6 +20,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Upda
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ChatActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventActivity;
 
 public class PushNotification {
     private static final String NOTIFICATION_CHANNEL = "notification_channel";
@@ -28,6 +28,7 @@ public class PushNotification {
     private static PushNotification instance;
     private NotificationManagerCompat notificationManager;
     private Application application;
+    private int notificationIndex = 1;
 
     private PushNotification(Application application) {
         this.application = application;
@@ -68,35 +69,124 @@ public class PushNotification {
                 .setContentIntent(resultPendingIntent)
                 .build();
 
-        notificationManager.notify(1, notification);
+        notificationManager.notify(notificationIndex, notification);
+        notificationIndex++;
     }
 
     public void sendEventChatMessageNotification(EventChatMessage message) {
+        Intent resultIntent = new Intent(application, EventActivity.class);
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(application, NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.drawable.twitter_button)
+                .setContentTitle("EVENT CHAT")
+                .setContentText(message.getEventUID())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(resultPendingIntent)
+                .build();
+
+        notificationManager.notify(notificationIndex, notification);
+        notificationIndex++;
     }
 
     public void sendEventCreationNotification(EventCreationReply message) {
+        Intent resultIntent = new Intent(application, EventActivity.class);
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(application, NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.drawable.twitter_button)
+                .setContentTitle(message.getMessageType().name())
+                .setContentText(message.getEventName())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(resultPendingIntent)
+                .build();
+
+        notificationManager.notify(notificationIndex, notification);
+        notificationIndex++;
     }
 
     public void sendFriendRequestNotification(FriendRequest message) {
+        Intent resultIntent = new Intent(application, ChatActivity.class);
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(application, NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.drawable.twitter_button)
+                .setContentTitle(message.getMessageType().name())
+                .setContentText(message.getSender().getName())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(resultPendingIntent)
+                .build();
+
+        notificationManager.notify(notificationIndex, notification);
+        notificationIndex++;
     }
 
     public void sendFriendReplyNotification(FriendReply message) {
+        Intent resultIntent = new Intent(application, ChatActivity.class);
+        resultIntent.putExtra("ContactObject", message.getSender());
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(application, NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.drawable.twitter_button)
+                .setContentTitle(message.getMessageType().name())
+                .setContentText(message.getFriend().getName())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(resultPendingIntent)
+                .build();
+
+        notificationManager.notify(notificationIndex, notification);
+        notificationIndex++;
     }
 
-    public void sendFriendsReplyNotification(FriendsReply message) {
-
-    }
 
     public void sendAudioMessageNotification(UploadAudioMessageReply message) {
+        Intent resultIntent = new Intent(application, ChatActivity.class);
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(application, NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.drawable.twitter_button)
+                .setContentTitle(message.getMessageType().name())
+                .setContentText(message.getSender().getName())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(resultPendingIntent)
+                .build();
+
+        notificationManager.notify(notificationIndex, notification);
+        notificationIndex++;
     }
 
     public void sendImageMessageNotification(UploadImageReply message) {
+        Intent resultIntent = new Intent(application, ChatActivity.class);
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(application, NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.drawable.twitter_button)
+                .setContentTitle(message.getMessageType().name())
+                .setContentText(message.getSender().getName())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(resultPendingIntent)
+                .build();
+
+        notificationManager.notify(notificationIndex, notification);
+        notificationIndex++;
     }
 }
 
