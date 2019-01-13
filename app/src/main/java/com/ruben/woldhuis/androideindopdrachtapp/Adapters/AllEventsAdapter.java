@@ -1,6 +1,7 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Meetup;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventDetailActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,6 +52,18 @@ public class AllEventsAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.an
         public MyViewHolder(View view, final Context context) {
             super(view);
             title = (TextView) view.findViewById(R.id.event_name_TextView);
+
+
+            //TODO: Event veraderen naar Meetup ff wachten op antwoord
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Meetup i = dataSource.get(getAdapterPosition());
+                    Intent intent = new Intent(view.getContext(), EventDetailActivity.class);
+                    intent.putExtra("Meetup", (Serializable) i);
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
 
     }

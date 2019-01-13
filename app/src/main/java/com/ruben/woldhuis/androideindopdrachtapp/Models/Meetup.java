@@ -1,8 +1,9 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Models;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public class Meetup {
+public class Meetup implements Serializable {
     private String eventName;
     private LocalTime time;
     private Location location;
