@@ -13,10 +13,18 @@ import android.util.Log;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.PicassoMarker;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -30,6 +38,9 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     private GoogleMap mMap;
     private Queue<Runnable> runnables;
     private android.location.Location location;
+    private UserRepository repository;
+    private ArrayList<User> friends;
+    private ArrayList<PicassoMarker> picassoMarkers;
 
     public MapFragment() {
         // Required empty public constructor
@@ -44,6 +55,8 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
             mapFragment.getMapAsync(this);
         }
         runnables = new LinkedBlockingQueue<>();
+        friends = new ArrayList<>();
+        picassoMarkers = new ArrayList<>();
     }
 
 
@@ -51,42 +64,22 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         Log.d("MAP_READY_TAG", "onMapReady: ");
         mMap = googleMap;
-/*
-        if (!checkPermission(Manifest.permission.ACCESS_FINE_LOCATION))
-            requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_PERMISSIONS_ID);
-        else
-            mMap.setMyLocationEnabled(true);
-        getGps();
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                .target(new LatLng(location.getLatitude(), location.getLongitude()))
-                .bearing(0)
-                .zoom(15)
-                .build()));
-        LatLng currentposition = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(currentposition).title("Test"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(currentposition));
-
-        mMap.setBuildingsEnabled(false);
-        mMap.setIndoorEnabled(false);
-        mMap.setMinZoomPreference(13);
-        mMap.setMaxZoomPreference(20);
-        mMap.setOnMarkerClickListener(this);
-        mMap.setOnCameraMoveListener(this);
-        mMap.getUiSettings().setRotateGesturesEnabled(true);
-        mMap.getUiSettings().setCompassEnabled(true);
-//        UiSettings settings = googleMap.getUiSettings();
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().setTiltGesturesEnabled(true);
-        mMap.getUiSettings().setCompassEnabled(true);
-        mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        Iterator<Runnable> iterator = runnables.iterator();
-        while (iterator.hasNext()) {
-            Runnable runnable = iterator.next();
-            runnable.run();
-
-        }*/
-
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        googleMap.setMyLocationEnabled(true);
+        for (User friend : friends) {
+            if (friend.getLocation() != null) {
+                LatLng pos = new LatLng(friend.getLocation().getLatitude(), friend.getLocation().getLongitude());
+                MarkerOptions options = new MarkerOptions()
+                        .position(pos);
+                PicassoMarker marker = new PicassoMarker(googleMap.addMarker(options));
+                if (friend.getProfilePictureURL() != null && !friend.getProfilePictureURL().isEmpty())
+                    Picasso.get().load(friend.getProfilePictureURL()).into(marker);
+                picassoMarkers.add(marker);
+            }
+        }
 
     }
 
@@ -164,11 +157,10 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
         return false;
     }
 
-    public void addMarker(GoogleMap googleMap) {
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }
-        googleMap.setMyLocationEnabled(true);
+    public void updateFriends(List<User> friends) {
+        Log.d("MAP_FRAGMENT_TAG", "You have: " + friends.size() + " friends");
+        this.friends.clear();
+        this.friends.addAll(friends);
+        getMapAsync(this::onMapReady);
     }
 }

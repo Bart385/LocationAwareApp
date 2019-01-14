@@ -22,8 +22,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.MessageHandler;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
@@ -41,6 +44,7 @@ public class MainActivity extends FragmentActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private android.support.v4.app.FragmentManager fragmentManager;
+    private UserRepository userRepository;
 
     public static MainActivity getInstance() {
         return instance;
@@ -57,6 +61,7 @@ public class MainActivity extends FragmentActivity
             }
         }
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
+        userRepository = new UserRepository(getApplication());
         mAuth = FirebaseAuth.getInstance();
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         FirebaseInstanceId.getInstance().getInstanceId()
@@ -109,9 +114,16 @@ public class MainActivity extends FragmentActivity
 
         //Alles voor de map
 
-        mMapFragment.getMapAsync(googleMap -> mMapFragment.addMarker(googleMap));
+        mMapFragment.getMapAsync(googleMap -> {
+            Toast.makeText(getApplicationContext(), TAG, Toast.LENGTH_LONG).show();
+            mMapFragment.onMapReady(googleMap);
+        });
         mMapFragment.onCreate(savedInstanceState);
-
+        userRepository.getmUsers().observe(this, friends -> mMapFragment.updateFriends(friends));
+        User user = new User("TEST", "TEST", "TEST");
+        user.setLocation(new Location(1, 5));
+        user.setProfilePictureURL("http://206.189.3.15/images/Testing.jpg");
+        userRepository.insertUser(user);
     }
 
     private void authenticateWithServer() {

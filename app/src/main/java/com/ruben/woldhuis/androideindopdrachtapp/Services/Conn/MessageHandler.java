@@ -188,7 +188,6 @@ public class MessageHandler {
         if (!message.getFireBaseToken().equals("SERVER")) {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
-            //TODO: get the events from here and store them somewhere
             EventRepository eventRepository = new EventRepository(application);
             eventRepository.deleteAllEvents();
             Log.d(TAG, "handleGetAllEventsReplyMessage: " + message.getEvents().size());
@@ -229,10 +228,6 @@ public class MessageHandler {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
 
-          /*  TcpManagerService.getInstance().submitMessage(new GetAllEventsRequest(
-                    UserPreferencesService.getInstance(application).getAuthenticationKey(),
-                    UserPreferencesService.getInstance(application).getCurrentUser()
-            ));*/
         }
     }
 
