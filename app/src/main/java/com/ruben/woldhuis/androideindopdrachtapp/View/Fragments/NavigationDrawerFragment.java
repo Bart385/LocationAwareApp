@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.CallActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
@@ -96,7 +97,8 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
                         getString(R.string.title_section4),
-                        getString(R.string.title_section5)
+                        getString(R.string.title_section5),
+                        getString(R.string.title_section6)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -285,11 +287,13 @@ public class NavigationDrawerFragment extends Fragment {
             case 5:
                 intent = new Intent(getActivity(), Camera2Activity.class);
                 break;
+            case 6:
+                intent = new Intent(getActivity(), CallActivity.class);
         }
 
         if (intent != null) {
             startActivity(intent);
-            //   getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+            getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
         }
     }
 

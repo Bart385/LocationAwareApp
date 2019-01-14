@@ -14,9 +14,18 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.USE_SIP" />
 
     <uses-feature android:name="android.hardware.camera2.full" />
-
+    <uses-feature
+        android:name="android.hardware.sip.voip"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -41,8 +50,10 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/camera_icon_location_aware_app" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+             Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
@@ -60,7 +71,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.Activities.SettingsActivity" />
-        <activity android:name=".View.Activities.EventActivity"></activity>
+        <activity android:name=".View.Activities.EventActivity" />
         <activity
             android:name=".View.Activities.LoginActivity"
             android:label="@string/title_activity_login"
@@ -79,9 +90,14 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".View.Activities.Camera2Activity"></activity>
-        <activity android:name=".View.Activities.ImageEditorActivity"></activity>
+        <receiver
+            android:name=".Receivers.IncomingCallReceiver"
+            android:label="Call Receiver" />
+
+        <activity android:name=".View.Activities.Camera2Activity" />
+        <activity android:name=".View.Activities.ImageEditorActivity" />
         <activity android:name=".View.Activities.SignUpActivity" />
+        <activity android:name=".View.Activities.CallActivity"></activity>
     </application>
 
 </manifest>

@@ -43,5 +43,6 @@
     <string name="unregisteredSourceNotification">Bericht ontvangen van een ongeregistreerde verzender</string>
     <string name="unsubSuccessful">Je bent nu niet meer geabonneerd op</string>
     <string name="subSuccessful">Je bent nu geabonneerd op</string>
+    <string name="title_section6">Bellen</string>
 
 </resources>

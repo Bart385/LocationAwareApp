@@ -15,7 +15,6 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Repl
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendRequest;
-import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.SyncMissedMessagesRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationFailedMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationSuccesfulMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.EventChatMessage;
@@ -25,7 +24,6 @@ import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 
 
 public class MessageHandler {
@@ -214,10 +212,11 @@ public class MessageHandler {
         if (!message.getFireBaseToken().equals("SERVER")) {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
+            /*
             TcpManagerService.getInstance().submitMessage(new SyncMissedMessagesRequest(
                     UserPreferencesService.getInstance(application).getAuthenticationKey(),
                     UserPreferencesService.getInstance(application).getCurrentUser()
-            ));
+            ));*/
         }
     }
 

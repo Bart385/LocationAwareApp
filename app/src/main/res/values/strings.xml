@@ -59,5 +59,6 @@
     <string name="unregisteredSourceNotification">Got a message from an unregistered source</string>
     <string name="unsubSuccessful">You successfully unsubscribed from</string>
     <string name="subSuccessful">You successfully subscribed to</string>
+    <string name="title_section6">Call</string>
 
 </resources>
