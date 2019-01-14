@@ -8,16 +8,22 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.VoIP.SinchManager;
 import com.squareup.picasso.Picasso;
 
 public class DetailedCallActivity extends Activity {
     private static final int RECORD_AUDIO_REQUEST_CODE = 201;
     private static final String TAG = "DETAILED_CALL_ACTIVITY_TAG";
+
+    private SinchManager mSinchManager;
+
     private FloatingActionButton answerCall;
     private FloatingActionButton cancelCall;
     private ImageView callerImage;
@@ -26,7 +32,13 @@ public class DetailedCallActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_detailed_call);
+        mSinchManager = SinchManager.getInstance(getApplication(), status -> {
+
+        });
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST_CODE);
 
         Intent intent = getIntent();
