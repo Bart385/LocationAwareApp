@@ -53,12 +53,12 @@ public class AddEventFragment extends Fragment {
                     String.valueOf(EventName.getText())
             ));
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-            openMap(getActivity().getSupportFragmentManager());
+            openMap(getActivity().getSupportFragmentManager(), R.id.eventMapFragment);
         });
 
         cancelButton.setOnClickListener(view1 -> {
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-            openMap(getActivity().getSupportFragmentManager());
+            openMap(getActivity().getSupportFragmentManager(), R.id.eventMapFragment);
         });
 
     }

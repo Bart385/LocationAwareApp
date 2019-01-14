@@ -25,6 +25,8 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
 
+import static com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventActivity.meetups;
+
 
 public class MessageHandler {
     private static final String TAG = "MESSAGE_HANDLER_TAG";
@@ -176,7 +178,7 @@ public class MessageHandler {
         if (!message.getFireBaseToken().equals("SERVER")) {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
-            //TODO: get the events from here and store them somewhere
+            //TODO: de Arraylist van events naar DetailEvents krijgen
         }
     }
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Meetup;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventDetailActivity;
@@ -19,10 +20,10 @@ import java.util.ArrayList;
 public class AllEventsAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.androideindopdrachtapp.Adapters.AllEventsAdapter.MyViewHolder> implements Serializable {
 
     Context mContext;
-    Meetup meetup;
-    private ArrayList<Meetup> dataSource;
+    Event meetup;
+    private ArrayList<Event> dataSource;
 
-    public AllEventsAdapter(Context context, ArrayList<Meetup> dataArgs) {
+    public AllEventsAdapter(Context context, ArrayList<Event> dataArgs) {
         dataSource = dataArgs;
         this.mContext = context;
     }
@@ -57,7 +58,7 @@ public class AllEventsAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.an
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Meetup i = dataSource.get(getAdapterPosition());
+                    Event i = dataSource.get(getAdapterPosition());
                     Intent intent = new Intent(view.getContext(), EventDetailActivity.class);
                     intent.putExtra("Meetup", (Serializable) i);
                     view.getContext().startActivity(intent);
