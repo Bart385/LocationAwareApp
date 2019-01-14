@@ -1,6 +1,7 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,11 @@ public class ProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        User user = UserPreferencesService.getInstance(getApplication()).getCurrentUser();
+        User user = null;
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("FRIEND");
+        if (user == null)
+            user = UserPreferencesService.getInstance(getApplication()).getCurrentUser();
 
         name = findViewById(R.id.profil_name);
         email = findViewById(R.id.profile_emailChange);

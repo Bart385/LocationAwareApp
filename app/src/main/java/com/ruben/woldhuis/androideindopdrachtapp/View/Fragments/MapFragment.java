@@ -2,6 +2,7 @@ package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +22,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Models.PicassoMarker;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class MapFragment extends SupportMapFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveListener, LocationListener {
+public class MapFragment extends SupportMapFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveListener, LocationListener, GoogleMap.OnInfoWindowClickListener {
     private static final int REQUEST_PERMISSIONS_ID = 1;
     private static final int BOUND_PADDING = 100;
     double latitude;
@@ -38,7 +40,6 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     private GoogleMap mMap;
     private Queue<Runnable> runnables;
     private android.location.Location location;
-    private UserRepository repository;
     private ArrayList<User> friends;
     private ArrayList<PicassoMarker> picassoMarkers;
 
@@ -63,17 +64,19 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d("MAP_READY_TAG", "onMapReady: ");
-        mMap = googleMap;
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
         googleMap.setMyLocationEnabled(true);
+        googleMap.setOnMarkerClickListener(this);
+        googleMap.setOnInfoWindowClickListener(this);
         for (User friend : friends) {
             if (friend.getLocation() != null) {
                 LatLng pos = new LatLng(friend.getLocation().getLatitude(), friend.getLocation().getLongitude());
                 MarkerOptions options = new MarkerOptions()
-                        .position(pos);
+                        .position(pos)
+                        .title(friend.getName());
                 PicassoMarker marker = new PicassoMarker(googleMap.addMarker(options));
                 if (friend.getProfilePictureURL() != null && !friend.getProfilePictureURL().isEmpty())
                     Picasso.get().load(friend.getProfilePictureURL()).into(marker);
@@ -153,8 +156,21 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
         return false;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        User friend = null;
+        for (User u : friends) {
+            if (u.getName().equals(marker.getTitle())) {
+                friend = u;
+                break;
+            }
+        }
+        intent.putExtra("FRIEND", friend);
+        startActivity(intent);
     }
 
     public void updateFriends(List<User> friends) {

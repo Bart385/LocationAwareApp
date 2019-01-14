@@ -3,7 +3,9 @@ package com.ruben.woldhuis.androideindopdrachtapp.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Location implements Parcelable {
+import java.io.Serializable;
+
+public class Location implements Parcelable, Serializable {
     /**
      *
      */
