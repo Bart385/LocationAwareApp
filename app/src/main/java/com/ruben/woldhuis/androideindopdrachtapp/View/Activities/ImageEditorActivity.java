@@ -20,6 +20,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Base64;
+import java.util.UUID;
 
 public class ImageEditorActivity extends Activity {
     private File imageFile;
@@ -77,7 +78,12 @@ public class ImageEditorActivity extends Activity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] data = byteArrayOutputStream.toByteArray();
-        User user = new User("Ruben", "rubenwoldhuis@gmail.com", "gv27K98cpUWmOyFuI08koW996eK2");
-        TcpManagerService.getInstance().submitMessage(new UploadImageRequest(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), "Testing", ".jpg", Base64.getEncoder().encodeToString(data), user, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
+        TcpManagerService.getInstance().submitMessage(new UploadImageRequest(
+                UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(),
+                UUID.randomUUID().toString(),
+                ".jpg",
+                Base64.getEncoder().encodeToString(data),
+                target,
+                UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
     }
 }

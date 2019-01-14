@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.FriendsRecyclerAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class FriendsFragment extends Fragment implements Serializable {
 
 
     private static FriendsFragment instance;
-    ArrayList<User> friend;
+    private ArrayList<User> friends;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -35,10 +36,9 @@ public class FriendsFragment extends Fragment implements Serializable {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        friend = new ArrayList<>();
-        friend.add(new User("Test", "digitallego3@gmail.com", "1vG9DOn2rfh1KCo6CKNR9l5NYSB3"));
-        friend.add(new User("Ruben", "rubenwoldhuis@gmail.com", "gv27K98cpUWmOyFuI08koW996eK2"));
-        friend.add(new User("Bart", "bart.vanes1@gmail.com", "M8bMsIsr40Zg7uEgbRFMhldkoEl2"));
+        friends = new ArrayList<>();
+        //  friends.add(new User("Test", "digitallego3@gmail.com", "1vG9DOn2rfh1KCo6CKNR9l5NYSB3"));
+        //  friends.add(new User("Bart", "bart.vanes1@gmail.com", "M8bMsIsr40Zg7uEgbRFMhldkoEl2"));
 
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
 
@@ -48,9 +48,18 @@ public class FriendsFragment extends Fragment implements Serializable {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new FriendsRecyclerAdapter(getContext(), friend);
+        mAdapter = new FriendsRecyclerAdapter(getContext(), friends);
         mRecyclerView.setAdapter(mAdapter);
 
+        UserRepository repository = new UserRepository(getActivity().getApplication());
+        repository.insertUser(new User("Ruben", "rubenwoldhuis@gmail.com", "gv27K98cpUWmOyFuI08koW996eK2"));
+        repository.getmUsers().observe(this, users -> {
+            friends.clear();
+            if (users != null)
+                friends.addAll(users);
+            friends.removeIf(user -> user.getUid().equals("EMPTY"));
+            mAdapter.notifyDataSetChanged();
+        });
         return v;
 
     }

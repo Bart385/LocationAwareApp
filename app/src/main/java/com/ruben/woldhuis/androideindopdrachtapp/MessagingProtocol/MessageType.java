@@ -25,5 +25,7 @@ public enum MessageType {
     GetAllEventsReply_Message,
     EventChat_Message,
     SyncMissedMessagesRequest_Message,
-    SyncMissedMessagesReply_Message
+    SyncMissedMessagesReply_Message,
+    ProfilePictureUpdate_Message
+
 }

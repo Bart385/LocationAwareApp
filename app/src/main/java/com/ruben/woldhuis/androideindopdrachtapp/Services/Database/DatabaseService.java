@@ -15,7 +15,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.DAO.EventDAO;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.DAO.UserDAO;
 
-@Database(entities = {User.class, Event.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Event.class}, version = 2, exportSchema = false)
 @TypeConverters({ModelConverter.class})
 public abstract class DatabaseService extends RoomDatabase {
     private volatile static DatabaseService instance;

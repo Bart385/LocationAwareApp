@@ -1,42 +1,38 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends Activity {
-
-
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    private TextView name;
+    private TextView email;
+    private ImageView profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        TextView profileName = findViewById(R.id.profil_name);
-        TextView profilEmail = findViewById(R.id.profile_emailChange);
-        ImageView image = findViewById(R.id.profile_imageView);
+        User user = UserPreferencesService.getInstance(getApplication()).getCurrentUser();
 
-        profileName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-        profilEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        name = findViewById(R.id.profil_name);
+        email = findViewById(R.id.profile_emailChange);
+        profilePicture = findViewById(R.id.profile_imageView);
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+        name.setText(user.getName());
+        email.setText(user.getEmail());
+        if (user.getProfilePictureURL() != null && !user.getProfilePictureURL().isEmpty())
+            Picasso.get().load(user.getProfilePictureURL()).into(profilePicture);
 
-        StorageReference ref = storageReference.child("images/profilepicture" + FirebaseAuth.getInstance().getCurrentUser().getEmail());
-
-//TODO: Zorgen dat hij de foto op een imageview kan zetten.....
-        Picasso.get().load(Uri.parse("images/profilepicture" + FirebaseAuth.getInstance().getCurrentUser().getEmail())).into(image);
-        System.out.println(image.toString());
     }
 }
+
+
+

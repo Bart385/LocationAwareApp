@@ -27,6 +27,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Upda
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.EventChatMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.LocationUpdateMessage;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.ProfilePictureUpdate;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.SignOutMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 
@@ -162,6 +163,8 @@ public class MessageSerializer {
                         return SyncMissedMessageReply.fromJson(json);
                     case SyncMissedMessagesRequest_Message:
                         return SyncMissedMessagesRequest.fromJson(json);
+                    case ProfilePictureUpdate_Message:
+                        return ProfilePictureUpdate.fromJson(json);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -20,6 +20,8 @@ public class User implements Serializable {
     private String uid;
     @ColumnInfo(name = "user_location")
     private Location location;
+    @ColumnInfo(name = "user_profile_picture")
+    private String profilePictureURL;
 
     public User(String name, String email, @NonNull String uid) {
         this.name = name;
@@ -46,6 +48,14 @@ public class User implements Serializable {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public String getProfilePictureURL() {
+        return profilePictureURL;
+    }
+
+    public void setProfilePictureURL(String profilePictureURL) {
+        this.profilePictureURL = profilePictureURL;
     }
 
     @Ignore

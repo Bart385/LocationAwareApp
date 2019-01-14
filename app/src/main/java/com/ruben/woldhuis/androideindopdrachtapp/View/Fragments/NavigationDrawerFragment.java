@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.CallActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Call2Activity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.Camera2Activity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
@@ -288,7 +288,7 @@ public class NavigationDrawerFragment extends Fragment {
                 intent = new Intent(getActivity(), Camera2Activity.class);
                 break;
             case 6:
-                intent = new Intent(getActivity(), CallActivity.class);
+                intent = new Intent(getActivity(), Call2Activity.class);
         }
 
         if (intent != null) {

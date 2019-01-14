@@ -15,6 +15,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Repl
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendsRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.GetAllEventsRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationFailedMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationSuccesfulMessage;
@@ -145,6 +146,10 @@ public class MessageHandler {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
             pushNotification.sendFriendReplyNotification(message);
+            TcpManagerService.getInstance().submitMessage(new FriendsRequest(
+                    UserPreferencesService.getInstance(application).getAuthenticationKey(),
+                    UserPreferencesService.getInstance(application).getCurrentUser()
+            ));
         }
     }
 

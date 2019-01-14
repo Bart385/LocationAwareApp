@@ -44,5 +44,10 @@
     <string name="unsubSuccessful">Je bent nu niet meer geabonneerd op</string>
     <string name="subSuccessful">Je bent nu geabonneerd op</string>
     <string name="title_section6">Bellen</string>
+    <string name="make_call">Bellen</string>
+    <string name="hang_up">Ophangen</string>
+    <string name="call_connected">Verbonden</string>
+    <string name="call_ringing">U wordt gebeld.</string>
+    <string name="profile_change_complete">Uw profile informatie is succesvol geupdatet.</string>
 
 </resources>

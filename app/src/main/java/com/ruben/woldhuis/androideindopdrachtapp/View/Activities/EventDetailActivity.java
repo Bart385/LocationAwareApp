@@ -1,18 +1,13 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Adapters.AllEventParticipantsAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.SubscribeToEventRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
@@ -20,6 +15,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -70,7 +66,6 @@ public class EventDetailActivity extends FragmentActivity implements Serializabl
         });
 
         openMap(getSupportFragmentManager(), R.id.MapDetailedEventActivity);
-
 
 
         //TODO: Alles invullen voor Event Detail

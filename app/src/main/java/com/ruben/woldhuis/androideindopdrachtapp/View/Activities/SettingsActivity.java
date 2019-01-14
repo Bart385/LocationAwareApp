@@ -1,150 +1,129 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.ruben.woldhuis.androideindopdrachtapp.Constants;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.UploadImageRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.ProfilePictureUpdate;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.util.Base64;
 
-public class SettingsActivity extends Activity implements View.OnClickListener {
-    private final int PICK_IMAGE_REQUEST = 71;
-    FirebaseUser firebaseApp;
-    TextView displayNameTB;
-    TextView email;
-    TextView phoneNumber;
-    ImageView imageView;
-    FirebaseStorage storage;
-    StorageReference storageReference;
-    private Uri filePath;
+public class SettingsActivity extends Activity {
+    private UserPreferencesService userPreferences;
+    private User user;
+    private Uri previewImageURI;
+    private TextView name;
+    private TextView email;
+
+    private ImageView profilePicture;
+    private ImageView previewProfilePicture;
+
+    private Button changeProfilePicture;
+    private Button forgotPasswordButton;
+    private Button confirmChanges;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+        userPreferences = UserPreferencesService.getInstance(getApplication());
+        user = userPreferences.getCurrentUser();
 
-        imageView = findViewById(R.id.previewImage_settings);
-
-        firebaseApp = FirebaseAuth.getInstance().getCurrentUser();
-
-        String settingsEmail = firebaseApp.getEmail();
-        String settingsDisplayName = firebaseApp.getDisplayName();
-        Uri settingsPhotoUri = firebaseApp.getPhotoUrl();
-
+        name = findViewById(R.id.settings_profilename);
         email = findViewById(R.id.Settings_email);
-        email.setText(settingsEmail);
+        name.setText(user.getName());
+        email.setText(user.getEmail());
+        profilePicture = findViewById(R.id.profile_picture);
+        previewProfilePicture = findViewById(R.id.previewImage_settings);
 
-        displayNameTB = findViewById(R.id.settings_profilename);
-        displayNameTB.setText(settingsDisplayName);
+        changeProfilePicture = findViewById(R.id.changeprofilepicture_button);
+        forgotPasswordButton = findViewById(R.id.forgotpassword_button);
+        confirmChanges = findViewById(R.id.settings_confirmbutton);
 
+        changeProfilePicture.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 0);
+        });
 
-        findViewById(R.id.settings_confirmbutton).setOnClickListener(this);
-        findViewById(R.id.forgotpassword_button).setOnClickListener(this);
-        findViewById(R.id.changeprofilepicture_button).setOnClickListener(this);
+        forgotPasswordButton.setOnClickListener(view -> {
+            Toast.makeText(getApplicationContext(), R.string.newpassword, Toast.LENGTH_LONG).show();
+            FirebaseAuth.getInstance().sendPasswordResetEmail(user.getEmail());
+        });
 
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.settings_confirmbutton:
-                if (displayNameTB != null) {
-                    UserProfileChangeRequest profileChangeRequest =
-                            new UserProfileChangeRequest.Builder().setDisplayName(String.valueOf(displayNameTB.getText())).build();
-                    firebaseApp.updateProfile(profileChangeRequest).addOnCompleteListener(task -> {
-                        Toast toast = Toast.makeText(getBaseContext(), "Changing DisplayName was succesfull!", Toast.LENGTH_LONG);
-                        toast.show();
-                    });
-                }
-                uploadImage();
-                break;
-            case R.id.forgotpassword_button:
-                Toast toast = Toast.makeText(getBaseContext(), R.string.newpassword, Toast.LENGTH_LONG);
-                toast.show();
-                FirebaseAuth.getInstance().sendPasswordResetEmail(firebaseApp.getEmail());
-                break;
-            case R.id.changeprofilepicture_button:
-                chooseImage();
-
-        }
-    }
-
-    private void chooseImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        confirmChanges.setOnClickListener(view -> {
+            UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(String.valueOf(name.getText())).build();
+            FirebaseAuth.getInstance().getCurrentUser().updateProfile(profileChangeRequest).addOnCompleteListener(task -> {
+                Toast.makeText(getApplicationContext(), getString(R.string.profile_change_complete), Toast.LENGTH_LONG).show();
+            });
+            uploadImage();
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
-            filePath = data.getData();
+
+        if (resultCode == RESULT_OK) {
+            Uri targetUri = data.getData();
+            previewImageURI = targetUri;
+            Bitmap bitmap;
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                profilePicture.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
 
     private void uploadImage() {
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(previewImageURI));
 
-        if (filePath != null) {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+            byte[] byteData = byteArrayOutputStream.toByteArray();
 
-            StorageReference ref = storageReference.child("images/profilepicture" + firebaseApp.getEmail());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(SettingsActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(SettingsActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                        }
-                    });
+            String imageURL = user.getUid() + "_PROFILE_PICTURE";
+            user.setProfilePictureURL(Constants.IMAGE_SERVER_HOSTNAME + imageURL + ".jpg");
+            userPreferences.saveCurrentUser(user);
+
+            TcpManagerService.getInstance().submitMessage(new UploadImageRequest(
+                    userPreferences.getAuthenticationKey(),
+                    imageURL,
+                    ".jpg",
+                    Base64.getEncoder().encodeToString(byteData),
+                    null,
+                    user
+            ));
+
+            TcpManagerService.getInstance().submitMessage(new ProfilePictureUpdate(
+                    userPreferences.getAuthenticationKey(),
+                    user,
+                    Constants.IMAGE_SERVER_HOSTNAME + imageURL + ".jpg"
+            ));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
-
 }

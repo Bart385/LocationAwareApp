@@ -60,5 +60,12 @@
     <string name="unsubSuccessful">You successfully unsubscribed from</string>
     <string name="subSuccessful">You successfully subscribed to</string>
     <string name="title_section6">Call</string>
+    <string name="make_call">Call</string>
+    <string name="hang_up">Hang Up</string>
+    <string name="sinch_application_key" translatable="false">feabd66c-e803-4fe3-b0fc-30d5bcf06cfc</string>
+    <string name="sinch_application_secret" translatable="false">V8OHs66ccUmDvFy9kHINDQ==</string>
+    <string name="call_connected">Connected</string>
+    <string name="call_ringing">Ringing</string>
+    <string name="profile_change_complete">Successfully update your profile information</string>
 
 </resources>

@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.USE_SIP" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature android:name="android.hardware.camera2.full" />
     <uses-feature
@@ -97,8 +98,10 @@
         <activity android:name=".View.Activities.Camera2Activity" />
         <activity android:name=".View.Activities.ImageEditorActivity" />
         <activity android:name=".View.Activities.SignUpActivity" />
-        <activity android:name=".View.Activities.CallActivity"></activity>
-        <activity android:name=".Services.SIP.SipSettings"></activity>
+        <activity android:name=".View.Activities.CallActivity" />
+        <activity android:name=".Services.SIP.SipSettings" />
+        <activity android:name=".View.Activities.Call2Activity" />
+        <activity android:name=".View.Activities.DetailedCallActivity"></activity>
     </application>
 
 </manifest>
