@@ -8,24 +8,24 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
+import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
 
 import java.util.List;
 
 @Dao
-public interface UserDAO {
-    @Query("SELECT * FROM USER_MODEL")
-    LiveData<List<User>> getAllUsers();
+public interface EventDAO {
+    @Query("SELECT * FROM EVENT_MODEL")
+    LiveData<List<Event>> getAllEvents();
 
-    @Query("SELECT * FROM USER_MODEL WHERE user_uid = :uid")
-    LiveData<User> getUser(String uid);
+    @Query("SELECT * FROM EVENT_MODEL WHERE event_uid = :event_uid")
+    LiveData<Event> getEvent(String event_uid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertUser(User user);
+    void insertEvent(Event event);
 
     @Update
-    void updateUser(User user);
+    void updateEvent(Event event);
 
     @Delete
-    void deleteUser(User user);
+    void deleteEvent(Event event);
 }

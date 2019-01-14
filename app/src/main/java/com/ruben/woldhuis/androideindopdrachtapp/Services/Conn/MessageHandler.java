@@ -15,6 +15,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Repl
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadAudioMessageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Replies.UploadImageReply;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.FriendRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.GetAllEventsRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationFailedMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.AuthenticationSuccesfulMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.EventChatMessage;
@@ -22,10 +23,10 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Upda
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.TextMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.EventRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
-
-import static com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventActivity.meetups;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 
 
 public class MessageHandler {
@@ -178,7 +179,9 @@ public class MessageHandler {
         if (!message.getFireBaseToken().equals("SERVER")) {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
-            //TODO: de Arraylist van events naar DetailEvents krijgen
+            //TODO: get the events from here and store them somewhere
+            EventRepository eventRepository = new EventRepository(application);
+            message.getEvents().forEach(event -> eventRepository.insertUser(event));
         }
     }
 
@@ -214,8 +217,8 @@ public class MessageHandler {
         if (!message.getFireBaseToken().equals("SERVER")) {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
-            /*
-            TcpManagerService.getInstance().submitMessage(new SyncMissedMessagesRequest(
+
+          /*  TcpManagerService.getInstance().submitMessage(new GetAllEventsRequest(
                     UserPreferencesService.getInstance(application).getAuthenticationKey(),
                     UserPreferencesService.getInstance(application).getCurrentUser()
             ));*/

@@ -98,6 +98,7 @@
         <activity android:name=".View.Activities.ImageEditorActivity" />
         <activity android:name=".View.Activities.SignUpActivity" />
         <activity android:name=".View.Activities.CallActivity"></activity>
+        <activity android:name=".Services.SIP.SipSettings"></activity>
     </application>
 
 </manifest>

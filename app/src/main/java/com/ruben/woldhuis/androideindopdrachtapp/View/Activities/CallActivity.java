@@ -30,8 +30,9 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Receivers.IncomingCallReceiver;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.SIP.SipSettings;
 
-public class CallActivity extends Activity implements View.OnTouchListener {
+import java.text.ParseException;
 
+public class CallActivity extends Activity implements View.OnTouchListener {
     private static final int CALL_ADDRESS = 1;
     private static final int SET_AUTH_INFO = 2;
     private static final int UPDATE_SETTINGS_DIALOG = 3;
@@ -147,12 +148,11 @@ public class CallActivity extends Activity implements View.OnTouchListener {
                     updateStatus("Registration failed.  Please check settings.");
                 }
             });
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        } catch (SipException e) {
-            e.printStackTrace();
+        } catch (ParseException pe) {
+            updateStatus("Connection Error.");
+        } catch (SipException se) {
+            updateStatus("Connection error.");
         }
-
     }
 
     /**
@@ -201,12 +201,12 @@ public class CallActivity extends Activity implements View.OnTouchListener {
             call = manager.makeAudioCall(me.getUriString(), sipAddress, listener, 30);
 
         } catch (Exception e) {
-            Log.i("CallActivity/InitiateCall", "Error when trying to close manager.", e);
+            Log.i("WalkieTalkieActivity/InitiateCall", "Error when trying to close manager.", e);
             if (me != null) {
                 try {
                     manager.close(me.getUriString());
                 } catch (Exception ee) {
-                    Log.i("CallActivity/InitiateCall",
+                    Log.i("WalkieTalkieActivity/InitiateCall",
                             "Error when trying to close manager.", ee);
                     ee.printStackTrace();
                 }
