@@ -2,6 +2,8 @@ package com.ruben.woldhuis.androideindopdrachtapp.Services.Conn;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,11 +40,13 @@ public class MessageHandler {
     private PushNotification pushNotification;
     private Application application;
     private UserRepository repository;
+    private Handler handler;
 
     private MessageHandler(PushNotification pushNotification, Application application) {
         this.pushNotification = pushNotification;
         this.application = application;
         repository = new UserRepository(application);
+        handler = new Handler(Looper.getMainLooper());
     }
 
     public static MessageHandler getInstance(PushNotification pushNotification, Application application) {
@@ -52,53 +56,55 @@ public class MessageHandler {
     }
 
     public void handleMessage(IMessage message) {
-        switch (message.getMessageType()) {
-            case EventChat_Message:
-                handleEventChatMessage((EventChatMessage) message);
-                break;
-            case EventCreationReply_Message:
-                handleEventCreationReplyMessage((EventCreationReply) message);
-                break;
-            case FriendRequest_Message:
-                handleFriendRequestMessage((FriendRequest) message);
-                break;
-            case Text_Message:
-                handleTextMessage((TextMessage) message);
-                break;
-            case FriendReply_Message:
-                handleFriendReplyMessage((FriendReply) message);
-                break;
-            case FriendsReply_Message:
-                handleFriendsReplyMessage((FriendsReply) message);
-                break;
-            case UploadAudioReply_Message:
-                handleUploadAudioReplyMessage((UploadAudioMessageReply) message);
-                break;
-            case LocationUpdate_Message:
-                handleLocationUpdateMessage((LocationUpdateMessage) message);
-                break;
-            case GetAllEventsReply_Message:
-                handleGetAllEventsReplyMessage((GetAllEventsReply) message);
-                break;
-            case UploadImageReply_Message:
-                handleUploadImageReplyMessage((UploadImageReply) message);
-                break;
-            case AuthenticationFailed_Message:
-                handleAuthenticationFailedMessage((AuthenticationFailedMessage) message);
-                break;
-            case SubscribeToEventReply_Message:
-                handleSubscribeToEventReply((SubscribeToEventReply) message);
-                break;
-            case SyncMissedMessagesReply_Message:
-                handleSyncMissedMessagesReply((SyncMissedMessageReply) message);
-                break;
-            case AuthenticationSuccessful_Message:
-                handleAuthenticationSuccessfulMessage((AuthenticationSuccesfulMessage) message);
-                break;
-            case UnsubscribeFromEventReply_Message:
-                handleUnsubscribeFromEventReplyMessage((UnsubscribeFromEventReply) message);
-                break;
-        }
+        handler.post(() -> {
+            switch (message.getMessageType()) {
+                case EventChat_Message:
+                    handleEventChatMessage((EventChatMessage) message);
+                    break;
+                case EventCreationReply_Message:
+                    handleEventCreationReplyMessage((EventCreationReply) message);
+                    break;
+                case FriendRequest_Message:
+                    handleFriendRequestMessage((FriendRequest) message);
+                    break;
+                case Text_Message:
+                    handleTextMessage((TextMessage) message);
+                    break;
+                case FriendReply_Message:
+                    handleFriendReplyMessage((FriendReply) message);
+                    break;
+                case FriendsReply_Message:
+                    handleFriendsReplyMessage((FriendsReply) message);
+                    break;
+                case UploadAudioReply_Message:
+                    handleUploadAudioReplyMessage((UploadAudioMessageReply) message);
+                    break;
+                case LocationUpdate_Message:
+                    handleLocationUpdateMessage((LocationUpdateMessage) message);
+                    break;
+                case GetAllEventsReply_Message:
+                    handleGetAllEventsReplyMessage((GetAllEventsReply) message);
+                    break;
+                case UploadImageReply_Message:
+                    handleUploadImageReplyMessage((UploadImageReply) message);
+                    break;
+                case AuthenticationFailed_Message:
+                    handleAuthenticationFailedMessage((AuthenticationFailedMessage) message);
+                    break;
+                case SubscribeToEventReply_Message:
+                    handleSubscribeToEventReply((SubscribeToEventReply) message);
+                    break;
+                case SyncMissedMessagesReply_Message:
+                    handleSyncMissedMessagesReply((SyncMissedMessageReply) message);
+                    break;
+                case AuthenticationSuccessful_Message:
+                    handleAuthenticationSuccessfulMessage((AuthenticationSuccesfulMessage) message);
+                    break;
+                case UnsubscribeFromEventReply_Message:
+                    handleUnsubscribeFromEventReplyMessage((UnsubscribeFromEventReply) message);
+                    break;
+            }
+        });
     }
 
 
@@ -216,6 +222,7 @@ public class MessageHandler {
             UserPreferencesService.getInstance(application).clearSharedPreferences();
             Intent intent = new Intent(application, LoginActivity.class);
             application.startActivity(intent);
+            pushNotification.sendTextMessageNotification(new TextMessage("", "AUTHENTICATION FAILED", new User("RUBEN", "RUBEN", "RUBEN"), new User("RUBEN", "RUBEN", "RUBEN")));
         }
     }
 
@@ -234,6 +241,7 @@ public class MessageHandler {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
             //TODO: Sync messages
+            UserPreferencesService.getInstance(application).saveCurrentUser(message.getUser());
         }
     }
 

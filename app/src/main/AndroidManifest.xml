@@ -84,6 +84,7 @@
         <activity android:name=".View.Activities.ChatActivity" />
         <activity android:name=".View.Activities.LocationAwareChatActivity" />
         <activity android:name=".View.Activities.ProfileActivity" />
+        <activity android:name=".View.Activities.EventDetailActivity" />
 
         <service android:name=".Services.C2DM.FCMReceiverService">
             <intent-filter>
