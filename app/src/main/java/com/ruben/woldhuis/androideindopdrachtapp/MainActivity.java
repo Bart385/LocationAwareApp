@@ -142,6 +142,7 @@ public class MainActivity extends FragmentActivity
                             if (idToken != null) {
                                 UserPreferencesService.getInstance(getApplication()).saveAuthenticationKey(idToken);
                                 TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, userPreferencesService.getFireBaseMessagingId()));
+
                             }
                         } else
                             Log.e("IDENTIFICATION_TAG", task.getException().getMessage());

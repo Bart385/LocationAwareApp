@@ -89,11 +89,26 @@ public class UserPreferencesService {
         editor.apply();
     }
 
+    /**
+     * @return
+     */
     public User getCurrentUser() {
         String json = this.preferences.getString("current_user", "ERROR");
         if (json.equals("ERROR"))
             return null;
         return Constants.GSON.fromJson(json, User.class);
+    }
+
+    /**
+     *
+     */
+    public void clearSharedPreferences() {
+        SharedPreferences.Editor editor = this.preferences.edit();
+        editor.remove("authentication_key");
+        editor.remove("firebase_messaging_token");
+        editor.remove("name");
+        editor.remove("current_user");
+        editor.apply();
     }
 
 

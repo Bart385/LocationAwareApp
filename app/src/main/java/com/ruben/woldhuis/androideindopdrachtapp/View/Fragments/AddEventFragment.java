@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.EventCreationRequest;
@@ -46,12 +47,16 @@ public class AddEventFragment extends Fragment {
         Button confirmButton = view.findViewById(R.id.confirmAddEvent);
         Application app = getActivity().getApplication();
         confirmButton.setOnClickListener(view1 -> {
-            TcpManagerService.getInstance().submitMessage(new EventCreationRequest(
-                    UserPreferencesService.getInstance(getActivity().getApplication()).getAuthenticationKey(),
-                    UserPreferencesService.getInstance(getActivity().getApplication()).getCurrentUser(),
-                    getGps(),
-                    String.valueOf(EventName.getText())
-            ));
+            Location eventLocation = getGps();
+            if (eventLocation != null)
+                TcpManagerService.getInstance().submitMessage(new EventCreationRequest(
+                        UserPreferencesService.getInstance(getActivity().getApplication()).getAuthenticationKey(),
+                        UserPreferencesService.getInstance(getActivity().getApplication()).getCurrentUser(),
+                        getGps(),
+                        String.valueOf(EventName.getText())
+                ));
+            else
+                Toast.makeText(getContext(), "No location known; Not creating event...", Toast.LENGTH_SHORT).show();
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
             openMap(getActivity().getSupportFragmentManager(), R.id.eventMapFragment);
         });

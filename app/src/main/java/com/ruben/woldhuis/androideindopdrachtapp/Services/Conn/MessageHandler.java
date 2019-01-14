@@ -1,6 +1,7 @@
 package com.ruben.woldhuis.androideindopdrachtapp.Services.Conn;
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.Ev
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
 
 
 public class MessageHandler {
@@ -210,6 +212,10 @@ public class MessageHandler {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
             // TODO: log user out
+            Toast.makeText(application, "NOT LOGGED IN", Toast.LENGTH_LONG).show();
+            UserPreferencesService.getInstance(application).clearSharedPreferences();
+            Intent intent = new Intent(application, LoginActivity.class);
+            application.startActivity(intent);
         }
     }
 
@@ -227,7 +233,7 @@ public class MessageHandler {
         if (!message.getFireBaseToken().equals("SERVER")) {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
-
+            //TODO: Sync messages
         }
     }
 
