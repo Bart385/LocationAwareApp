@@ -28,4 +28,7 @@ public interface EventDAO {
 
     @Delete
     void deleteEvent(Event event);
+
+    @Query("DELETE FROM EVENT_MODEL")
+    void deleteAllEvents();
 }

@@ -32,6 +32,10 @@ public class EventRepository {
         new EventRepository.DeleteEventAsyncTask(eventDAO).execute(event);
     }
 
+    public void deleteAllEvents() {
+        new EventRepository.DeleteAllEventsAsyncTask(eventDAO).execute();
+    }
+
     public LiveData<List<Event>> getmEvents() {
         return mEvents;
     }
@@ -74,6 +78,20 @@ public class EventRepository {
         @Override
         protected Void doInBackground(Event... events) {
             eventDAO.deleteEvent(events[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllEventsAsyncTask extends AsyncTask<Void, Void, Void> {
+        private EventDAO eventDAO;
+
+        private DeleteAllEventsAsyncTask(EventDAO eventDAO) {
+            this.eventDAO = eventDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            eventDAO.deleteAllEvents();
             return null;
         }
     }
