@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Meetup;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventDetailActivity;
 
@@ -54,13 +53,13 @@ public class AllEventsAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.an
             title = (TextView) view.findViewById(R.id.event_name_TextView);
 
 
-            //TODO: Event veraderen naar Meetup ff wachten op antwoord want welke is het?
+            //TODO: Meetup veraderen naar Event ff wachten op antwoord want welke is het?
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Event i = dataSource.get(getAdapterPosition());
                     Intent intent = new Intent(view.getContext(), EventDetailActivity.class);
-                    intent.putExtra("Meetup", (Serializable) i);
+                    intent.putExtra("Event", (Serializable) i);
                     view.getContext().startActivity(intent);
                 }
             });

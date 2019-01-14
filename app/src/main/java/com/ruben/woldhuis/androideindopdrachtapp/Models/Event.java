@@ -6,10 +6,11 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Entity(tableName = "EVENT_MODEL")
-public class Event {
+public class Event implements Serializable {
     @ColumnInfo(name = "event_location")
     private Location location;
     @ColumnInfo(name = "event_name")

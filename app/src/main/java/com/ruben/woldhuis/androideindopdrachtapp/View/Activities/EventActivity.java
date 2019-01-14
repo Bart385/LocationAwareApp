@@ -6,26 +6,23 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.AllEventsAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.GetAllEventsRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Location;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.Meetup;
-import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.EventRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.AddEventFragment;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
 
 public class EventActivity extends FragmentActivity {
-
-    public  static ArrayList<Event> meetups;
+    private static final String TAG = "EVENT_ACTIVITY_TAG";
+    private ArrayList<Event> events;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -47,7 +44,7 @@ public class EventActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_activity);
-        meetups = new ArrayList<>();
+        events = new ArrayList<>();
 
         TcpManagerService.getInstance().submitMessage(new GetAllEventsRequest(
                 UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(),
@@ -59,17 +56,25 @@ public class EventActivity extends FragmentActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new AllEventsAdapter(this, meetups);
+        mAdapter = new AllEventsAdapter(this, events);
         mRecyclerView.setAdapter(mAdapter);
 
         openMap(getSupportFragmentManager(), R.id.eventMapFragment);
         fragmentManager = getSupportFragmentManager();
         addEventFragment = new AddEventFragment();
-        System.out.println(meetups.size());
+        System.out.println(events.size());
 
         addEventButton.setOnClickListener(view -> {
             fragmentManager.beginTransaction().replace(R.id.eventMapFragment, addEventFragment).commit();
+        });
 
+
+        EventRepository repository = new EventRepository(getApplication());
+        repository.getmEvents().observe(this, eventList -> {
+            Log.d(TAG, "In Database: " + eventList.size());
+            events.clear();
+            events.addAll(eventList);
+            mAdapter.notifyDataSetChanged();
         });
     }
 }

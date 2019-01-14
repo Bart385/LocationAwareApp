@@ -46,7 +46,7 @@ public class EventDetailActivity extends FragmentActivity implements Serializabl
         setContentView(R.layout.activity_eventdetail);
 
         Intent intent = getIntent();
-        Event event = (Event) intent.getSerializableExtra("Meetup");
+        Event event = (Event) intent.getSerializableExtra("Event");
 
         allUsers = new ArrayList<>();
 

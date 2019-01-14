@@ -24,7 +24,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.MessageHandler;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.EventRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
@@ -57,11 +56,6 @@ public class MainActivity extends FragmentActivity
                 Log.d(TAG, "onCreate: " + key);
             }
         }
-
-        EventRepository repository = new EventRepository(getApplication());
-        repository.getmEvents().observe(this, events -> {
-            Log.d(TAG, "In database: " + events.size());
-        });
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         mAuth = FirebaseAuth.getInstance();
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
