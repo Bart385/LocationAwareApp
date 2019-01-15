@@ -39,9 +39,7 @@ public class EventDetailActivity extends FragmentActivity implements Serializabl
 
 public Event event;
 
-    public MapFragment mapFragment;
-    public RecyclerView.LayoutManager mLayoutManager;
-    public RecyclerView.Adapter mAdapter;
+
 
     public ArrayList<User> allUsers;
 
@@ -64,7 +62,7 @@ public Event event;
         subscribeButton = findViewById(R.id.subscribeButton_eventDetail);
 
         eventName.setText(event.getEventName());
-        eventLocation.setText(event.getLocation().toString());
+        eventLocation.setText(locationstring(event));
         eventTime.setText(event.getExpirationDateAsString());
 
         subscribeButton.setOnClickListener(new View.OnClickListener() {
@@ -78,9 +76,14 @@ public Event event;
         });
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.MapDetailedEventActivity, DetailEventMapFragment.newInstance(event), "object").commit();
+        Fragment DEF  = DetailEventMapFragment.newInstance(event);
+        fragmentManager.beginTransaction().replace(R.id.MapDetailedEventActivity, DEF).commit();
 
 
+    }
+
+    public String locationstring(Event event){
+        String s = getString(R.string.yourlocation) + " Lat: " + event.getLocation().getLatitude() + " & Lon: " + event.getLocation().getLongitude();
+        return s;
     }
 }

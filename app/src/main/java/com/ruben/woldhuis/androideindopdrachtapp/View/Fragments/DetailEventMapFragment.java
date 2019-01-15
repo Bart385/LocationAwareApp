@@ -20,26 +20,20 @@ import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventDetailActivity;
 
-public class DetailEventMapFragment extends Fragment implements OnMapReadyCallback {
-GoogleMap mMap;
-Event event;
+import java.io.Serializable;
+
+public class DetailEventMapFragment extends Fragment implements OnMapReadyCallback, Serializable {
+    GoogleMap mMap;
+    static Event thisevent;
 
     public DetailEventMapFragment(){
     //needs to stay empty
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        if (getArguments() != null)
-            event = (Event) getArguments().getSerializable("object");
+
         return inflater.inflate(R.layout.fragment_eventmap, container, false);
     }
 
@@ -61,16 +55,14 @@ Event event;
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
         mMap.setMyLocationEnabled(true);
-        mMap.addMarker(new MarkerOptions().position(new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude())).title(event.getEventName()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude()), 8));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude())).title(thisevent.getEventName()));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude()), 8));
         System.out.println("Test");
     }
 
     public static DetailEventMapFragment newInstance(Event event) {
         DetailEventMapFragment fragment = new DetailEventMapFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("object", event);
-        fragment.setArguments(bundle);
+        thisevent = event;
 
         return fragment;
     }

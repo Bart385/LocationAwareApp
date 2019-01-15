@@ -67,5 +67,6 @@
     <string name="call_connected">Connected</string>
     <string name="call_ringing">Ringing</string>
     <string name="profile_change_complete">Successfully update your profile information</string>
+    <string name="yourlocation">You are at this point:</string>
 
 </resources>

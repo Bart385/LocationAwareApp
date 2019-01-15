@@ -40,7 +40,6 @@ public class SignUpActivity extends Activity implements View.OnClickListener {
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        editTextPhoneNumber = findViewById(R.id.signup_PhoneNumber);
         editTextUsername = findViewById(R.id.signUp_Username);
         progressBar = findViewById(R.id.progressbar);
 
@@ -54,7 +53,6 @@ public class SignUpActivity extends Activity implements View.OnClickListener {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String username = editTextUsername.getText().toString().trim();
-        String phoneNumber = editTextPhoneNumber.getText().toString().trim();
 
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
@@ -81,14 +79,8 @@ public class SignUpActivity extends Activity implements View.OnClickListener {
         }
 
         if (username.isEmpty()) {
-            editTextUsername.setError("Email is required");
+            editTextUsername.setError("Username is required");
             editTextUsername.requestFocus();
-            return;
-        }
-
-        if (phoneNumber.isEmpty()) {
-            editTextPhoneNumber.setError("Email is required");
-            editTextPhoneNumber.requestFocus();
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
