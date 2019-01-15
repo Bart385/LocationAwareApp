@@ -11,9 +11,9 @@ public class EventChatMessage implements IMessage {
     private String fireBaseToken;
     private User sender;
     private String eventUID;
-    private IMessage[] content;
+    private String content;
 
-    public EventChatMessage(String fireBaseToken, User sender, String eventUID, IMessage... content) {
+    public EventChatMessage(String fireBaseToken, User sender, String eventUID, String content) {
         this.fireBaseToken = fireBaseToken;
         this.sender = sender;
         this.eventUID = eventUID;
@@ -43,7 +43,7 @@ public class EventChatMessage implements IMessage {
         return eventUID;
     }
 
-    public IMessage[] getContent() {
+    public String getContent() {
         return content;
     }
 
