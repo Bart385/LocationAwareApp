@@ -28,6 +28,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.MessageHandler;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.SIP.SinchManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.VolleyRequests.GetServerRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.VolleyService;
@@ -50,6 +51,7 @@ public class MainActivity extends FragmentActivity
     private CharSequence mTitle;
     private android.support.v4.app.FragmentManager fragmentManager;
     private UserRepository userRepository;
+    private SinchManagerService sinchManagerService;
 
     public static MainActivity getInstance() {
         return instance;
@@ -67,6 +69,7 @@ public class MainActivity extends FragmentActivity
         }
         volleyService = VolleyService.getInstance(getApplication());
         volleyService.doRequest(new GetServerRequest());
+        sinchManagerService = SinchManagerService.getInstance(getApplication());
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         userRepository = new UserRepository(getApplication());
         mAuth = FirebaseAuth.getInstance();

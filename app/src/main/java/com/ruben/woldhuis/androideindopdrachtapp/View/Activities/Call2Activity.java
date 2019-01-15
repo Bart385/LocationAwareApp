@@ -28,6 +28,7 @@ public class Call2Activity extends Activity {
                 Intent intent = new Intent(getApplication(), DetailedCallActivity.class);
                 intent.putExtra("TARGET", UserPreferencesService.getInstance(getApplication()).getCurrentUser());
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
