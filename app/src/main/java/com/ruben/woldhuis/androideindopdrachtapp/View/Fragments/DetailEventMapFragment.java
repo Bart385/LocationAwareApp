@@ -1,8 +1,10 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -10,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +31,7 @@ import java.io.Serializable;
 public class DetailEventMapFragment extends Fragment implements OnMapReadyCallback, Serializable {
     static Event thisevent;
     GoogleMap mMap;
+    Button openNavButton;
 
     public DetailEventMapFragment() {
         //needs to stay empty
@@ -43,13 +47,13 @@ public class DetailEventMapFragment extends Fragment implements OnMapReadyCallba
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_eventmap, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         if (getActivity() != null) {
             SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
