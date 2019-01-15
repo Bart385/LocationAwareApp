@@ -50,5 +50,6 @@
     <string name="call_ringing">U wordt gebeld.</string>
     <string name="profile_change_complete">Uw profile informatie is succesvol geupdatet.</string>
     <string name="yourlocation">Je bent op dit punt</string>
+    <string name="caller_id_default">Beller ID niet beschikbaar</string>
 
 </resources>
