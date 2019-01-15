@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity
             }
         }
         volleyService = VolleyService.getInstance(getApplication());
-        volleyService.doRequest(new GetServerRequest());
+      //  volleyService.doRequest(new GetServerRequest());
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         userRepository = new UserRepository(getApplication());
         mAuth = FirebaseAuth.getInstance();
@@ -129,12 +129,12 @@ public class MainActivity extends FragmentActivity
         User user = new User("TEST", "TEST", "TEST");
         user.setLocation(new Location(1, 5));
         user.setProfilePictureURL("http://206.189.3.15/images/Testing.jpg");
-        userRepository.insertUser(user);
+        userRepository.deleteUser(user);
     }
 
     private void authenticateWithServer() {
         TcpManagerService.getInstance().subscribeToMessageEvents(message ->
-                MessageHandler.getInstance(PushNotification.getInstance(getApplication()), getApplication()).handleMessage(message));
+                MessageHandler.getInstance(PushNotification.getInstance(getApplication(), this), getApplication()).handleMessage(message));
         TcpManagerService.getInstance().subscribeToErrorEvents(error -> Log.e("MAIN_ACTIVITY_TAG", error.getMessage()));
         if (mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);

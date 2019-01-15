@@ -51,5 +51,7 @@
     <string name="profile_change_complete">Uw profile informatie is succesvol geupdatet.</string>
     <string name="yourlocation">Je bent op dit punt</string>
     <string name="caller_id_default">Beller ID niet beschikbaar</string>
+    <string name="add_friend">Vriend toevoegen</string>
+    <string name="add_friend_dialog">Geef de email van uw vriend(in) om deze toe te voegen aan de vriendenlijst</string>
 
 </resources>

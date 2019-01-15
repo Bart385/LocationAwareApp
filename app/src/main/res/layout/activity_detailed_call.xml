@@ -40,6 +40,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@android:color/holo_red_light"
+        android:src="@android:drawable/ic_menu_call"
         android:theme="@style/Theme.AppCompat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +54,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@android:color/holo_green_light"
+        android:src="@android:drawable/ic_menu_call"
         android:theme="@style/Theme.AppCompat"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/caller_id_text" />

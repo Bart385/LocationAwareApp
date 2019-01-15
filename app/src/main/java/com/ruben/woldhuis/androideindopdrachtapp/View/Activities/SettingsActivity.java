@@ -20,6 +20,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -53,7 +54,8 @@ public class SettingsActivity extends Activity {
         email.setText(user.getEmail());
         profilePicture = findViewById(R.id.profile_picture);
         previewProfilePicture = findViewById(R.id.previewImage_settings);
-
+        if (user.getProfilePictureURL() != null && !user.getProfilePictureURL().isEmpty())
+            Picasso.get().load(user.getProfilePictureURL()).into(profilePicture);
         changeProfilePicture = findViewById(R.id.changeprofilepicture_button);
         forgotPasswordButton = findViewById(R.id.forgotpassword_button);
         confirmChanges = findViewById(R.id.settings_confirmbutton);

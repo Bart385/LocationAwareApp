@@ -92,6 +92,10 @@
         <activity android:name=".View.Activities.LocationAwareChatActivity" />
         <activity android:name=".View.Activities.ProfileActivity" />
         <activity android:name=".View.Activities.EventDetailActivity" />
+        <activity
+            android:name=".View.Activities.OnFriendRequestDialog"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
 
         <service android:name=".Services.C2DM.FCMReceiverService">
             <intent-filter>

@@ -2,6 +2,7 @@ package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,8 @@ public class FriendsFragment extends Fragment implements Serializable {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private FloatingActionButton addFriendButton;
+
     public static FriendsFragment newInstance() {
         return new FriendsFragment();
     }
@@ -45,11 +48,17 @@ public class FriendsFragment extends Fragment implements Serializable {
         //TODO: netter opzetten is nu heel kaal
 
         mRecyclerView = v.findViewById(R.id.Friend_RecyclerView);
+        addFriendButton = v.findViewById(R.id.add_friend_button);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new FriendsRecyclerAdapter(getContext(), friends);
         mRecyclerView.setAdapter(mAdapter);
+
+        addFriendButton.setOnClickListener(view -> {
+            AddFriendDialogFragment fragment = AddFriendDialogFragment.newInstance();
+            fragment.show(getFragmentManager(), "Add a friend");
+        });
 
         UserRepository repository = new UserRepository(getActivity().getApplication());
         repository.insertUser(new User("Ruben", "rubenwoldhuis@gmail.com", "gv27K98cpUWmOyFuI08koW996eK2"));

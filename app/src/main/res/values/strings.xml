@@ -69,5 +69,7 @@
     <string name="profile_change_complete">Successfully update your profile information</string>
     <string name="caller_id_default">No Caller ID</string>
     <string name="yourlocation">You are at this point:</string>
+    <string name="add_friend">Add a friend</string>
+    <string name="add_friend_dialog">Enter your friends email to add them to your friendslist</string>
 
 </resources>
