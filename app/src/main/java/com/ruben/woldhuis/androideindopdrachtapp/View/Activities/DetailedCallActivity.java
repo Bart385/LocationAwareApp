@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.SIP.SinchManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.sinch.android.rtc.PushPair;
 import com.sinch.android.rtc.calling.Call;
 import com.sinch.android.rtc.calling.CallClient;
@@ -27,7 +28,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class DetailedCallActivity extends Activity {
-    private static final int RECORD_AUDIO_REQUEST_CODE = 201;
     private static final String TAG = "DETAILED_CALL_ACTIVITY_TAG";
     private Call mCall;
     private SinchManagerService mSinchManager;
@@ -44,11 +44,10 @@ public class DetailedCallActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_detailed_call);
-        mSinchManager = SinchManagerService.getInstance(getApplication());
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST_CODE);
 
         Intent intent = getIntent();
         User target = (User) intent.getSerializableExtra("TARGET");
+        mSinchManager = SinchManagerService.getInstance(getApplication(), UserPreferencesService.getInstance(getApplication()).getCurrentUser());
 
         answerCall = findViewById(R.id.accept_call_button);
         cancelCall = findViewById(R.id.cancel_call_button);
@@ -82,23 +81,7 @@ public class DetailedCallActivity extends Activity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case RECORD_AUDIO_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-        }
-    }
 
     private class SinchCallClientListener implements CallClientListener {
         @Override

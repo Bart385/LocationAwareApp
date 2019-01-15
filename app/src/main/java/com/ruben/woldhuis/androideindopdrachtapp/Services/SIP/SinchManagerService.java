@@ -2,8 +2,8 @@ package com.ruben.woldhuis.androideindopdrachtapp.Services.SIP;
 
 import android.app.Application;
 
+import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.sinch.android.rtc.Sinch;
 import com.sinch.android.rtc.SinchClient;
 
@@ -14,17 +14,17 @@ public class SinchManagerService {
     private Application application;
     private SinchClient sinchClient;
 
-    public static SinchManagerService getInstance(Application application) {
+    public static SinchManagerService getInstance(Application application, User user) {
         if (instance == null)
-            instance = new SinchManagerService(application);
+            instance = new SinchManagerService(application, user);
         return instance;
     }
 
-    private SinchManagerService(Application application) {
+    private SinchManagerService(Application application, User user) {
         this.application = application;
         sinchClient = Sinch.getSinchClientBuilder()
                 .context(application)
-                .userId(UserPreferencesService.getInstance(application).getCurrentUser().getUid())
+                .userId(user.getUid())
                 .applicationKey(application.getString(R.string.sinch_application_key))
                 .applicationSecret(application.getString(R.string.sinch_application_secret))
                 .environmentHost(SIP_SERVER_HOSTNAME)

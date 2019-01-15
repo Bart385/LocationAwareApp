@@ -30,6 +30,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.EventRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.SIP.SinchManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
 
@@ -242,6 +243,8 @@ public class MessageHandler {
         } else {
             //TODO: Sync messages
             UserPreferencesService.getInstance(application).saveCurrentUser(message.getUser());
+            SinchManagerService.getInstance(application, message.getUser());
+
         }
     }
 

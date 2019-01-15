@@ -1,7 +1,10 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +17,8 @@ import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.Us
 import java.util.ArrayList;
 
 public class Call2Activity extends FragmentActivity {
+    private static final int RECORD_AUDIO_REQUEST_CODE = 201;
+
     private UserRepository userRepository;
 
     private RecyclerView.LayoutManager mLayoutManager;
@@ -27,6 +32,8 @@ public class Call2Activity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST_CODE);
+
         setContentView(R.layout.activity_call2);
         mRecyclerView = findViewById(R.id.callable_contacts_recyclerview);
         contacts = new ArrayList<>();
@@ -58,5 +65,21 @@ public class Call2Activity extends FragmentActivity {
 */
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case RECORD_AUDIO_REQUEST_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+        }
+    }
 }
