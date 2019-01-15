@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -15,14 +16,21 @@ import android.widget.TextView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.VoIP.SinchManager;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.SIP.SinchManagerService;
+import com.sinch.android.rtc.PushPair;
+import com.sinch.android.rtc.calling.Call;
+import com.sinch.android.rtc.calling.CallClient;
+import com.sinch.android.rtc.calling.CallClientListener;
+import com.sinch.android.rtc.calling.CallListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class DetailedCallActivity extends Activity {
     private static final int RECORD_AUDIO_REQUEST_CODE = 201;
     private static final String TAG = "DETAILED_CALL_ACTIVITY_TAG";
-
-    private SinchManager mSinchManager;
+    private Call mCall;
+    private SinchManagerService mSinchManager;
 
     private FloatingActionButton answerCall;
     private FloatingActionButton cancelCall;
@@ -36,9 +44,7 @@ public class DetailedCallActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_detailed_call);
-        mSinchManager = SinchManager.getInstance(getApplication(), status -> {
-
-        });
+        mSinchManager = SinchManagerService.getInstance(getApplication());
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST_CODE);
 
         Intent intent = getIntent();
@@ -48,6 +54,11 @@ public class DetailedCallActivity extends Activity {
         cancelCall = findViewById(R.id.cancel_call_button);
         callerImage = findViewById(R.id.caller_image);
         callerID = findViewById(R.id.caller_id_text);
+
+        CallClient callClient = mSinchManager.getSinchClient().getCallClient();
+        mCall = callClient.callUser(target.getUid());
+        callClient.addCallClientListener(new SinchCallClientListener());
+
 
         callerID.setText(target.getName());
 
@@ -65,6 +76,11 @@ public class DetailedCallActivity extends Activity {
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -84,4 +100,39 @@ public class DetailedCallActivity extends Activity {
         }
     }
 
+    private class SinchCallClientListener implements CallClientListener {
+        @Override
+        public void onIncomingCall(CallClient callClient, Call incomingCall) {
+            //Pick up the call!
+            mCall = incomingCall;
+            mCall.answer();
+            mCall.addCallListener(new SinchCallListener());
+        }
+    }
+
+    private class SinchCallListener implements CallListener {
+        @Override
+        public void onCallEnded(Call endedCall) {
+            setVolumeControlStream(AudioManager.USE_DEFAULT_STREAM_TYPE);
+            //      statusListener.onStatusTextChanged("");
+
+        }
+
+        @Override
+        public void onCallEstablished(Call establishedCall) {
+            setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+            //   callState.setText(getString(R.string.call_connected));
+
+        }
+
+        @Override
+        public void onCallProgressing(Call progressingCall) {
+            //  callState.setText(getString(R.string.call_ringing));
+        }
+
+        @Override
+        public void onShouldSendPushNotification(Call call, List<PushPair> pushPairs) {
+            //don't worry about this right now
+        }
+    }
 }

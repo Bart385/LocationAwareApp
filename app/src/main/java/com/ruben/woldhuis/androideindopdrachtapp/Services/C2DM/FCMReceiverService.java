@@ -18,6 +18,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Upda
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
+import com.sinch.android.rtc.SinchHelpers;
 
 public class FCMReceiverService extends FirebaseMessagingService {
     private static final String TAG = "FCM_RECEIVER_TAG";
@@ -50,14 +51,19 @@ public class FCMReceiverService extends FirebaseMessagingService {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
+        if (SinchHelpers.isSinchPushPayload(remoteMessage.getData())) {
+            Intent sinchNotification = new Intent();
+            sinchNotification.setAction("com.call.notification");
+            sendBroadcast(sinchNotification);
+        }
+
+
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
             // Handle message within 10 seconds
             handleNow();
-
-
         }
 
         // Check if message contains a notification payload.

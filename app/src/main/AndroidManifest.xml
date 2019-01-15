@@ -72,7 +72,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.Activities.EventDetailActivity"></activity>
+        <receiver android:name=".Receivers.SinchCallReceiver">
+            <intent-filter>
+                <action android:name="com.call.notification" />
+            </intent-filter>
+        </receiver>
+
         <activity android:name=".View.Activities.SettingsActivity" />
         <activity android:name=".View.Activities.EventActivity" />
         <activity
