@@ -21,7 +21,6 @@ import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.PicassoMarker;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
 import com.squareup.picasso.Picasso;
 

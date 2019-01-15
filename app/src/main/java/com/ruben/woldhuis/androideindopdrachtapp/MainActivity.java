@@ -28,7 +28,6 @@ import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.MessageHandler;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
-import com.ruben.woldhuis.androideindopdrachtapp.Services.SIP.SinchManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.VolleyRequests.GetServerRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.VolleyService;
@@ -85,7 +84,6 @@ public class MainActivity extends FragmentActivity
                     authenticateWithServer();
                     // Log and toast
                     Log.d(TAG, token);
-                    Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                 });
 
         setContentView(R.layout.activity_main);

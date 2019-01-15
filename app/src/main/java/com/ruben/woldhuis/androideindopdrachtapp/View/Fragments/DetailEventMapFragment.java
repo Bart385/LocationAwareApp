@@ -18,16 +18,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventDetailActivity;
 
 import java.io.Serializable;
 
 public class DetailEventMapFragment extends Fragment implements OnMapReadyCallback, Serializable {
-    GoogleMap mMap;
     static Event thisevent;
+    GoogleMap mMap;
 
-    public DetailEventMapFragment(){
-    //needs to stay empty
+    public DetailEventMapFragment() {
+        //needs to stay empty
+    }
+
+    public static DetailEventMapFragment newInstance(Event event) {
+        DetailEventMapFragment fragment = new DetailEventMapFragment();
+        thisevent = event;
+
+        return fragment;
     }
 
     @Override
@@ -42,10 +48,9 @@ public class DetailEventMapFragment extends Fragment implements OnMapReadyCallba
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-                mapFragment.getMapAsync(this);
-            }
+            mapFragment.getMapAsync(this);
         }
-
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -58,12 +63,5 @@ public class DetailEventMapFragment extends Fragment implements OnMapReadyCallba
         mMap.addMarker(new MarkerOptions().position(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude())).title(thisevent.getEventName()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude()), 8));
         System.out.println("Test");
-    }
-
-    public static DetailEventMapFragment newInstance(Event event) {
-        DetailEventMapFragment fragment = new DetailEventMapFragment();
-        thisevent = event;
-
-        return fragment;
     }
 }

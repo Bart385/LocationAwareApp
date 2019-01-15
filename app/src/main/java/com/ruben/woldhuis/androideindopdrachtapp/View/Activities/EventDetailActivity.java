@@ -1,19 +1,14 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Requests.SubscribeToEventRequest;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
@@ -22,14 +17,11 @@ import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.DetailEventMapFragment;
-import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import static com.ruben.woldhuis.androideindopdrachtapp.View.Activities.EventActivity.openMap;
-
-public class EventDetailActivity extends FragmentActivity implements Serializable{
+public class EventDetailActivity extends FragmentActivity implements Serializable {
 
     public TextView eventName;
     public TextView eventTime;
@@ -37,13 +29,10 @@ public class EventDetailActivity extends FragmentActivity implements Serializabl
     public RecyclerView mRecyclerView;
     public Button subscribeButton;
 
-public Event event;
-
+    public Event event;
 
 
     public ArrayList<User> allUsers;
-
-
 
 
     @Override
@@ -76,13 +65,13 @@ public Event event;
         });
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment DEF  = DetailEventMapFragment.newInstance(event);
+        Fragment DEF = DetailEventMapFragment.newInstance(event);
         fragmentManager.beginTransaction().replace(R.id.MapDetailedEventActivity, DEF).commit();
 
 
     }
 
-    public String locationstring(Event event){
+    public String locationstring(Event event) {
         String s = getString(R.string.yourlocation) + " Lat: " + event.getLocation().getLatitude() + " & Lon: " + event.getLocation().getLongitude();
         return s;
     }

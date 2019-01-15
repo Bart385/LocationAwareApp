@@ -218,7 +218,6 @@ public class MessageHandler {
         if (!message.getFireBaseToken().equals("SERVER")) {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
-            // TODO: log user out
             Toast.makeText(application, "NOT LOGGED IN", Toast.LENGTH_LONG).show();
             UserPreferencesService.getInstance(application).clearSharedPreferences();
             Intent intent = new Intent(application, LoginActivity.class);
@@ -241,10 +240,12 @@ public class MessageHandler {
         if (!message.getFireBaseToken().equals("SERVER")) {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
-            //TODO: Sync messages
             UserPreferencesService.getInstance(application).saveCurrentUser(message.getUser());
             SinchManagerService.getInstance(application, message.getUser());
-
+          /*  TcpManagerService.getInstance().submitMessage(new SyncMissedMessagesRequest(
+                    UserPreferencesService.getInstance(application).getAuthenticationKey(),
+                    message.getUser()
+            ));*/
         }
     }
 

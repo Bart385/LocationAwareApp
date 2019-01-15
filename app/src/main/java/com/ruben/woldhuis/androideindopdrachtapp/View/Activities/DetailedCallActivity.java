@@ -1,13 +1,10 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Activities;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -80,7 +77,6 @@ public class DetailedCallActivity extends Activity {
         super.onStop();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
-
 
 
     private class SinchCallClientListener implements CallClientListener {

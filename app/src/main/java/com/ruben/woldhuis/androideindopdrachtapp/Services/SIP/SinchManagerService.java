@@ -14,12 +14,6 @@ public class SinchManagerService {
     private Application application;
     private SinchClient sinchClient;
 
-    public static SinchManagerService getInstance(Application application, User user) {
-        if (instance == null)
-            instance = new SinchManagerService(application, user);
-        return instance;
-    }
-
     private SinchManagerService(Application application, User user) {
         this.application = application;
         sinchClient = Sinch.getSinchClientBuilder()
@@ -33,6 +27,12 @@ public class SinchManagerService {
         sinchClient.setSupportActiveConnectionInBackground(true);
         sinchClient.setSupportManagedPush(true);
         sinchClient.start();
+    }
+
+    public static SinchManagerService getInstance(Application application, User user) {
+        if (instance == null)
+            instance = new SinchManagerService(application, user);
+        return instance;
     }
 
     public SinchClient getSinchClient() {
