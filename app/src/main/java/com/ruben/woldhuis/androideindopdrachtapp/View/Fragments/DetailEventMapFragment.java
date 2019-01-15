@@ -64,7 +64,7 @@ public class DetailEventMapFragment extends Fragment implements OnMapReadyCallba
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
         mMap.setMyLocationEnabled(true);
-        MarkerOptions eventMarker= new MarkerOptions().position(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude())).title(thisevent.getEventName())
+        MarkerOptions eventMarker= new MarkerOptions().position(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude())).title(thisevent.getEventName());
         mMap.addMarker(eventMarker);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude()), 8));
         
