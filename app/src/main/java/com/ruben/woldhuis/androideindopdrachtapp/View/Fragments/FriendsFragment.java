@@ -1,5 +1,6 @@
 package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ruben.woldhuis.androideindopdrachtapp.Adapters.FriendsRecyclerAdapter;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
@@ -22,6 +25,8 @@ public class FriendsFragment extends Fragment implements Serializable {
 
 
     private static FriendsFragment instance;
+    public TextView chatLayout;
+    public ImageView imageChat;
     private ArrayList<User> friends;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -45,7 +50,7 @@ public class FriendsFragment extends Fragment implements Serializable {
 
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
 
-        //TODO: netter opzetten is nu heel kaal
+
 
         mRecyclerView = v.findViewById(R.id.Friend_RecyclerView);
         addFriendButton = v.findViewById(R.id.add_friend_button);
