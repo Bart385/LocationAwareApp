@@ -76,7 +76,8 @@ public class SettingsActivity extends Activity {
             FirebaseAuth.getInstance().getCurrentUser().updateProfile(profileChangeRequest).addOnCompleteListener(task -> {
                 Toast.makeText(getApplicationContext(), getString(R.string.profile_change_complete), Toast.LENGTH_LONG).show();
             });
-            uploadImage();
+            if (previewImageURI != null)
+                uploadImage();
         });
     }
 

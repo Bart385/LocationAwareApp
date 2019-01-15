@@ -17,7 +17,10 @@ import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.SIP.SinchManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.DetailedCallActivity;
+import com.sinch.android.rtc.NotificationResult;
 import com.sinch.android.rtc.SinchHelpers;
 
 public class FCMReceiverService extends FirebaseMessagingService {
@@ -52,25 +55,31 @@ public class FCMReceiverService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         if (SinchHelpers.isSinchPushPayload(remoteMessage.getData())) {
-            Intent sinchNotification = new Intent();
-            sinchNotification.setAction("com.call.notification");
-            sendBroadcast(sinchNotification);
+            NotificationResult result = SinchManagerService
+                    .getInstance(getApplication(), UserPreferencesService.getInstance(getApplication()).getCurrentUser())
+                    .getSinchClient()
+                    .relayRemotePushNotificationPayload(remoteMessage.getData());
+
+            Intent intent = new Intent(getApplicationContext(), DetailedCallActivity.class);
+            Log.d(TAG, "onMessageReceived: " + result.getCallResult().getRemoteUserId());
+            intent.putExtra("USER_UID", result.getCallResult().getRemoteUserId());
+            intent.putExtra("CALL_ID", result.getCallResult().getCallId());
+            startActivity(intent);
+        } else {
+
+            // Check if message contains a data payload.
+            if (remoteMessage.getData().size() > 0) {
+                Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+
+                // Handle message within 10 seconds
+                handleNow();
+            }
+
+            // Check if message contains a notification payload.
+            if (remoteMessage.getNotification() != null) {
+                Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            }
         }
-
-
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-
-            // Handle message within 10 seconds
-            handleNow();
-        }
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        }
-
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
