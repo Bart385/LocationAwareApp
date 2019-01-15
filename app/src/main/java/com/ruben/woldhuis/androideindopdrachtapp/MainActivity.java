@@ -29,6 +29,8 @@ import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Database.Repository.UserRepository;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.VolleyRequests.GetServerRequest;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.VolleyService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawerFragment;
@@ -37,7 +39,10 @@ import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.NavigationDrawer
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private static final String TAG = "MAIN_ACTIVITY_TAG";
+
     private static MainActivity instance;
+
+    private VolleyService volleyService;
     private FirebaseAuth mAuth;
     private MapFragment mMapFragment;
     private UserPreferencesService userPreferencesService;
@@ -60,6 +65,8 @@ public class MainActivity extends FragmentActivity
                 Log.d(TAG, "onCreate: " + key);
             }
         }
+        volleyService = VolleyService.getInstance(getApplication());
+        volleyService.doRequest(new GetServerRequest());
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         userRepository = new UserRepository(getApplication());
         mAuth = FirebaseAuth.getInstance();
