@@ -85,6 +85,9 @@ public class DetailedCallActivity extends FragmentActivity {
 
         cancelCall.setOnClickListener(view -> {
             Log.d(TAG, "cancel call clicked");
+            if (mCall != null)
+                mCall.hangup();
+            finish();
         });
 
 
