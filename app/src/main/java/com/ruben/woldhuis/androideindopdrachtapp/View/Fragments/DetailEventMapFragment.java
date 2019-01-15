@@ -2,6 +2,7 @@ package com.ruben.woldhuis.androideindopdrachtapp.View.Fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -15,7 +16,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.Event;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 
@@ -60,8 +64,9 @@ public class DetailEventMapFragment extends Fragment implements OnMapReadyCallba
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
         mMap.setMyLocationEnabled(true);
-        mMap.addMarker(new MarkerOptions().position(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude())).title(thisevent.getEventName()));
+        MarkerOptions eventMarker= new MarkerOptions().position(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude())).title(thisevent.getEventName())
+        mMap.addMarker(eventMarker);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(thisevent.getLocation().getLatitude(), thisevent.getLocation().getLongitude()), 8));
-        System.out.println("Test");
+        
     }
 }
