@@ -18,6 +18,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.core.UserWriteRecord;
 import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.IdentificationMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
@@ -26,7 +29,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService
 public class SignUpActivity extends Activity implements View.OnClickListener {
 
     private ProgressBar progressBar;
-    private EditText editTextEmail, editTextPassword;
+    private EditText editTextEmail, editTextPassword, editTextUsername, editTextPhoneNumber;
 
     private FirebaseAuth mAuth;
 
@@ -37,6 +40,8 @@ public class SignUpActivity extends Activity implements View.OnClickListener {
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        editTextPhoneNumber = findViewById(R.id.signup_PhoneNumber);
+        editTextUsername = findViewById(R.id.signUp_Username);
         progressBar = findViewById(R.id.progressbar);
 
         mAuth = FirebaseAuth.getInstance();
@@ -48,6 +53,8 @@ public class SignUpActivity extends Activity implements View.OnClickListener {
     private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String username = editTextUsername.getText().toString().trim();
+        String phoneNumber = editTextPhoneNumber.getText().toString().trim();
 
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
@@ -72,6 +79,18 @@ public class SignUpActivity extends Activity implements View.OnClickListener {
             editTextPassword.requestFocus();
             return;
         }
+
+        if (username.isEmpty()) {
+            editTextUsername.setError("Email is required");
+            editTextUsername.requestFocus();
+            return;
+        }
+
+        if (phoneNumber.isEmpty()) {
+            editTextPhoneNumber.setError("Email is required");
+            editTextPhoneNumber.requestFocus();
+            return;
+        }
         progressBar.setVisibility(View.VISIBLE);
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -87,6 +106,11 @@ public class SignUpActivity extends Activity implements View.OnClickListener {
                                                                String idToken = task.getResult().getToken();
                                                                UserPreferencesService.getInstance(getApplication()).saveAuthenticationKey(idToken);
                                                                TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, UserPreferencesService.getInstance(getApplication()).getFireBaseMessagingId()));
+                                                               UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(String.valueOf(username)).build();
+                                                               FirebaseAuth.getInstance().getCurrentUser().updateProfile(profileChangeRequest);
+                                                               FirebaseAuth.getInstance().getCurrentUser().reload();
+                                                               //TODO: Telefoonnummer toevoegen is voor nu heel wat werk.
+
                                                            } else
                                                                Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
 

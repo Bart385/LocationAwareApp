@@ -39,6 +39,22 @@
                 android:inputType="textPassword"
                 android:paddingBottom="15dp" />
 
+            <EditText
+                android:id="@+id/signUp_Username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Username"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/signup_PhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/phonenumber"
+                android:inputType="phone" />
+
             <Button
                 android:id="@+id/buttonSignUp"
                 android:layout_width="match_parent"

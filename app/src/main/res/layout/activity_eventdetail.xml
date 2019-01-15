@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/MapDetailedEventActivity"
-        android:name="com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment"
+        android:name="com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.DetailEventMapFragment"
         android:layout_width="384dp"
         android:layout_height="259dp"
         android:layout_marginTop="20dp"

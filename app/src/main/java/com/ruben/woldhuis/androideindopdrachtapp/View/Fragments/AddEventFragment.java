@@ -52,7 +52,7 @@ public class AddEventFragment extends Fragment {
                 TcpManagerService.getInstance().submitMessage(new EventCreationRequest(
                         UserPreferencesService.getInstance(getActivity().getApplication()).getAuthenticationKey(),
                         UserPreferencesService.getInstance(getActivity().getApplication()).getCurrentUser(),
-                        getGps(),
+                        eventLocation,
                         String.valueOf(EventName.getText())
                 ));
             else

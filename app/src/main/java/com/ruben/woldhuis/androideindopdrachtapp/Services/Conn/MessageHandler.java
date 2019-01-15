@@ -231,7 +231,7 @@ public class MessageHandler {
         if (!message.getFireBaseToken().equals("SERVER")) {
             Toast.makeText(application, application.getText(R.string.unregisteredSourceNotification), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(application, application.getString(R.string.subSuccessful), Toast.LENGTH_SHORT).show();
+            Toast.makeText(application, application.getText(R.string.subSuccessful), Toast.LENGTH_SHORT).show();
         }
     }
 
