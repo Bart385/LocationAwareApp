@@ -18,9 +18,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ruben.woldhuis.androideindopdrachtapp.MainActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.MessagingProtocol.Messages.Updates.LocationUpdateMessage;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.PicassoMarker;
 import com.ruben.woldhuis.androideindopdrachtapp.Models.User;
 import com.ruben.woldhuis.androideindopdrachtapp.R;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.Conn.TcpManagerService;
+import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.ProfileActivity;
 import com.squareup.picasso.Picasso;
 
@@ -39,6 +42,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     private GoogleMap mMap;
     private Queue<Runnable> runnables;
     private android.location.Location location;
+    private com.ruben.woldhuis.androideindopdrachtapp.Models.Location ModelLocation;
     private ArrayList<User> friends;
     private ArrayList<PicassoMarker> picassoMarkers;
 
@@ -50,6 +54,13 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getGps();
+        ModelLocation = new com.ruben.woldhuis.androideindopdrachtapp.Models.Location(latitude, longitude);
+        TcpManagerService.getInstance().submitMessage(new LocationUpdateMessage(
+                UserPreferencesService.getInstance(MainActivity.getInstance().getApplication()).getAuthenticationKey(),
+                ModelLocation,
+                UserPreferencesService.getInstance(MainActivity.getInstance().getApplication()).getCurrentUser()
+        ));
         SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
@@ -57,6 +68,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
         runnables = new LinkedBlockingQueue<>();
         friends = new ArrayList<>();
         picassoMarkers = new ArrayList<>();
+
     }
 
 

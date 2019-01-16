@@ -42,6 +42,7 @@ public class MainActivity extends FragmentActivity
 
     private static MainActivity instance;
 
+
     private VolleyService volleyService;
     private FirebaseAuth mAuth;
     private MapFragment mMapFragment;
