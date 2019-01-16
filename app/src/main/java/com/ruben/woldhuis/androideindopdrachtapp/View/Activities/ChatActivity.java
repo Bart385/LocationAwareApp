@@ -75,7 +75,7 @@ public class ChatActivity extends Activity {
         sendButton.setOnClickListener(view -> {
             //TODO: implement message logic
             //TcpManagerService.getInstance().submitMessage();
-            if (input.getText().equals("")) {
+            if (!input.getText().equals("")) {
                 addMess(new TextMessage(null, input.getText().toString(), null, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
                 TcpManagerService.getInstance().submitMessage(new TextMessage(UserPreferencesService.getInstance(getApplication()).getAuthenticationKey(), input.getText().toString(), target, UserPreferencesService.getInstance(getApplication()).getCurrentUser()));
                 input.setText("");
