@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity
             }
         }
         volleyService = VolleyService.getInstance(getApplication());
-        //  volleyService.doRequest(new GetServerRequest());
+        volleyService.doRequest(new GetServerRequest());
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         userRepository = new UserRepository(getApplication());
         mAuth = FirebaseAuth.getInstance();
@@ -94,29 +94,15 @@ public class MainActivity extends FragmentActivity
 
                 MapFragment();
 
-        fragmentManager =
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, mMapFragment).commit();
 
-                getSupportFragmentManager();
-        fragmentManager.beginTransaction().
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-                replace(R.id.container, mMapFragment).
-
-                commit();
-
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-
-                getSupportFragmentManager().
-
-                        findFragmentById(R.id.navigation_drawer);
-
-        mTitle =
-
-                getTitle();
+        mTitle = getTitle();
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
-                (DrawerLayout)
-
-                        findViewById(R.id.drawer_layout));
+                (DrawerLayout) findViewById(R.id.drawer_layout));
         mNavigationDrawerFragment.setUpHeader();
 
         //Alles voor de map
