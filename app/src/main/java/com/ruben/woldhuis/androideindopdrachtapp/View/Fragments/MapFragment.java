@@ -45,6 +45,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     private com.ruben.woldhuis.androideindopdrachtapp.Models.Location ModelLocation;
     private ArrayList<User> friends;
     private ArrayList<PicassoMarker> picassoMarkers;
+    public static boolean isAuthenticad = false;
 
     public MapFragment() {
         // Required empty public constructor
@@ -55,22 +56,24 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getGps();
-        ModelLocation = new com.ruben.woldhuis.androideindopdrachtapp.Models.Location(latitude, longitude);
-        TcpManagerService.getInstance().submitMessage(new LocationUpdateMessage(
-                UserPreferencesService.getInstance(MainActivity.getInstance().getApplication()).getAuthenticationKey(),
-                ModelLocation,
-                UserPreferencesService.getInstance(MainActivity.getInstance().getApplication()).getCurrentUser()
-        ));
-        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
+
         runnables = new LinkedBlockingQueue<>();
         friends = new ArrayList<>();
         picassoMarkers = new ArrayList<>();
 
     }
 
+    public void sendLocation() {
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mMap != null)
+            mMap.clear();
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -79,9 +82,10 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
-        googleMap.setMyLocationEnabled(true);
-        googleMap.setOnMarkerClickListener(this);
-        googleMap.setOnInfoWindowClickListener(this);
+        mMap = googleMap;
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
         for (User friend : friends) {
             if (friend.getLocation() != null) {
                 LatLng pos = new LatLng(friend.getLocation().getLatitude(), friend.getLocation().getLongitude());
@@ -94,8 +98,17 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
                 picassoMarkers.add(marker);
             }
         }
+         if (isAuthenticad) {
+            ModelLocation = new com.ruben.woldhuis.androideindopdrachtapp.Models.Location(latitude, longitude);
+            TcpManagerService.getInstance().submitMessage(new LocationUpdateMessage(
+                    UserPreferencesService.getInstance(MainActivity.getInstance().getApplication()).getAuthenticationKey(),
+                    ModelLocation,
+                    UserPreferencesService.getInstance(MainActivity.getInstance().getApplication()).getCurrentUser()
+            ));
 
-    }
+            }
+        }
+
 
     public Location getGps() {
         LocationManager locationManager = (LocationManager) MainActivity.getInstance().getSystemService(LOCATION_SERVICE);

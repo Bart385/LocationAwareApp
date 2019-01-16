@@ -2,6 +2,7 @@ package com.ruben.woldhuis.androideindopdrachtapp.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,6 +52,7 @@ public class AllEventsAdapter extends RecyclerView.Adapter<com.ruben.woldhuis.an
         public MyViewHolder(View view, final Context context) {
             super(view);
             title = (TextView) view.findViewById(R.id.event_name_TextView);
+            title.setTextColor(Color.BLACK);
 
 
             //TODO: Meetup veraderen naar Event ff wachten op antwoord want welke is het?

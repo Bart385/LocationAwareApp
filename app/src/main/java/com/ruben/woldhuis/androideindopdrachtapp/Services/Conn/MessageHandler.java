@@ -33,6 +33,7 @@ import com.ruben.woldhuis.androideindopdrachtapp.Services.PushNotification;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.SIP.SinchManagerService;
 import com.ruben.woldhuis.androideindopdrachtapp.Services.UserPreferencesService;
 import com.ruben.woldhuis.androideindopdrachtapp.View.Activities.LoginActivity;
+import com.ruben.woldhuis.androideindopdrachtapp.View.Fragments.MapFragment;
 
 
 public class MessageHandler {
@@ -246,6 +247,11 @@ public class MessageHandler {
                     UserPreferencesService.getInstance(application).getAuthenticationKey(),
                     message.getUser()
             ));*/
+            TcpManagerService.getInstance().submitMessage(new FriendsRequest(
+                    UserPreferencesService.getInstance(application).getAuthenticationKey(),
+                    UserPreferencesService.getInstance(application).getCurrentUser()
+            ));
+            MapFragment.isAuthenticad = true;
         }
     }
 

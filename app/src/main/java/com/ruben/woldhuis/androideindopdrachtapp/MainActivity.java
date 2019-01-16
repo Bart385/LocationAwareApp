@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity
             }
         }
         volleyService = VolleyService.getInstance(getApplication());
-      //  volleyService.doRequest(new GetServerRequest());
+        //  volleyService.doRequest(new GetServerRequest());
         userPreferencesService = UserPreferencesService.getInstance(getApplication());
         userRepository = new UserRepository(getApplication());
         mAuth = FirebaseAuth.getInstance();
@@ -149,7 +149,7 @@ public class MainActivity extends FragmentActivity
                             if (idToken != null) {
                                 UserPreferencesService.getInstance(getApplication()).saveAuthenticationKey(idToken);
                                 TcpManagerService.getInstance().submitMessage(new IdentificationMessage(idToken, userPreferencesService.getFireBaseMessagingId()));
-
+                                mMapFragment.sendLocation();
                             }
                         } else
                             Log.e("IDENTIFICATION_TAG", task.getException().getMessage());
