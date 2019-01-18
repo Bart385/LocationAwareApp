@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">AndroidEindopdrachtApp</string>
+    <string name="title_activity_login">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_section1">Friends</string>
+    <string name="title_section2">Global</string>
+    <string name="title_section3">Events</string>
+    <string name="title_section4">Settings</string>
+    <string name="title_section5">Camera</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example" translatable="false">Example action</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_friend_chat">friend_chat</string>
+    <string name="title_activity_global_chat">GlobalChatActivity</string>
+    <string name="google_maps_key">AIzaSyAV9VQY-GNfn_j5-LEU-CZxss-eR_hCC8o</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="have_account">Already have an account? Login</string>
+    <string name="no_have_account">Don\'t have an account? Sign Up</string>
+
+    <string name="confirm_changes">Confirm changes</string>
+    <string name="error_code_emailadres">ERROR COULDNT FIND EMAIL</string>
+
+    <string name="profile_name">profile name</string>
+    <string name="settings">settings</string>
+
+    <string name="name">Name</string>
+    <string name="phonenumber">Phone number</string>
+    <string name="photo">Photo</string>
+
+    <string name="newpassword"> U received a mail for a new password in the given email adress.</string>
+    <string name="write_message">Write a Message</string>
+    <string name="default_notification_channel_id" translatable="false">FCM_Notification</string>
+    <string name="fcm_message" translatable="false">FCM Message</string>
+
+    <string name="AddeventTitle">Set your name for the event here the event will be made on your position</string>
+    <string name="eventTitle">Event Title</string>
+    <string name="unregisteredSourceNotification">Got a message from an unregistered source</string>
+    <string name="unsubSuccessful">You successfully unsubscribed from</string>
+    <string name="subSuccessful">You successfully subscribed to</string>
+    <string name="title_section6">Call</string>
+    <string name="make_call">Call</string>
+    <string name="hang_up">Hang Up</string>
+    <string name="sinch_application_key" translatable="false">feabd66c-e803-4fe3-b0fc-30d5bcf06cfc</string>
+    <string name="sinch_application_secret" translatable="false">V8OHs66ccUmDvFy9kHINDQ==</string>
+    <string name="call_connected">Connected</string>
+    <string name="call_ringing">Ringing</string>
+    <string name="profile_change_complete">Successfully update your profile information</string>
+    <string name="caller_id_default">No Caller ID</string>
+    <string name="yourlocation">You are at this point:</string>
+    <string name="add_friend">Add a friend</string>
+    <string name="add_friend_dialog">Enter your friends email to add them to your friendslist</string>
+
+</resources>

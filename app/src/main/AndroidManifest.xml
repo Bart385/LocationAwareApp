@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ruben.woldhuis.androideindopdrachtapp">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.USE_SIP" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.camera2.full" />
+    <uses-feature
+        android:name="android.hardware.sip.voip"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_textlauncher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_textlauncher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/camera_icon_location_aware_app" />
+        <!--
+             Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@android:color/black" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver android:name=".Receivers.SinchCallReceiver">
+            <intent-filter>
+                <action android:name="com.call.notification" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".View.Activities.SettingsActivity" />
+        <activity android:name=".View.Activities.EventActivity" />
+        <activity
+            android:name=".View.Activities.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ruben.woldhuis.androideindopdrachtapp.MainActivity" />
+        </activity>
+        <activity android:name=".View.Activities.ChatActivity" />
+        <activity android:name=".View.Activities.LocationAwareChatActivity" />
+        <activity android:name=".View.Activities.ProfileActivity" />
+        <activity android:name=".View.Activities.EventDetailActivity" />
+        <activity
+            android:name=".View.Activities.OnFriendRequestDialog"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+
+        <service android:name=".Services.C2DM.FCMReceiverService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".Receivers.IncomingCallReceiver"
+            android:label="Call Receiver" />
+
+        <activity android:name=".View.Activities.Camera2Activity" />
+        <activity android:name=".View.Activities.ImageEditorActivity" />
+        <activity android:name=".View.Activities.SignUpActivity" />
+        <activity android:name=".View.Activities.CallActivity" />
+        <activity android:name=".Services.SIP.SipSettings" />
+        <activity android:name=".View.Activities.Call2Activity" />
+        <activity android:name=".View.Activities.DetailedCallActivity"></activity>
+    </application>
+
+</manifest>

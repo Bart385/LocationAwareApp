@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidEindopdrachtApp</string>
+    <string name="title_activity_login">Inloggen</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">Wachtwoord (optioneel)</string>
+    <string name="action_sign_in">Inloggen of Registreren</string>
+    <string name="action_sign_in_short">Inloggen</string>
+    <string name="error_invalid_email">Dit emailadres klopt niet.</string>
+    <string name="error_invalid_password">Dit wachtwoord is te kort.</string>
+    <string name="error_incorrect_password">Dit wachtwoord klopt niet.</string>
+    <string name="error_field_required">Dit is een veplicht veld</string>
+    <string name="permission_rationale">Contacten zijn nodig voor email</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_section1">Vrienden</string>
+    <string name="title_section2">Globaal</string>
+    <string name="title_section3">Evenementen</string>
+    <string name="title_section4">Instellingen</string>
+    <string name="title_section5">Camera</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="title_activity_friend_chat">vrienden_chat</string>
+    <string name="title_activity_global_chat">GlobalChatActivity</string>
+    <string name="navigation_drawer_close">Navigation drawer dicht doen</string>
+    <string name="navigation_drawer_open">Navigation drawer openen</string>
+    <string name="google_maps_key">AIzaSyAV9VQY-GNfn_j5-LEU-CZxss-eR_hCC8o</string>
+    <string name="login">Inloggen</string>
+    <string name="sign_up">Maak een account</string>
+    <string name="email">email</string>
+    <string name="password">wachtwoord</string>
+    <string name="have_account">Inloggen</string>
+    <string name="no_have_account">Nieuw account aanmaken</string>
+    <string name="confirm_changes">Bevestig</string>
+    <string name="error_code_emailadres">ERROR KAN EMAIL NIET VINDEN</string>
+    <string name="profile_name">profiel naam</string>
+    <string name="settings">Instellingen</string>
+    <string name="name">Naam</string>
+    <string name="phonenumber">Telefoonnummer</string>
+    <string name="photo">Foto</string>
+    <string name="newpassword"> U heeft een mail ontvangen waarin u uw mail kunt resetten</string>
+    <string name="write_message">Schrijf een bericht</string>
+    <string name="AddeventTitle">Vul je naam in voor het event en het event wordt gemaakt op jouw locatie</string>
+    <string name="eventTitle">Event Titel</string>
+    <string name="unregisteredSourceNotification">Bericht ontvangen van een ongeregistreerde verzender</string>
+    <string name="unsubSuccessful">Je bent nu niet meer geabonneerd op</string>
+    <string name="subSuccessful">Je bent nu geabonneerd op</string>
+    <string name="title_section6">Bellen</string>
+    <string name="make_call">Bellen</string>
+    <string name="hang_up">Ophangen</string>
+    <string name="call_connected">Verbonden</string>
+    <string name="call_ringing">U wordt gebeld.</string>
+    <string name="profile_change_complete">Uw profile informatie is succesvol geupdatet.</string>
+    <string name="yourlocation">Je bent op dit punt</string>
+    <string name="caller_id_default">Beller ID niet beschikbaar</string>
+    <string name="add_friend">Vriend toevoegen</string>
+    <string name="add_friend_dialog">Geef de email van uw vriend(in) om deze toe te voegen aan de vriendenlijst</string>
+
+</resources>
